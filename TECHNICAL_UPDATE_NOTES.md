@@ -10,9 +10,9 @@ Chủ dự án yêu cầu tạo và duy trì tài liệu này ngày 25/10/2026. 
 
 | Hạng mục | Trạng thái |
 |---|---|
-| Phiên bản | **0.0.5** (13/11/2026) — trước đó 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
+| Phiên bản | **0.0.6** (16/11/2026) — trước đó 0.0.5 (13/11/2026), 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
 | Số nguồn | 196 (Phim 44 · Truyện tranh 36 · Tiểu thuyết 116) lấy từ `Project Extension Repo.xlsx` → sheet *Extension Repo Main* |
-| Ứng dụng hỗ trợ | Aniyomi, Nekoyomi (từ 0.0.5: mỗi nguồn một APK — 44 Phim + 37 Truyện) · Mangayomi, YomiHub (JS) · LNReader, IReader (plugin JS ES5) · vBook, LeechText, YomiHub-vBook (zip vBook) · **Aidoku** (từ 0.0.3: 152 gói `.aix` — cầu nối Rust/WASM + JavaScriptCore, xem `docs/AIDOKU.md`) |
+| Ứng dụng hỗ trợ | Aniyomi, Nekoyomi (từ 0.0.5: mỗi nguồn một APK — 44 Phim + 37 Truyện; từ 0.0.6: chọn / nhập tên miền trên mọi app) · Mangayomi, YomiHub (JS) · LNReader, IReader (plugin JS ES5) · vBook, LeechText, YomiHub-vBook (zip vBook) · **Aidoku** (từ 0.0.3: 152 gói `.aix` — cầu nối Rust/WASM + JavaScriptCore, xem `docs/AIDOKU.md`) |
 | Kết quả kiểm thử | xem bảng trong `README.md` (tự sinh từ `data/test-results.json`) |
 
 ## Kiến trúc (0.0.1)
@@ -553,3 +553,87 @@ Quyết định của chủ dự án:
 - Sửa YomiHub theo `docs/YOMIHUB_SHORTS_GUIDE.md`.
 - vBook (app 1.1.57), LeechText, LNReader: kiểm lại trên Note9.
 - Thêm một vòng ghi trên mạng thật cho các nguồn gần đạt.
+
+
+### 15–16/11/2026 — Bản 0.0.6 (đổi tên miền linh hoạt cho cả 9 app, Short Video YomiHub 0.5.7, giảm dung lượng, sửa nguồn, kiểm thử trên Galaxy Note9)
+
+**Yêu cầu**
+- Excel `Project Extension Repo.xlsx`: sheet Feature Check trỏ sang sheet Update (8 mục).
+- Chủ dự án xác nhận ngày 15/11 lúc 22:30:
+  - Làm cho cả 9 app: Aniyomi, Nekoyomi, Mangayomi, YomiHub, LNReader, IReader, vBook, LeechText, Aidoku.
+  - YomiHub đã lên 0.5.7 và tự hỗ trợ Shorts, nên **không sửa repo YomiHub**.
+  - Kiểm thử trên Note9 nếu cắm, kèm máy ảo. Aidoku kiểm bằng `aidoku-sim` vì không có iPhone.
+  - Cho phép cài đè các app trên điện thoại (16/11 15:26).
+
+**Đo hiện trạng** (15/11 22:27, Windows, `run-tests --stream --record`)
+- **65/196** đạt.
+- Phân loại 131 nguồn lỗi:
+  - 62 nguồn đã phân loại từ trước: dead 36, api 12, blocked/protected/login 14.
+  - 69 lỗi mới.
+- 196 website trong Excel khớp đủ 196 nguồn. 12 nguồn có tên miền trong Excel khác tên miền đang dùng (trang đã đổi miền).
+
+| # | Hạng mục | Lỗi phát hiện | Tệp / dòng đã sửa | Công cụ | Kết quả kiểm thử |
+|---|---|---|---|---|---|
+| 1 | **Đổi tên miền linh hoạt** (Update mục 5) | Đổi tên miền chưa đồng đều giữa các app và các nguồn:<br>• Nguồn không có `config.DOMAIN` thì không đổi được tên miền.<br>• LNReader/IReader không có cài đặt nào (`hosts/lnreader.js`: `config: k => null`).<br>• Mangayomi chỉ có danh sách cố định; Aniyomi/Nekoyomi chỉ có ô nhập.<br>• Tên miền trong Excel không có trong danh sách. | • `runtime/engine.js`:<br>  – `get base()`: `DOMAIN_CUSTOM` > `DOMAIN` > `configDefaults.DOMAIN` > `metadata.source`.<br>  – Hàm mới `live(u)` bọc `env.fetch`, chuyển request tới tên miền mặc định/gương sang `base`.<br>  – `cfg('DOMAIN')` trả `base`.<br>• `tools/build/build-all.mjs`: mọi nguồn có `config.DOMAIN`; `values` = default + `metadata.source` + values cũ + urls Excel (`data/sources.json`, đã thêm url Excel).<br>• `hosts/mangayomi.tail.js`: `__base()` + ô `DOMAIN_CUSTOM`.<br>• `hosts/lnreader.js`: `pluginSettings` (DOMAIN_CUSTOM + tuỳ chọn riêng của nguồn), `config` đọc `storage`.<br>• `android/{anime,manga}/…/V*Factory.kt`: `ListPreference DOMAIN` + `EditTextPreference DOMAIN_CUSTOM`; `baseUrl` = custom > list > default.<br>• `aidoku/bridge/src/lib.rs` `base()` + `tools/build/aidoku-build.mjs` ô `text DOMAIN_CUSTOM`; `BRIDGE_REV 4`. | VS Code, Node 24 + esbuild, Gradle 9.3.1 (JBR, Android SDK 35 / build-tools 36), Rust 1.97 (`AIDOKU_BUILD_STD=1`) | • `node test/domain-switch.test.mjs`: **12/12** (đám mây + Windows).<br>• Note9:<br>  – Aniyomi Anime47: hiện "Tên miền / Domain" (danh sách) + "Tên miền tuỳ chỉnh". ✅<br>  – Mangayomi Twitch 0.5.4: Tên miền + Tên miền tuỳ chỉnh + tuỳ chọn riêng. ✅<br>  – LNReader Bàn Long 1.4.11: "Tên miền (để trống = https://blhvip.vn)". ✅ |
+| 2 | **Short Video YomiHub 0.5.7** (Update mục 3) | `additionalParams: 'shorts'` (chữ trần), trong khi regex `_flag` của `shorts_detect.dart` cần dạng `shorts: true`. Kiểm bằng Python với đúng regex: `'shorts'` → False. | `build-all.mjs` (chỉ mục Mangayomi) và `tools/build/yomihub-sources.mjs`: `additionalParams = {"shorts":true,"short_video":true}` cho nguồn có cờ Short. | VS Code; đọc mã YomiHub-Project `overlay/lib/yomihub/player/shorts_detect.dart` | • Regex YomiHub với chuỗi mới → **True**.<br>• `repo/index.json` trên GitHub: 11 nguồn mang cờ (Douyin, FreeReels, TikTok, YouTube, Pornhub, FikFap, Tik.Porn, Kwiky, xFree, FapReel, SexVietTop). |
+| 3 | **Giảm dung lượng** | Mỗi gói nhúng bảng mã hoá thực thể HTML `entities/lib/esm/generated/encode-html.js` (23 KB), dù `runtime/dom.js` luôn `render(..., {decodeEntities:false})` nên bảng không bao giờ được dùng. Tìm bằng esbuild `metafile`. | `build-all.mjs`: plugin esbuild `slimEntities` thay bằng Map 5 ký tự (`&amp; &lt; &gt; &quot; &apos;`). | esbuild metafile | Mangayomi/YomiHub 42,6 → 38,0 MB (−10,8%); LNReader/IReader 30,0 → 27,3 MB (−9%); Aidoku 23,1 → 19,8 MB (−14%). `--replay`: 65/196, không hồi quy. |
+| 4 | **Phân loại Aniyomi/Nekoyomi** (Update mục 2) | • Đối chiếu Excel ↔ `data/sources.json` ↔ `plugin.json`: ngôn ngữ, 18+, Short khớp. YouTube/Pornhub giữ Short vì có Shorts thật; Cosplaytele/Wattpad Excel ghi khác ngôn ngữ thực.<br>• **Lỗi mới do bản sửa nguồn:** Dailymotion bị đổi `locale` vi → global, nên gói APK thành `…animeextension.all.kiridailymotion`, nằm song song gói `vi` cũ (Aniyomi hiện 2 Dailymotion). | `sources/dailymotion/plugin.json`: `locale` trả về `vi` theo Excel. Gỡ gói `all` trên Note9. | Aniyomi trên Note9, `adb` | • 81 APK (44 Phim + 37 Truyện), mỗi APK tên + logo + `lang` + `nsfw` riêng.<br>• Gỡ `all.kiridailymotion`, cài `vi.kiridailymotion` 14.1004. ✅ |
+| 5 | **Logo** (Update mục 7) | 196/196 có logo, không logo nào < 64 px. Trùng logo: jjwxc×2, 69shu×2 (cùng trang), lofter = sudugu.org (theo Excel). | — | PIL | ✅ |
+| 6 | **Resume A Video** (Update mục 4) | Kiểm lại: app tự lưu vị trí theo URL tập. Đổi tên miền vẫn giữ URL chuẩn (`canon`), nên không mất vị trí. | — | Note9 | Aniyomi Twitch: phát → thoát → nút đổi thành "Tiếp tục" → phát tiếp đúng đoạn. ✅ |
+| 7 | **TikTok & Douyin** (Update mục 6) | tikwm giới hạn 1 yêu cầu/giây và hay trả HTTP 531 "Oops"; `/api/feed/search`, `/api/user/posts` bị Cloudflare. | `sources/tiktok/src/svx.js` (mới: giãn cách 1,2 giây, thử lại 4 lần luân phiên `www.tikwm.com`/`tikwm.com`, cache thông tin clip, báo lỗi tiếng Việt) + `chap/detail/genre/home/search.js`. Douyin giữ chính sách: video cần máy chủ DTK riêng. | tác tử s1 (Fable), `run-tests --record` | TikTok **đạt** khi ghi riêng (16/11 14:43). Trong lần chạy toàn bộ 15:00 thì hết giờ vì tikwm chặn IP máy test sau nhiều lần gọi. |
+| 8 | **Nguồn SPA → API** (tồn từ 0.0.5) | Twitch, Dailymotion tải nội dung bằng JavaScript. | `sources/twitch/*` (GQL `gql.twitch.tv` + `usher.ttvnw.net`); `sources/dailymotion/*` (`/player/metadata/video/<id>` + API danh sách). bilibili, vtvgo, freereels, iqiyi, mgtv chưa làm. | tác tử s4 (Fable/Sonnet) | • Twitch **đạt** `--stream`; Note9: phát trên Aniyomi ✅, Mangayomi 0.9.96 quay mãi ❌.<br>• Dailymotion đạt danh sách/chi tiết; m3u8 bị CDN chặn với Node (403). |
+| 9 | **Sửa nguồn** | Trang đổi giao diện, bộ chọn hỏng. | `sources/{hihiphim,hentaivietsubcom,metruyenchu,wikidich,xtruyen,tutienpro,52shukubyquocbao,html5qqcom}` đạt trọn; sửa một phần `phimtv, truyencvio, truyenh, hacamchicac, abcbiquge` (popular/search chạy). | tác tử s1–s4, `run-tests --record/--replay`, `one.mjs` | Ghi riêng 17 nguồn: **11/17 đạt**. |
+| 10 | **Kotlin** | `Unresolved reference 'dialogTitle'` trên `ListPreference` (extensions-lib stub không có). | Bỏ dòng đó ở 2 tệp Factory. | Gradle `:anime-core/:manga-core:compileReleaseKotlin` | 81/81 APK dựng được. |
+| 11 | **Công cụ kiểm thử** | DNS nhà mạng (VNPT 123.23.23.23) chặn một số trang truyện từ 16/11, nên `run-tests` báo `HTTP 0 ENOTFOUND` trong 20 ms. | `tools/test/run-tests.mjs`: tuỳ chọn `--dns 1.1.1.1,8.8.8.8` (thay `dns.lookup`). | Node | Phân giải được, nhưng vài trang vẫn hết giờ: nhà mạng chặn cả IP. |
+
+**Phiên bản**
+- `package.json` 0.0.6.
+- Cả 196 nguồn +1 `version` (engine đổi).
+- APK `14.1004` / `1.4.1004`.
+- Mangayomi `0.5.4`, LNReader `1.4.x+1`.
+- Aidoku `BRIDGE_REV 4`, 152/152 gói (dựng trên đám mây, cargo 35 giây).
+
+**Kiểm thử tự động** (Windows, 16/11 15:00)
+- `run-tests --stream`: **69/196** (0.0.5: 66).
+- `aidoku-sim --all`: **63/152**.
+- Riêng 17 nguồn đã sửa: 11 đạt.
+- 6 nguồn trước đạt nay báo HTTP 0, do DNS/IP nhà mạng chặn, không phải lỗi mã: apptruyenchu, ixdzs8, truyenc, truyendichai, vietnamthuquan, vinahentai.
+
+**Kiểm thử trên Galaxy Note9** (adb `281038ac31217ece`, Android 10, 16/11 15:07–15:52)
+- Ảnh và video ở `_work/shots/v006/`: 26 ảnh, 16 video. Cài đặt máy ghi ở `phone_settings_before.txt` và đã trả lại.
+- **Aniyomi 0.18.2.1:**
+  - Cài đè 81 APK, 81/81 Success, 880 giây.
+  - Cài đặt Anime47: Tên miền + Tên miền tuỳ chỉnh. ✅
+  - Twitch: danh sách, chi tiết 51 tập, phát VOD. ✅
+  - Resume: "Tiếp tục" phát tiếp đúng đoạn. ✅
+- **Nekoyomi 0.20.6:** TruyenQQ danh sách + đọc chương (1/36 trang). ✅
+- **Mangayomi** (cài đè lên 0.9.96 từ GitHub kodjodevf/mangayomi):
+  - Phải xoá cache jsDelivr (`_work/purge.bat`) thì app mới thấy 0.5.4.
+  - Twitch 0.5.4: cài đặt tên miền mới ✅, danh sách + chi tiết ✅, phát ❌ (quay mãi, cả live lẫn VOD).
+- **YomiHub 0.5.7:**
+  - Kho cập nhật được ("Cập nhật tất cả").
+  - Chưa kiểm được tab Shorts trên app: danh sách tiện ích gộp nhiều kho, không có ô tìm. Kiểm bằng regex `ShortsDetect` (mục 2) ✅.
+- **LNReader 2.1.4:**
+  - Update all 4 plugin.
+  - Cài đặt plugin Bàn Long có ô Tên miền ✅.
+  - Danh sách + chi tiết truyện "Cơ Giáp Cảm Thấu" ✅.
+- **IReader 2.0.26:** Play Protect chặn cài đặt ("Đã chặn ứng dụng có hại"). Không vượt cảnh báo bảo mật; IReader dùng chung gói plugin với LNReader.
+- **vBook 1.1.54:** app bắt cập nhật 1.1.57 mới cho cài tiện ích (như 0.0.5). Kho `repo/plugin.json` 196 tiện ích trả 200.
+- **LeechText 2.0.0:** app tự dừng khi mở (`ClassNotFoundException: org.jetbrains.compose.resources.ComposeEnvironment`). Cài lại vẫn lỗi; đây là lỗi bản dựng của app, xảy ra trước khi tải tiện ích.
+
+**Phát hành**
+- `tools/win/publish.ps1` (session hiện tại): commit `32e29cf`, push local = remote.
+- Release **v0.0.6**: 10/10 tệp.
+- Kiểm HTTP: `repo/index.json` (204 mục Mangayomi/YomiHub), `index.min.json` (81 APK), `plugins.min.json` (115), `plugin.json` (196), `aidoku/index.min.json`, cùng 10 link Release trong README, đều 200.
+
+**Việc cần làm ở bản sau**
+- Twitch phát trong Mangayomi/YomiHub (media_kit): kiểm header / định dạng m3u8 usher.
+- Dailymotion: m3u8 `cdndirector.dailymotion.com` 403 với Node; kiểm trên app.
+- Nguồn API còn lại: bilibili, VTV Go, FreeReels, iQIYI, MGTV, allin1, stvappvi, mimimoe, novelpiaglobal.
+- Nguồn sửa dở: phimtv, truyencvio, truyenh, hacamchicac, abcbiquge.
+- Nguồn tác tử s2/s3 chưa tới:
+  - Truyện Việt: cbhentai, sayhentai, truyentranhdammyy, minotruyen, quykiep, truyennet, webtruyendich, lnkuro, lohi, taonovel, novelnext, syosetur18, mattreadingtranslations, lnhakovnhako.
+  - Truyện Trung: 69shuba, douban, gongzicp, idejian, jjwxc×2, moyuemacduyet, piaotianapp, po18sm, qmbook, quanben, 75zwcom, snapd, sweetastes, wodeshucheng5, xianqihaotiamiapp, ypshuobinhluansach, weibo.
+  - Kiểm lại các nguồn `dead`.
+- Kiểm tab Shorts trên YomiHub 0.5.7 bằng giao diện. Dùng máy ảo `YomiHub056_Phone_API34` cho nhanh, hoặc tìm nguồn trong danh sách đã cài.
+- Đo lại khi mạng không bị DNS/IP chặn: dùng `--dns 1.1.1.1` hoặc mạng khác.

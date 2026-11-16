@@ -5,7 +5,7 @@
     "version": 4,
     "source": "https://www.dailymotion.com",
     "description": "Dailymotion — video qua API công khai (api.dailymotion.com + player metadata), không cần tài khoản.",
-    "locale": "global",
+    "locale": "vi",
     "regexp": "dailymotion\\.com",
     "type": "video",
     "nsfw": false

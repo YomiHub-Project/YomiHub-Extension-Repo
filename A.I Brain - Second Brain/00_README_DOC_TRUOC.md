@@ -14,4 +14,6 @@ Mỗi phiên làm xong phải bổ sung kinh nghiệm mới vào đúng tệp, g
 | `07_nhat-ky-phien.md` | Nhật ký ngắn từng phiên (ngày, việc, kết quả) |
 | `08_ban-giao-0.0.5.md` | Bàn giao bản 0.0.5 (đã phát hành 13/11/2026); phần "Việc còn lại" chuyển sang TECHNICAL_UPDATE_NOTES → mục 0.0.5 |
 
-Lần tạo: 13/11/2026 (bản 0.0.4).
+| `09_ban-giao-0.0.6.md` | **Đọc trước khi làm 0.0.7**: bài học 0.0.6 (hạn mức 5 giờ dùng chung, khôi phục quyền + trình chạy nền, DNS nhà mạng, Play Protect, tikwm), cách đổi tên miền hoạt động |
+
+Lần tạo: 13/11/2026 (bản 0.0.4). Cập nhật 16/11/2026 (bản 0.0.6).

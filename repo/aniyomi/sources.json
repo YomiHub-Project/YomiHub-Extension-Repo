@@ -110,13 +110,13 @@
  {
   "id": "dailymotion",
   "name": "Dailymotion",
-  "lang": "all",
+  "lang": "vi",
   "baseUrl": "https://www.dailymotion.com",
   "type": "video",
   "nsfw": false,
   "sourceId": 440543255,
   "short": false,
-  "pkg": "eu.kanade.tachiyomi.animeextension.all.kiridailymotion",
+  "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiridailymotion",
   "version": "14.1004"
  },
  {

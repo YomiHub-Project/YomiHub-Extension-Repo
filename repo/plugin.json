@@ -313,7 +313,7 @@
    "icon": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/dailymotion.png",
    "description": "Dailymotion — video qua API công khai (api.dailymotion.com + player metadata), không cần tài khoản.",
    "type": "video",
-   "locale": "global",
+   "locale": "vi_VN",
    "nsfw": false
   },
   {

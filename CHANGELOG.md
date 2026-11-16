@@ -32,6 +32,25 @@
 - Mọi nguồn tăng `version` 1 bậc, vì engine dùng chung thay đổi.
 - Aidoku `BRIDGE_REV 4`.
 
+## Kiểm thử
+- **Tự động** (Windows, 16/11/2026):
+  - `run-tests --stream`: 69/196 (0.0.5: 66).
+  - Ghi riêng 17 nguồn vừa sửa: 11 đạt.
+  - `aidoku-sim`: 63/152.
+  - `test/domain-switch.test.mjs`: 12/12.
+  - Lưu ý: DNS nhà mạng VNPT chặn vài trang truyện, nên kiểm thử có thêm tuỳ chọn `--dns 1.1.1.1`.
+- **Galaxy Note9** (16/11/2026):
+  - Aniyomi: 81/81 APK cài đè thành công. Cài đặt tên miền mới hiện đúng. Twitch phát được. "Tiếp tục" xem đúng chỗ. ✅
+  - Nekoyomi: đọc TruyenQQ. ✅
+  - Mangayomi 0.9.96: cài đặt tên miền mới, danh sách và chi tiết Twitch ✅. Trình phát Twitch quay mãi ❌, để bản sau.
+  - LNReader: cập nhật plugin, ô "Tên miền" trong cài đặt plugin, đọc Bàn Long. ✅
+  - YomiHub 0.5.7: cập nhật kho. Cờ Short kiểm bằng đúng quy tắc ShortsDetect của YomiHub. ✅
+  - Không kiểm được trên máy:
+    - IReader: Play Protect chặn cài app.
+    - vBook 1.1.54: bắt cập nhật app 1.1.57.
+    - LeechText 2.0.0: app tự dừng khi mở, lỗi thiếu lớp Compose của chính app.
+- Sửa thêm khi kiểm thử: Dailymotion bị đổi ngôn ngữ thành "Đa Ngôn Ngữ", nên Aniyomi hiện 2 tiện ích Dailymotion. Đã trả về Tiếng Việt theo Excel.
+
 ---
 
 # Kiritokmn Extension Repo — v0.0.5 (13/11/2026)

@@ -14,3 +14,20 @@
 - Trình chạy nền đã dừng từ 09:22 UTC, phải bật lại bằng File Explorer. Gradle 81 APK: 412 giây lần đầu, 174 giây lần sau.
 - Note9: gỡ 4 APK gộp, cài 81 APK ✅; Aniyomi hiện tên + logo riêng ✅; NguonC phát phim 1:43:26, tua, xem tiếp ✅; YouTube phát có "Âm thanh gốc" ✅; Nekoyomi nguồn manga riêng + TruyenQQ đọc ✅.
 - `run-tests` mạng thật: 66/196 (0.0.4: 60).
+
+## 15–16/11/2026 — bản 0.0.6 (Claude, Cowork)
+- Đọc 2 Excel + Second Brain + notes; tóm tắt rồi được xác nhận: 9 app, không sửa YomiHub (0.5.7 đã hỗ trợ Shorts), kiểm Note9 + máy ảo, Aidoku bằng aidoku-sim.
+- Đo mạng thật: 65/196. Chạy 4 tác tử song song: hết hạn mức 5 giờ 3 lần, nên chỉ sửa được 17 nguồn (11 đạt). Từ nay tự làm, tối đa 1–2 tác tử.
+- Hạ tầng:
+  - Đổi tên miền linh hoạt trên 9 app (`DOMAIN` + `DOMAIN_CUSTOM`, engine `live()`).
+  - Cờ Short `{"shorts":true}` cho YomiHub 0.5.7.
+  - Bỏ bảng `encode-html` (−10% gói).
+  - `run-tests --dns`.
+- Dựng: 81 APK (Gradle), Aidoku 152 gói (đám mây, Rust). Phát hành v0.0.6: commit `32e29cf`, Release 10/10.
+- Note9:
+  - Aniyomi: tên miền ✅, Twitch phát ✅, Resume ✅.
+  - Nekoyomi: TruyenQQ đọc ✅.
+  - Mangayomi 0.9.96 (cài đè): tên miền ✅, Twitch phát ❌.
+  - LNReader: cài đặt plugin tên miền ✅, đọc ✅.
+  - IReader: Play Protect chặn. vBook: cần 1.1.57. LeechText 2.0.0: app crash.
+- Lỗi phát sinh: tác tử đổi `locale` Dailymotion vi → global, nên có APK trùng; đã trả về vi.
