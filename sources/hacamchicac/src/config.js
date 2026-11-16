@@ -2,16 +2,24 @@ var BASE_URL = "https://haccbl.xyz";
 try { if (DOMAIN) BASE_URL = String(DOMAIN).replace(/\/+$/, ""); } catch (e) {}
 var G = {
  "tabs": {
-  "Mới cập nhật": "/[page/{p}/]"
+  "Mới cập nhật": "/moi-cap-nhat/[page/{p}/]"
  },
- "search": "/?username={q}[&page={p}]",
- "item": "div.uk-panel.uk-position-relative > div.uk-overflow-hidden.uk-border-rounded",
- "title": "img@alt",
+ "search": "/?s={q}&post_type=manga",
+ "item": "div.manga-item-grid",
+ "title": "h3 || a.uk-link-heading || img@alt",
  "link": "a@href",
- "ch_list": "div.recent-comment-content.uk-background-muted a",
+ "ch_list": "#chapter-list div.chapter-item a",
  "d_title": "h1 || meta[property=og:title]@content",
  "d_cover": "meta[property=og:image]@content || img@img",
  "d_desc": "meta[property=og:description]@content || meta[name=description]@content",
  "cover": "img@img",
- "pages": "div.uk-overflow-hidden.uk-border-rounded img"
+ "pages": "#chapter-content img",
+ "ch_name": "h3",
+ "ch_next": "#chapter-list ul.uk-pagination a[aria-label='Trang sau']",
+ "ch_reverse": true,
+ "initmanga": true,
+ "s_item": "article.uk-grid-small, div.manga-item-grid",
+ "s_title": "a.uk-link-heading || h3",
+ "s_link": "a.uk-link-heading@href || a@href",
+ "s_cover": "img@img"
 };

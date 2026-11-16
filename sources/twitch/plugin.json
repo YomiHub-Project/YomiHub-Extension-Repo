@@ -2,16 +2,17 @@
   "metadata": {
     "name": "Twitch",
     "author": "Kiritokmn",
-    "version": 3,
-    "source": "https://m.twitch.tv",
-    "description": "Twitch — Kiritokmn Extension Repo",
+    "version": 4,
+    "source": "https://www.twitch.tv",
+    "description": "Twitch — kênh trực tiếp và video phát lại (VOD) qua API GQL công khai, không cần tài khoản.",
     "locale": "global",
-    "regexp": "m\\.twitch\\.tv",
+    "regexp": "twitch\\.tv",
     "type": "video",
     "nsfw": false
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",
@@ -22,13 +23,20 @@
     "DOMAIN": {
       "title": "Tên miền",
       "subtitle": "Đổi khi trang đổi tên miền",
-      "default": "https://m.twitch.tv",
+      "default": "https://www.twitch.tv",
       "values": [
-        "https://m.twitch.tv",
-        "https://www.twitch.tv"
+        "https://www.twitch.tv",
+        "https://m.twitch.tv"
       ],
       "mode": "select",
       "format": "single"
+    },
+    "LANG": {
+      "title": "Ngôn ngữ kênh ưu tiên",
+      "subtitle": "Mã ngôn ngữ cho mục đầu trang chủ: VI, EN, JA, KO… (để trống = mọi ngôn ngữ)",
+      "default": "",
+      "mode": "input",
+      "format": "text"
     }
   }
 }

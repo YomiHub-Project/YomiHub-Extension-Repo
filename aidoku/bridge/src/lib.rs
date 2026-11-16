@@ -209,15 +209,15 @@ impl Bridge {
 		}
 	}
 
-	/// Current site address: the "DOMAIN" setting when it holds a URL, otherwise the default.
+	/// Current site address (0.0.6): the "DOMAIN_CUSTOM" text setting when it holds a URL, else the "DOMAIN"
+	/// setting picked from the list, otherwise the default.
 	pub fn base(&self) -> String {
-		let d: String = defaults_get::<String>("DOMAIN").unwrap_or_default();
-		let d = d.trim();
-		let b = if d.starts_with("http://") || d.starts_with("https://") {
-			d
-		} else {
-			self.info.default_base
+		let ok = |k: &str| -> Option<String> {
+			let d: String = defaults_get::<String>(k).unwrap_or_default();
+			let d = d.trim();
+			if d.starts_with("http://") || d.starts_with("https://") { Some(d.to_owned()) } else { None }
 		};
+		let b = ok("DOMAIN_CUSTOM").or_else(|| ok("DOMAIN")).unwrap_or_else(|| self.info.default_base.to_owned());
 		b.trim_end_matches('/').to_owned()
 	}
 

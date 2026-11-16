@@ -1,4 +1,3 @@
 load('config.js');
 load('lib_common.js');
-load('lib_generic.js');
-function execute(input, page) { return X.browse(input, page); }
+function execute(input, page) { return ttList(input || '/story/stories/?page_size=24', page); }

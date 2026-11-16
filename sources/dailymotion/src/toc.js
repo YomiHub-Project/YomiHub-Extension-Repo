@@ -1,4 +1,3 @@
 load('config.js');
-load('lib_common.js');
-load('lib_generic.js');
-function execute(url) { return X.toc(url); }
+load('dm.js');
+function execute(url) { var id = DM.id(url); return Response.success([{ name: 'Xem video', url: BASE_URL + '/video/' + id, host: BASE_URL }]); }

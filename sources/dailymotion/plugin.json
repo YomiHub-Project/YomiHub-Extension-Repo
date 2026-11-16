@@ -2,16 +2,17 @@
   "metadata": {
     "name": "Dailymotion",
     "author": "Kiritokmn",
-    "version": 3,
+    "version": 4,
     "source": "https://www.dailymotion.com",
-    "description": "Dailymotion — Kiritokmn Extension Repo",
-    "locale": "vi",
+    "description": "Dailymotion — video qua API công khai (api.dailymotion.com + player metadata), không cần tài khoản.",
+    "locale": "global",
     "regexp": "dailymotion\\.com",
     "type": "video",
     "nsfw": false
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",

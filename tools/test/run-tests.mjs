@@ -9,6 +9,21 @@ const args = process.argv.slice(2); const opt = k => { const i = args.indexOf(k)
 const only = opt('--only') ? new Set(opt('--only').split(',')) : null;
 const CONC = +(opt('--conc') || 4);
 const OUTF = opt('--out') ? path.resolve(opt('--out')) : path.join(ROOT, 'test-results.json'); // 0.0.3: separate result files (e.g. runs through a VPN)
+// 0.0.6: --dns 1.1.1.1 resolves host names through that DNS server (the ISP DNS on the test machine — VNPT 123.23.23.23
+// in 11/2026 — blocks some reading sites, so a working source would be reported as "HTTP 0 ENOTFOUND")
+if (opt('--dns')) {
+  const dns = await import('node:dns'); const R = new dns.Resolver(); R.setServers(opt('--dns').split(','));
+  const orig = dns.default.lookup;
+  dns.default.lookup = function (host, o, cb) {
+    if (typeof o === 'function') { cb = o; o = {}; } if (typeof o === 'number') o = { family: o }; o = o || {};
+    if (host === 'localhost' || /^[\d.]+$|:/.test(host)) return orig.call(this, host, o, cb);
+    R.resolve4(host, (e, a4) => {
+      const done = (list) => o.all ? cb(null, list) : cb(null, list[0].address, list[0].family);
+      if (!e && a4 && a4.length) return done(a4.map(a => ({ address: a, family: 4 })));
+      R.resolve6(host, (e6, a6) => (!e6 && a6 && a6.length) ? done(a6.map(a => ({ address: a, family: 6 }))) : orig.call(this, host, o, cb));
+    });
+  };
+}
 const dir = path.join(ROOT, '.build');
 // ---- 0.0.5: --stream = also download the first KB of the first stream / first HLS segment (extra step `stream`, reported only, not part of `pass`)
 const STREAM = args.includes('--stream'); let probeStream = null, h2f = null;

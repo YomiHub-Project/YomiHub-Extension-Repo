@@ -5,7 +5,10 @@ var G = {
   "Mới cập nhật": "/"
  },
  "search": "/?searchkey={q}",
- "ch_list": "a[href*=chuong], a[href*=chap], a[href*=tap-], a[href*=episode]",
+ "ch_rewrite": ["/info-(\\d+)/?$", "/wapbook-$1_1/"],
+ "ch_list": "a[href~=^/wapbook-\\d+-\\d+/?$]",
+ "ch_next": "a:contains(下一页)",
+ "ch_maxPages": 100,
  "item": "div.article > div.block",
  "link": "a@href",
  "title": "h2",

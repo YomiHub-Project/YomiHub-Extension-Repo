@@ -1,5 +1,6 @@
 load('config.js');
 load('lib_shortvideo.js');
+load('svx.js');
 function execute() {
   var t = [{ title: '热榜 · Tìm kiếm nóng', input: 'hot', script: 'genre.js' }];
   if (SV.server()) {

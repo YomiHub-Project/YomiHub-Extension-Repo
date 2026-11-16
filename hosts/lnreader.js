@@ -16,6 +16,10 @@ class VBookLNPlugin {
     this.version = META.lnVersion;
     this.filters = undefined;
     this.webStorageUtilized = false;
+    // 0.0.6: flexible domain switching + the source's own options (API server, region…)
+    const cfg = META.config || {}, doms = ((cfg.DOMAIN || {}).values || []).filter(d => d !== META.source);
+    this.pluginSettings = { DOMAIN_CUSTOM: { value: '', label: 'Tên miền (để trống = ' + META.source + ')' + (doms.length ? ' — khác: ' + doms.slice(0, 4).join(', ') : '') } };
+    Object.keys(cfg).forEach(k => { if (k !== 'DOMAIN') this.pluginSettings[k] = { value: String((cfg[k] || {}).default == null ? '' : cfg[k].default), label: (cfg[k] || {}).title || k }; });
     this.engine = create({
       name: 'LNReader',
       request: async (r) => {
@@ -28,7 +32,8 @@ class VBookLNPlugin {
       },
       storageGet: k => { const v = storage.get('vb_' + k); return v == null ? null : String(v); },
       storageSet: (k, v) => { if (v == null) storage.delete && storage.delete('vb_' + k); else storage.set('vb_' + k, String(v)); },
-      config: k => null,
+      // 0.0.6: plugin settings (LNReader stores them in the plugin storage under their key)
+      config: k => { const key = k === 'DOMAIN' ? 'DOMAIN_CUSTOM' : k; let v = null; try { v = storage.get(key); } catch (e) { } v = v == null ? '' : String(v).trim(); return v === '' ? null : v; },
       log: m => console.log(m),
     });
   }

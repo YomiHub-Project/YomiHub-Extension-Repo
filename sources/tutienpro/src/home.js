@@ -1,4 +1,9 @@
 load('config.js');
 load('lib_common.js');
-load('lib_generic.js');
-function execute() { var t = []; for (var k in G.tabs) t.push({ title: k, input: k, script: "browse.js" }); return Response.success(t); }
+function execute() {
+  return Response.success([
+    { title: "Mới cập nhật", input: "/story/stories/?page_size=24", script: "browse.js" },
+    { title: "Hoàn thành", input: "/story/stories/completed/?page_size=24", script: "browse.js" },
+    { title: "Lọc truyện", input: "/story/stories/filter/?page_size=24", script: "browse.js" }
+  ]);
+}

@@ -2,6 +2,7 @@ package kiritokmn.vbook.manga
 
 import android.content.SharedPreferences
 import androidx.preference.EditTextPreference
+import androidx.preference.ListPreference
 import androidx.preference.PreferenceScreen
 import eu.kanade.tachiyomi.source.ConfigurableSource
 import eu.kanade.tachiyomi.source.Source
@@ -40,7 +41,8 @@ class VBookMangaSource(private val def: SourceDef) : HttpSource(), ConfigurableS
     private val preferences: SharedPreferences by lazy {
         kiritokmn.vbook.appContext().getSharedPreferences("source_$id", 0x0000)
     }
-    override val baseUrl: String get() = preferences.getString("DOMAIN", null)?.takeIf { it.isNotBlank() }?.trimEnd('/') ?: def.baseUrl
+    // 0.0.6: custom domain (free text) > domain picked from the list > default
+    override val baseUrl: String get() = listOf("DOMAIN_CUSTOM", "DOMAIN").firstNotNullOfOrNull { k -> preferences.getString(k, null)?.trim()?.takeIf { it.startsWith("http://") || it.startsWith("https://") } }?.trimEnd('/') ?: def.baseUrl
 
     private val rt by lazy { VBookRuntime(Assets::read, def, client, preferences) }
 
@@ -93,13 +95,22 @@ class VBookMangaSource(private val def: SourceDef) : HttpSource(), ConfigurableS
     override fun getChapterUrl(chapter: SChapter): String = chapter.url
 
     override fun setupPreferenceScreen(screen: PreferenceScreen) {
-        EditTextPreference(screen.context).apply {
+        // 0.0.6: flexible domain switching — pick a known domain (incl. the ones in the owner's Excel sheet) or type a new one
+        val doms = (listOf(def.baseUrl) + def.domains).map { it.trim().trimEnd('/') }.filter { it.isNotEmpty() }.distinct().toTypedArray()
+        ListPreference(screen.context).apply {
             key = "DOMAIN"
             title = "Tên miền / Domain"
-            summary = baseUrl
-            dialogTitle = "Domain"
-            dialogMessage = "Mặc định: ${def.baseUrl}" + if (def.domains.size > 1) "\nKhác: " + def.domains.joinToString(", ") else ""
-            setDefaultValue(def.baseUrl)
+            entries = doms; entryValues = doms
+            summary = "%s"
+            setDefaultValue(doms.first())
+        }.also(screen::addPreference)
+        EditTextPreference(screen.context).apply {
+            key = "DOMAIN_CUSTOM"
+            title = "Tên miền tuỳ chỉnh / Custom domain"
+            summary = "Để trống = dùng tên miền đã chọn ở trên. Hiện tại: $baseUrl"
+            dialogTitle = "Tên miền tuỳ chỉnh"
+            dialogMessage = "Nhập tên miền mới khi trang đổi địa chỉ (VD: https://example.com). Để trống để dùng danh sách."
+            setDefaultValue("")
         }.also(screen::addPreference)
         def.prefs.forEach { p ->
             EditTextPreference(screen.context).apply {

@@ -1,4 +1,7 @@
 load('config.js');
-load('lib_common.js');
-load('lib_generic.js');
-function execute(url) { return X.servers(url); }
+load('dm.js');
+function execute(url) {
+  var id = DM.id(url);
+  if (!id) return Response.error('Liên kết Dailymotion không hợp lệ');
+  return Response.success([{ title: 'Dailymotion', data: id }]);
+}

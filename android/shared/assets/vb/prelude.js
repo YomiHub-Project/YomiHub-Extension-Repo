@@ -187,15 +187,42 @@ var VBookEngine = (function () {
         this.meta = meta;
         this.host = host;
         this.env = opts.env || createEnv(host, meta);
+        {
+            var env_1 = this.env, f_1 = env_1.fetch, self_1 = this;
+            if (typeof f_1 === 'function' && !f_1.__kiriLive) {
+                var w = function (u, o) { return f_1.call(env_1, self_1.live(u), o); };
+                w.__kiriLive = true;
+                env_1.fetch = w;
+            }
+        }
         this.scripts = scripts;
         this.cache = {};
         this.tokens = {};
     }
     Object.defineProperty(VBookEngine.prototype, "base", {
-        get: function () { return str(this.host.config('DOMAIN') || this.meta.source).replace(/\/+$/, ''); },
+        get: function () {
+            var ok = function (v) { v = str(v).trim(); return /^https?:\/\/[^/?#\s]+/i.test(v) ? v : ''; };
+            return (ok(this.host.config('DOMAIN_CUSTOM')) || ok(this.host.config('DOMAIN')) || ok((this.meta.configDefaults || {}).DOMAIN) || str(this.meta.source)).replace(/\/+$/, '');
+        },
         enumerable: false,
         configurable: true
     });
+    VBookEngine.prototype.live = function (u) {
+        u = str(u);
+        var o = this.origins;
+        if (!o.def)
+            return u;
+        var b = (/^https?:\/\/[^/?#]+/i.exec(this.base) || [])[0];
+        if (!b || o.key(b) === o.key(o.def))
+            return u;
+        var m = /^https?:\/\/[^/?#]+/i.exec(u);
+        if (!m || m[0] === b)
+            return u;
+        var h = o.key(m[0]);
+        if (o.hosts[h] !== 1 || h === o.key(b))
+            return u;
+        return b + u.slice(m[0].length);
+    };
     Object.defineProperty(VBookEngine.prototype, "origins", {
         get: function () {
             if (this._orig)
@@ -242,7 +269,8 @@ var VBookEngine = (function () {
         var factory = this.scripts[name];
         if (!factory)
             throw new Error('script ' + name + ' missing');
-        var cfg = function (k) { var v = _this.host.config(k); return v == null ? (_this.meta.configDefaults || {})[k] : v; };
+        var cfg = function (k) { if (k === 'DOMAIN')
+            return _this.base; var v = _this.host.config(k); return v == null ? (_this.meta.configDefaults || {})[k] : v; };
         var exec = factory(this.env, cfg);
         if (typeof exec !== 'function')
             throw new Error(name + ': execute() not defined');

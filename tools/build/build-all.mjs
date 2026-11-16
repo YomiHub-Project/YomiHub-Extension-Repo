@@ -117,12 +117,20 @@ function generateScriptsModule(id, pj, dir, reg = {}) {
   return `${needCrypto ? "import CryptoJS from 'crypto-js';\nglobalThis.CryptoJS = CryptoJS;\n" : ''}${ASYNC_HELPERS}\nexport const META = ${JSON.stringify(META)};\nexport const SCRIPTS = {\n${parts.join(',\n')}\n};\n`;
 }
 
+// 0.0.6 size optimisation: runtime/dom.js always serialises with { decodeEntities: false }, so the 23 KB
+// HTML-entity *encoder* trie of `entities` is never used — swap it for the 5 basic entities (≈ -23 KB per package,
+// ≈ -10 MB over the Mangayomi/YomiHub, LNReader/IReader, Aidoku packages and APK assets).
+const slimEntities = { name: 'slim-entities', setup(b) {
+  b.onResolve({ filter: /generated[\\/]encode-html(\.js)?$/ }, () => ({ path: 'encode-html-slim', namespace: 'slim' }));
+  b.onLoad({ filter: /.*/, namespace: 'slim' }, () => ({ contents: "export default new Map([[38,'&amp;'],[60,'&lt;'],[62,'&gt;'],[34,'&quot;'],[39,'&apos;']]);", loader: 'js' }));
+} };
+
 async function bundle(entry, genFile, format, extra = {}) {
   const r = await esbuild.build({
     entryPoints: [path.join(ROOT, 'hosts', entry)], bundle: true, write: false, format, platform: 'neutral', target: extra.target || 'es2020',
     minify: true, legalComments: 'none', charset: 'utf8', mainFields: ['module', 'main'],
     alias: { '__generated__/scripts.js': genFile }, nodePaths: [path.join(ROOT, 'node_modules'), path.join(ROOT, '_work/deps/node_modules'), path.join(ROOT, '../_work/deps/node_modules')], external: extra.external || [],
-    globalName: extra.globalName, logLevel: 'silent',
+    globalName: extra.globalName, logLevel: 'silent', plugins: [slimEntities],
   });
   return r.outputFiles[0].text;
 }
@@ -176,6 +184,18 @@ for (const id of ids) {
   try {
     const pj = JSON.parse(fs.readFileSync(path.join(dir, 'plugin.json'), 'utf8'));
     const md = pj.metadata; const reg = regById[id] || {};
+    // 0.0.6: flexible domain switching — every source gets a DOMAIN setting whose list holds the current domain, the
+    // known mirrors and the domains written in the owner's Excel sheet (data/sources.json urls). The engine redirects
+    // requests for any of them to the domain chosen (or typed in DOMAIN_CUSTOM) in the app, even for hard-coded URLs.
+    {
+      const org = u => { u = String(u || '').trim(); if (!u) return ''; if (!/^https?:\/\//i.test(u)) u = 'https://' + u; const m = /^https?:\/\/[^/?#\s]+/i.exec(u); return m ? m[0].toLowerCase() : ''; };
+      const bare = u => u.replace(/^(https?:\/\/)(?:www\.|m\.)/i, '$1').replace(/^http:/i, 'https:');
+      pj.config = pj.config || {};
+      const D = pj.config.DOMAIN || (pj.config.DOMAIN = { title: 'Tên miền', subtitle: 'Đổi khi trang đổi tên miền', default: md.source, mode: 'input', format: 'text' });
+      const vals = [];
+      [D.default, md.source].concat(D.values || [], reg.urls || []).map(org).forEach(v => { if (v && !vals.some(x => bare(x) === bare(v))) vals.push(v); });
+      D.values = vals;
+    }
     // 0.0.4: dead sources stay in the repo (owner's choice) but are clearly marked in every app
     if (STATUS.dead && STATUS.dead[id] && !/Ngừng hoạt động/.test(md.name)) { md.name = md.name + ' (Ngừng hoạt động)'; md.description = '⛔ Ngừng hoạt động: ' + STATUS.dead[id] + '. ' + (md.description || ''); }
     // 0.0.4: every source ships its own logo (tools/gen/make_icons.py) -> repo/icons/<id>.png; Google favicon only as fallback
@@ -214,7 +234,7 @@ for (const id of ids) {
     }
     mg = `const mangayomiSources = [${JSON.stringify(mgMeta)}];\n` + (needGbk ? `var __GBK_TABLE = ${JSON.stringify(GBK_TABLE)};\n` : '') + mg + '\n' + fs.readFileSync(path.join(ROOT, 'hosts/mangayomi.tail.js'), 'utf8');
     fs.writeFileSync(path.join(OUT, 'mangayomi', id + '.js'), mg);
-    mgIndex.push({ ...mgMeta, hasCloudflare: CF_IDS.has(id), sourceCodeUrl: `${BASE}/repo/mangayomi/${id}.js`, isManga: md.type === 'comic', isFullData: false, appMinVerReq: '0.5.0', sourceCodeLanguage: 1, additionalParams: reg.short ? 'shorts' : '', notes: 'Kiritokmn Extension Repo ' + VERSION });
+    mgIndex.push({ ...mgMeta, hasCloudflare: CF_IDS.has(id), sourceCodeUrl: `${BASE}/repo/mangayomi/${id}.js`, isManga: md.type === 'comic', isFullData: false, appMinVerReq: '0.5.0', sourceCodeLanguage: 1, additionalParams: reg.short ? JSON.stringify({ shorts: true, short_video: true }) : '', notes: 'Kiritokmn Extension Repo ' + VERSION });  // 0.0.6: YomiHub 0.5.7 ShortsDetect reads {"shorts": true} / #shorts
     // ---- LNReader / IReader (novels only)
     let lnSize = 0;
     if (md.type === 'novel') {

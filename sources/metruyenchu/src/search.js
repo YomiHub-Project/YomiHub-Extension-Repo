@@ -2,7 +2,8 @@ load("config.js");
 
 function execute(key, page) {
     var p = page ? parseInt(page) : 1;
-    var fetchUrl = BASE_URL + "/tim-kiem?keyword=" + encodeURIComponent(key) + "&page=" + p;
+    var fetchUrl = BASE_URL + "/search?q=" + encodeURIComponent(key) + (p > 1 ? "&page=" + p : "");
+    // 16/11/2026: /tim-kiem?keyword= nay chuyển hướng về trang chủ; form tìm kiếm của trang dùng /search?q=
     // Tìm kiếm trả SSR — dùng fetchRetry nhanh hơn fetchSmart (bỏ double request)
     var res = fetchRetry(fetchUrl);
     if (!res || !res.ok) return Response.error("Không tải được kết quả tìm kiếm");

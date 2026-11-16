@@ -1,5 +1,6 @@
 load('config.js');
 load('lib_shortvideo.js');
+load('svx.js');
 function execute(data) {
   var h = /douyin\.com\/hot\/([^/?#]+)/.exec(data);
   if (h) return SV.webview('https://www.douyin.com/search/' + h[1]);

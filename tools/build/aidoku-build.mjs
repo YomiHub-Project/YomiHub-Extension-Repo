@@ -22,7 +22,7 @@ const WS = path.join(ROOT, '.build/aidoku-ws');
 const OUT = path.join(ROOT, 'repo/aidoku');
 const VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
 // Bump when the bridge or the Aidoku adapter changes: package version = BRIDGE_REV * 100 + source version.
-const BRIDGE_REV = 3; // 0.0.5: lib_generic (relative chapter links, anchors, pages_suffix), engine http2 flag
+const BRIDGE_REV = 4; // 0.0.6: DOMAIN_CUSTOM + engine domain redirect (live()); 0.0.5: lib_generic (relative chapter links, anchors, pages_suffix), engine http2 flag
 const LANG = { vi: 'vi', 'zh-CN': 'zh', zh: 'zh', en: 'en', ja: 'ja', global: 'multi', all: 'multi' };
 const crate = id => 'kiri-' + id.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 export const aidokuId = s => `${LANG[s.lang] || 'multi'}.kiritokmn.${s.id.toLowerCase().replace(/[^a-z0-9]+/g, '')}`;
@@ -45,7 +45,9 @@ function settingsJson(s) {
   const item = doms.length > 1
     ? { type: 'select', key: 'DOMAIN', title: 'Tên miền / Domain', values: doms, default: doms[0], refreshes: ['content', 'listings'] }
     : { type: 'text', key: 'DOMAIN', title: 'Tên miền / Domain', placeholder: s.source, default: s.source, keyboardType: 3, autocorrectionDisabled: true, autocapitalizationType: 0, refreshes: ['content', 'listings'] };
-  return [{ type: 'group', title: 'Kiritokmn Extension Repo ' + VERSION, footer: 'Đổi tên miền khi trang chuyển địa chỉ (VD: https://example.com).', items: [item] }];
+  // 0.0.6: free-text domain that wins over the list (any new address, no extension update needed)
+  const custom = { type: 'text', key: 'DOMAIN_CUSTOM', title: 'Tên miền tuỳ chỉnh', placeholder: 'https://…', default: '', keyboardType: 3, autocorrectionDisabled: true, autocapitalizationType: 0, refreshes: ['content', 'listings'] };
+  return [{ type: 'group', title: 'Kiritokmn Extension Repo ' + VERSION, footer: 'Chọn tên miền, hoặc nhập tên miền mới vào ô tuỳ chỉnh khi trang chuyển địa chỉ (VD: https://example.com). Để trống ô tuỳ chỉnh để dùng danh sách.', items: [item, custom] }];
 }
 function libRs(s) {
   const webtoon = s.type === 'comic' && /^(vi|zh)/.test(s.lang);

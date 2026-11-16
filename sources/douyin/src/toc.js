@@ -1,5 +1,6 @@
 load('config.js');
 load('lib_shortvideo.js');
+load('svx.js');
 function execute(url) {
   var h = /\/hashtag\/(\d+)/.exec(url);
   if (h && SV.server()) {

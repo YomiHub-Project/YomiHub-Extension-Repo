@@ -1,4 +1,6 @@
 load('config.js');
 load('lib_common.js');
-load('lib_generic.js');
-function execute(key, page) { return X.search(key, page); }
+function execute(key, page) {
+  if (C.isUrl(key)) return ttList(String(key).replace(BASE_URL, ''), page);
+  return ttList('/story/user/search/?q=' + C.enc(key) + '&page_size=10', page);
+}

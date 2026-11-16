@@ -27,8 +27,11 @@ export function buildYomihubSources(root, base) {
     try { const pj = JSON.parse(fs.readFileSync(path.join(root, 'sources', id, 'plugin.json'), 'utf8')); for (const u of [pj.metadata.source, ...(((pj.config || {}).DOMAIN || {}).values || [])]) { const h = host(u); if (h && !byHost[h]) byHost[h] = id; } } catch (e) { }
   }
   const entries = [];
+  // 0.0.6: Short Video flag for YomiHub 0.5.7 (ShortsDetect reads additionalParams {"shorts": true})
+  let shortIds = new Set(); try { shortIds = new Set(JSON.parse(fs.readFileSync(path.join(root, 'data', 'sources.json'), 'utf8')).filter(r => r.short).map(r => r.id)); } catch (e) { }
   for (const s of meta.sources) {
     const rid = byHost[host(s.baseUrl)];
+    const isShort = !!(s.short || s.shorts || (rid && shortIds.has(rid)));
     if (rid && fs.existsSync(path.join(root, 'sources', rid, 'icon.png'))) s.iconUrl = `${base}/repo/icons/${rid}.png`;
     if (rid && (status.dead || {})[rid] && !/Ngừng hoạt động/.test(s.name)) { s.name += ' (Ngừng hoạt động)'; s.notes = '⛔ Ngừng hoạt động: ' + status.dead[rid]; }
     const body = fs.readFileSync(path.join(SRC, s.asset), 'utf8');
@@ -40,7 +43,7 @@ export function buildYomihubSources(root, base) {
     const code = `const mangayomiSources = [${JSON.stringify(m)}];\n${common}\n${body}\n`;
     fs.writeFileSync(path.join(OUT, s.asset), code);
     entries.push({ ...m, hasCloudflare: false, sourceCodeUrl: `${base}/repo/yomihub/${s.asset}`, isManga: s.itemType === 0,
-      isFullData: false, appMinVerReq: '0.5.0', additionalParams: '', sourceCodeLanguage: 1,
+      isFullData: false, appMinVerReq: '0.5.0', additionalParams: isShort ? JSON.stringify({ shorts: true, short_video: true }) : '', sourceCodeLanguage: 1,
       notes: s.notes || '' });  // the note is shown as a banner on the source screen: keep it empty when there is nothing to say
   }
   const idxPath = path.join(root, 'repo', 'index.json');

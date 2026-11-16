@@ -2,11 +2,11 @@
   "metadata": {
     "name": "Tu Tiên (.pro)",
     "author": "Kiritokmn",
-    "version": 3,
+    "version": 4,
     "source": "https://tutien.pro",
     "description": "Tu Tiên (.pro) — Kiritokmn Extension Repo",
     "locale": "vi",
-    "regexp": "tutien\\.pro",
+    "regexp": "tutien\\.pro\\/truyen\\/[^\\/]+\\/?$",
     "type": "novel",
     "nsfw": false
   },

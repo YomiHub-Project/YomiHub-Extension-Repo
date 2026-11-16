@@ -5,7 +5,7 @@ class DefaultExtension extends MProvider {
   get supportsLatest() { return true; }
   getHeaders(url) { return this.__imgHeaders(url); }
   __origin(u) { const m = /^https?:\/\/[^/?#]+/i.exec(String(u || '')); return m ? m[0] : ''; }
-  __base() { let d = ''; try { d = this.prefs.get('DOMAIN'); } catch (e) { } d = typeof d === 'string' ? d.trim() : ''; return (/^https?:\/\//i.test(d) ? d : __VB.META.source).replace(/\/+$/, ''); }
+  __base() { const g = k => { let d = ''; try { d = this.prefs.get(k); } catch (e) { } d = typeof d === 'string' ? d.trim() : ''; return /^https?:\/\//i.test(d) ? d : ''; }; return (g('DOMAIN_CUSTOM') || g('DOMAIN') || __VB.META.source).replace(/\/+$/, ''); }
   // Image CDNs (truyenvua, hinhtruyen…) answer 403 unless Referer is the site itself: use the page's own origin.
   __imgHeaders(pageUrl) { return { Referer: (this.__origin(pageUrl) || this.__base()) + '/', 'User-Agent': __VB.UA, Accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8' }; }
   __eng() {
@@ -72,6 +72,8 @@ class DefaultExtension extends MProvider {
     } else {
       prefs.push({ key: 'DOMAIN', editTextPreference: { title: 'Tên miền / Domain', summary: m.source, value: m.source, dialogTitle: 'Domain', dialogMessage: 'Đổi khi trang đổi tên miền (VD: https://example.com)' } });
     }
+    // 0.0.6: any new domain the site moves to, without waiting for an extension update (empty = use the list above)
+    prefs.push({ key: 'DOMAIN_CUSTOM', editTextPreference: { title: 'Tên miền tuỳ chỉnh / Custom domain', summary: 'Để trống = dùng tên miền đã chọn ở trên', value: '', dialogTitle: 'Custom domain', dialogMessage: 'Nhập tên miền mới khi trang đổi tên miền (VD: https://example.com). Để trống để dùng danh sách.' } });
     // 0.0.4: every other plugin.json config entry becomes an editable setting (e.g. TikTok/Douyin API server, region)
     Object.keys(m.config || {}).forEach(k => {
       if (k === 'DOMAIN') return; const o = m.config[k] || {};

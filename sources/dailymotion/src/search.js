@@ -1,4 +1,8 @@
 load('config.js');
-load('lib_common.js');
-load('lib_generic.js');
-function execute(key, page) { return X.search(key, page); }
+load('dm.js');
+function execute(key, page) {
+  key = String(key || '').trim();
+  var id = DM.id(key);
+  if (id) return Response.success([{ name: 'Dailymotion ' + id, link: BASE_URL + '/video/' + id, cover: '', description: '', host: BASE_URL }], '');
+  return DM.list('search=' + encodeURIComponent(key) + '&sort=relevance', page);
+}

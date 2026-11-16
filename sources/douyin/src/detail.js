@@ -1,5 +1,6 @@
 load('config.js');
 load('lib_shortvideo.js');
+load('svx.js');
 function execute(url) {
   if (SV.videoId(url) || /v\.douyin\.com\//.test(url)) {
     if (!SV.server()) return Response.success({ name: 'Video Douyin ' + SV.videoId(url), cover: '', author: '', description: 'Cần đặt máy chủ Douyin_TikTok_Download_API trong cài đặt nguồn để xem trong ứng dụng; không có máy chủ thì video mở bằng WebView.', detail: '', ongoing: false, genres: [], host: BASE_URL });

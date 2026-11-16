@@ -1,5 +1,6 @@
 load('config.js');
 load('lib_shortvideo.js');
+load('svx.js');
 // Douyin refuses keyword search to guests (status 2483), so search accepts links:
 // a video link -> that video; a profile link -> the author's videos; text -> the topic page.
 function execute(key, page) {

@@ -1,3 +1,39 @@
+# Kiritokmn Extension Repo — v0.0.6 (16/11/2026)
+
+## Tính năng mới
+- **Đổi tên miền linh hoạt trên cả 9 app.** Khi trang đổi địa chỉ, bạn tự đổi trong cài đặt nguồn, không phải chờ bản cập nhật.
+  - Mỗi nguồn (cả 196) có **danh sách tên miền**, gồm tên miền hiện tại, các tên miền gương và tên miền ghi trong Excel của dự án.
+  - Thêm ô **"Tên miền tuỳ chỉnh"** để gõ bất kỳ tên miền mới nào. Ô này được ưu tiên trước danh sách; để trống thì dùng danh sách.
+  - Cách hiện trên từng app:
+    - Aniyomi/Nekoyomi: danh sách chọn kèm ô nhập.
+    - Mangayomi/YomiHub: danh sách kèm ô nhập.
+    - **LNReader/IReader: lần đầu có mục cài đặt plugin.**
+    - Aidoku: ô chọn kèm ô nhập.
+    - vBook/LeechText: dùng cấu hình của app.
+  - Nguồn có địa chỉ viết cứng trong mã cũng tự đi theo tên miền đã chọn: engine chuyển hướng request tới tên miền cũ hoặc gương sang tên miền mới.
+  - Link truyện/phim được lưu theo tên miền gốc, nên **thư viện, lịch sử và vị trí xem tiếp (Resume) không mất khi đổi tên miền**.
+- **Short Video tương thích YomiHub 0.5.7:** kho khai báo `additionalParams = {"shorts": true}` cho mọi nguồn có cờ Short. Trước đây kho ghi chữ `shorts` trần, và bộ nhận diện ShortsDetect của YomiHub không đọc được dạng này.
+- **Giảm dung lượng:** bỏ bảng mã hoá thực thể HTML (23 KB mỗi gói), vốn không bao giờ được dùng.
+  - Mangayomi/YomiHub: 42,6 → 38,0 MB (−10,8%).
+  - LNReader/IReader: 30,0 → 27,3 MB (−9%).
+  - Aidoku: 23,1 → 19,8 MB (−14%).
+
+## Sửa nguồn
+- **TikTok:** tikwm.com giới hạn 1 yêu cầu/giây và hay báo "Oops, an error occurred".
+  - Nay tiện ích giãn cách các lần gọi, thử lại tối đa 4 lần và luân phiên `www.tikwm.com` / `tikwm.com`.
+  - Lưu thông tin clip vào cache để giảm số lần gọi; lỗi được báo bằng tiếng Việt rõ ràng.
+- **Twitch, Dailymotion:** viết lại theo API JSON công khai, thay cho trang SPA.
+- **Đạt trọn chuỗi trên mạng thật:** HiHiPhim, HentaiVietsub, Mê Truyện Chữ, Wiki Dịch, XTruyện, Tu Tiên Pro, 52shuku, html5.qq.
+- **Sửa một phần** (danh sách và tìm kiếm chạy, còn bước chương/nội dung): PhimTV, Truyện CV, TruyenH, Hắc Ám Chi Các, abcbiquge.
+- **Douyin:** muốn xem video vẫn cần máy chủ Douyin_TikTok_Download_API riêng (cài `DTK_SERVER`), vì tiện ích không đưa thuật toán ký chống bot vào.
+
+## Phiên bản
+- `package.json` 0.0.6.
+- Mọi nguồn tăng `version` 1 bậc, vì engine dùng chung thay đổi.
+- Aidoku `BRIDGE_REV 4`.
+
+---
+
 # Kiritokmn Extension Repo — v0.0.5 (13/11/2026)
 
 ## Tính năng mới

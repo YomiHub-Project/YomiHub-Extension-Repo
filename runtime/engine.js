@@ -20,11 +20,28 @@ export class VBookEngine {
     this.meta = meta;
     this.host = host;
     this.env = opts.env || createEnv(host, meta);
+    // 0.0.6 — flexible domain switching for EVERY source: a request sent to the default domain or to any known
+    // mirror (plugin.json DOMAIN.values + the domains of the owner's Excel sheet) is redirected to the domain the
+    // user picked / typed in the settings, so sources with hard-coded URLs follow the switch too.
+    { const env = this.env, f = env.fetch, self = this; if (typeof f === 'function' && !f.__kiriLive) { const w = function (u, o) { return f.call(env, self.live(u), o); }; w.__kiriLive = true; env.fetch = w; } }
     this.scripts = scripts; // name -> async factory(env, cfg) returning execute
     this.cache = {};
     this.tokens = {};
   }
-  get base() { return str(this.host.config('DOMAIN') || this.meta.source).replace(/\/+$/, ''); }
+  // 0.0.6: DOMAIN_CUSTOM (free text, any new domain) > DOMAIN (picked from the list) > default domain
+  get base() {
+    const ok = v => { v = str(v).trim(); return /^https?:\/\/[^/?#\s]+/i.test(v) ? v : ''; };
+    return (ok(this.host.config('DOMAIN_CUSTOM')) || ok(this.host.config('DOMAIN')) || ok((this.meta.configDefaults || {}).DOMAIN) || str(this.meta.source)).replace(/\/+$/, '');
+  }
+  live(u) {
+    u = str(u); const o = this.origins; if (!o.def) return u;
+    const b = (/^https?:\/\/[^/?#]+/i.exec(this.base) || [])[0];
+    if (!b || o.key(b) === o.key(o.def)) return u;
+    const m = /^https?:\/\/[^/?#]+/i.exec(u); if (!m || m[0] === b) return u;
+    const h = o.key(m[0]); if (o.hosts[h] !== 1 || h === o.key(b)) return u;
+    // o.key() keeps sub-domains (api., img., static.…), which are not in the mirror list and stay untouched
+    return b + u.slice(m[0].length);
+  }
   // 0.0.3 — stable identities (Resume A Video / reading history): every title / chapter / episode URL handed to
   // an app is written with the source's DEFAULT domain, whatever domain is selected in the settings, and turned
   // back into the current domain before a script runs. The apps (Aniyomi/Nekoyomi, Mangayomi/YomiHub, LNReader,
@@ -54,7 +71,7 @@ export class VBookEngine {
     const factory = this.scripts[name];
     // vBook also accepts script file names ("search.js") in tabs
     if (!factory) throw new Error('script ' + name + ' missing');
-    const cfg = k => { const v = this.host.config(k); return v == null ? (this.meta.configDefaults || {})[k] : v; };
+    const cfg = k => { if (k === 'DOMAIN') return this.base; const v = this.host.config(k); return v == null ? (this.meta.configDefaults || {})[k] : v; };
     const exec = await factory(this.env, cfg);
     if (typeof exec !== 'function') throw new Error(name + ': execute() not defined');
     const res = await exec(...args.map(str));
