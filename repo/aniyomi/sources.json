@@ -657,7 +657,7 @@
   "sourceId": 1628167011,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriphimtv",
-  "version": "14.1004"
+  "version": "14.1005"
  },
  {
   "id": "pornhub",
@@ -879,13 +879,13 @@
   "id": "vtvgo",
   "name": "VTV Go",
   "lang": "vi",
-  "baseUrl": "https://cache.vtvgo.vn",
+  "baseUrl": "https://vtvgo.vn",
   "type": "video",
   "nsfw": false,
   "sourceId": 318684011,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirivtvgo",
-  "version": "14.1004"
+  "version": "14.1005"
  },
  {
   "id": "watchhentainet",

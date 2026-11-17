@@ -1,4 +1,8 @@
 load('config.js');
-load('lib_common.js');
-load('lib_generic.js');
-function execute(url) { return X.servers(url); }
+load('bili.js');
+
+function execute(url) {
+  var epId = BILI.epId(url);
+  if (!epId) return Response.error('Không tìm thấy tập phim');
+  return Response.success([{ title: 'Bilibili Server', data: epId }]);
+}

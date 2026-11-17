@@ -2,11 +2,11 @@
   "metadata": {
     "name": "VTV Go",
     "author": "Kiritokmn",
-    "version": 4,
-    "source": "https://cache.vtvgo.vn",
-    "description": "VTV Go — Kiritokmn Extension Repo",
+    "version": 5,
+    "source": "https://vtvgo.vn",
+    "description": "VTV Go — Kênh truyền hình trực tuyến VTV Digital",
     "locale": "vi",
-    "regexp": "cache\\.vtvgo\\.vn",
+    "regexp": "vtvgo\\.vn",
     "type": "video",
     "nsfw": false
   },
@@ -22,11 +22,10 @@
     "DOMAIN": {
       "title": "Tên miền",
       "subtitle": "Đổi khi trang đổi tên miền",
-      "default": "https://cache.vtvgo.vn",
+      "default": "https://vtvgo.vn",
       "values": [
-        "https://cache.vtvgo.vn",
         "https://vtvgo.vn",
-        "https://vtvgo.vn"
+        "https://cache.vtvgo.vn"
       ],
       "mode": "select",
       "format": "single"

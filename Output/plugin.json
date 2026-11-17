@@ -1,7 +1,7 @@
 {
  "metadata": {
   "author": "Kiritokmn",
-  "description": "Kiritokmn Extension Repo v0.0.6"
+  "description": "Kiritokmn Extension Repo v0.0.7"
  },
  "data": [
   {
@@ -1364,7 +1364,7 @@
    "name": "PhimTV",
    "author": "Kiritokmn",
    "path": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/vbook/phimtv.zip",
-   "version": 4,
+   "version": 5,
    "source": "https://phimtv2.com",
    "icon": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/phimtv.png",
    "description": "PhimTV — Kiritokmn Extension Repo",
@@ -2132,10 +2132,10 @@
    "name": "VTV Go",
    "author": "Kiritokmn",
    "path": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/vbook/vtvgo.zip",
-   "version": 4,
-   "source": "https://cache.vtvgo.vn",
+   "version": 5,
+   "source": "https://vtvgo.vn",
    "icon": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/vtvgo.png",
-   "description": "VTV Go — Kiritokmn Extension Repo",
+   "description": "VTV Go — Kênh truyền hình trực tuyến VTV Digital",
    "type": "video",
    "locale": "vi_VN",
    "nsfw": false

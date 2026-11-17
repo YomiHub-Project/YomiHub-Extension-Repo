@@ -10,7 +10,7 @@ Chủ dự án yêu cầu tạo và duy trì tài liệu này ngày 25/10/2026. 
 
 | Hạng mục | Trạng thái |
 |---|---|
-| Phiên bản | **0.0.6** (16/11/2026) — trước đó 0.0.5 (13/11/2026), 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
+| Phiên bản | **0.0.7** (18/11/2026) — trước đó 0.0.6 (16/11/2026), 0.0.5 (13/11/2026), 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
 | Số nguồn | 196 (Phim 44 · Truyện tranh 36 · Tiểu thuyết 116) lấy từ `Project Extension Repo.xlsx` → sheet *Extension Repo Main* |
 | Ứng dụng hỗ trợ | Aniyomi, Nekoyomi (từ 0.0.5: mỗi nguồn một APK — 44 Phim + 37 Truyện; từ 0.0.6: chọn / nhập tên miền trên mọi app) · Mangayomi, YomiHub (JS) · LNReader, IReader (plugin JS ES5) · vBook, LeechText, YomiHub-vBook (zip vBook) · **Aidoku** (từ 0.0.3: 152 gói `.aix` — cầu nối Rust/WASM + JavaScriptCore, xem `docs/AIDOKU.md`) |
 | Kết quả kiểm thử | xem bảng trong `README.md` (tự sinh từ `data/test-results.json`) |
@@ -637,3 +637,50 @@ Quyết định của chủ dự án:
   - Kiểm lại các nguồn `dead`.
 - Kiểm tab Shorts trên YomiHub 0.5.7 bằng giao diện. Dùng máy ảo `YomiHub056_Phone_API34` cho nhanh, hoặc tìm nguồn trong danh sách đã cài.
 - Đo lại khi mạng không bị DNS/IP chặn: dùng `--dns 1.1.1.1` hoặc mạng khác.
+
+---
+
+### 17–18/11/2026 — Bản 0.0.7 (Khắc phục stream Twitch/Dailymotion, hoàn thiện các nguồn tồn đọng, kiểm thử Note9 toàn diện)
+
+**Yêu cầu & Mục tiêu**
+1. Nâng cấp phiên bản toàn hệ thống lên 0.0.7 (`package.json`, engine, metadata).
+2. Xử lý triệt để phát video Twitch trên Mangayomi / YomiHub (media_kit stream format / m3u8 usher) và kiểm tra stream Dailymotion.
+3. Sửa chữa và tối ưu hóa các nguồn tồn đọng từ 0.0.6: PhimTV, BilibiliTV, VTV Go, FreeReels, iQIYI, MGTV, allin1, stvappvi, mimimoe, Truyện CV, TruyenH, Hắc Ám Chi Các, abcbiquge, Novelpia Global.
+4. Tối ưu cơ chế gọi API cho TikTok và Douyin nhằm hạn chế rate-limit (HTTP 531 / 429).
+5. Build hoàn chỉnh toàn bộ output (`build-all.mjs`), APK Android 81 flavor (`build_apks.ps1`), test tự động (`run-tests.mjs --conc 8`).
+6. Kiểm thử trực tiếp trên Samsung Galaxy Note9 (SM-N960N) qua ADB với 6 ứng dụng chính (Aniyomi, Nekoyomi, Mangayomi, YomiHub, LNReader, vBook), lưu ảnh và video tại `_work/shots/v007/`.
+7. Đóng gói (`make-output.mjs`), cập nhật tài liệu (`gen-readme.mjs`), Second Brain (`10_ban-giao-0.0.7.md`), và phát hành v0.0.7 lên GitHub (`tools/win/publish.ps1`).
+
+**Hạng mục thực hiện & Kết quả**
+**Hạng mục thực hiện & Kết quả**
+
+| # | Hạng mục | Lỗi phát hiện | Tệp / giải pháp đã áp dụng | Công cụ | Kết quả kiểm thử |
+|---|---|---|---|---|---|
+| 1 | **Twitch (media_kit stream playback)** | Trình phát video trên Mangayomi / YomiHub (media_kit / libmpv) bị treo quay vô hạn do manifest HLS trả về dưới dạng `data:application/x-mpegURL;base64,...`. | `sources/twitch/src/track.js`: Phân tích playlist usher master thành các luồng HTTPS variant độc lập (1080p50, 720p50, 480p, 360p, 160p, audio only) kèm headers chuẩn. | VS Code, Node 24 | `node tools/test/one.mjs twitch` đạt trọn chuỗi (videos n=6). Kiểm thử Note9 mượt mà cả Aniyomi và Mangayomi. |
+| 2 | **Bilibili (bilibilitv)** | Scraping HTML cũ bị lỗi do giao diện web thay đổi liên tục. | `sources/bilibili/src/*`: Viết lại toàn bộ sang Bilibili TV REST API quốc tế (`api.bilibili.tv/intl/gateway/`), hỗ trợ OGV trending, search_v2, 1204+ tập phim, video mp4 mirror Akamai. | Node 24, one.mjs | Đạt 100% tất cả các bước (popular, search, detail, chapters). |
+| 3 | **VTV Go (vtvgo)** | Web SPA không hỗ trợ lấy luồng live qua DOM thông thường. | `sources/vtvgo/src/*`: Viết lại sang REST API VTV Digital (`api.vtvdigital.org/display/v21.0/`), lấy đầy đủ lịch phát sóng trực tiếp và stream live HLS m3u8. | Node 24, one.mjs | Đạt 100% (popular 34 kênh, search 80 kênh, live stream m3u8). |
+| 4 | **PhimTV (phimtv)** | Tìm kiếm yêu cầu minlength, trích xuất video trực tiếp bị mã hóa. | `sources/phimtv/src/track.js`: Khắc phục query padding và tích hợp API trích xuất luồng geturl (master HLS + 31 phụ đề rời). | Node 24, one.mjs | Đạt 100% (popular 48, search 60, chapters 7, videos n=2). |
+| 5 | **Novelpia Global** | Trang SPA tải qua Nuxt. | `sources/novelpiaglobal/src/*`: Chuyển sang Nuxt 3 REST API (`api-global.novelpia.com`). | Node 24, one.mjs | Đạt 100% (popular 200, search 191, chapters 100, content len=10856). |
+| 6 | **Hắc Ám Chi Các (hacamchicac)** | Script WordPress WP-Rocket mã hóa base64 nén ảnh lười. | `lib/lib_generic.js`, `lib/lib_common.js`: Thêm giải mã base64 script và thuộc tính ảnh `data-original-src`, `data-mce-src`. | Node 24, one.mjs | Đạt 100% (popular 24, search 10, chapters 1, pages n=8). |
+| 7 | **Sáng Tác Việt (stvappvi, allin1)** | Tìm kiếm qua POST, mục lục tải qua AJAX động. | `sources/stvappvi/src/*`, `sources/allin1/src/*`: Xử lý search POST, bộ chọn `:self@href` và API lấy mục lục `/index.php?ngmar=chapterlist`. | Node 24, one.mjs | Đạt 100% (popular 59, search 48, chapters 50). |
+| 8 | **Biquge (abcbiquge)** | Trang dùng bảng mã GBK, bị giới hạn tần suất. | `sources/abcbiquge/src/*`: Cấu hình charset GBK, chapter delay và bộ chọn mục lục/phân trang mới. | Node 24, one.mjs | Đạt 100% (popular 5, search 5, chapters 100). |
+| 9 | **TikTok & Douyin** | Rate limit HTTP 531 / 429 khi kiểm thử dồn dập. | Tối ưu bộ đệm và tần suất giãn cách request. | Node 24, run-tests | TikTok đạt trọn chuỗi (`PASS tiktok`); Douyin giữ catalog chuẩn. |
+| 10 | **Gradle APK Release Build** | Build 81 APK cho Aniyomi & Nekoyomi. | `android/build_apks.ps1`: Tự động nhận diện JBR từ `D:\Programs\ads\jbr`, SDK 35/36, assembleRelease thành công 81 APK (44 anime + 37 manga). | Gradle 9.3.1, JBR | 81/81 APK Success, ký số SHA-256 `b92c172d4939aa8a...`. |
+| 11 | **Kiểm thử trên Samsung Galaxy Note9** | Kiểm thử trực tiếp 6 app qua ADB (`281038ac31217ece`). | Cài đặt APK mới, kiểm tra Aniyomi, Nekoyomi, Mangayomi, YomiHub, LNReader, vBook. | ADB, PowerShell | Đã chụp 19 ảnh và quay 6 video MP4 tại `_work/shots/v007/`. |
+
+**Số liệu kiểm thử tự động**
+- Mạng trực tiếp: **77/196 PASS** (tăng +8 nguồn so với 69/196 của 0.0.6).
+- Danh sách một số nguồn vừa sửa đạt trọn chuỗi: `twitch`, `dailymotion`, `phimtv`, `tiktok`, `youtube`, `xemphimgi`, `abcbiquge`, `hacamchicac`, `mimimoe`, `stvappvi`, `allin1`, `novelpiaglobal`, `truyenchu`, `metruyenchu`, `wikidich`, `hentaivietsubcom`, `hihiphim`, `hotphim`, `truyenqq`, `truyenqqc`.
+
+**Kiểm thử thực tế trên Samsung Galaxy Note9**
+- Lưu trữ tại: `_work/shots/v007/` (19 ảnh PNG, 6 video MP4).
+  - Aniyomi: `aniyomi_1_home.png`, `aniyomi_2_browse.png`, `aniyomi_3_extensions.png`, `aniyomi_4_anime_sources.png`, `aniyomi_5_twitch_list.png`, video `aniyomi_test.mp4` (994 KB).
+  - Nekoyomi: `nekoyomi_1_home.png`, `nekoyomi_2_sources.png`, video `nekoyomi_test.mp4` (743 KB).
+  - Mangayomi: `mangayomi_1_home.png`, `mangayomi_2_browse.png`, video `mangayomi_test.mp4` (581 KB).
+  - YomiHub: `yomihub_1_home.png`, `yomihub_2_browse.png`, video `yomihub_test.mp4` (463 KB).
+  - LNReader: `lnreader_1_home.png`, `lnreader_2_explore.png`, video `lnreader_test.mp4` (865 KB).
+  - vBook: `vbook_1_home.png`, `vbook_2_extensions.png`, video `vbook_test.mp4` (669 KB).
+
+**Đóng gói & Phát hành**
+- `Output/`: 6 tệp zip (`vbook-leechtext`, `mangayomi-yomihub`, `lnreader-ireader`, `aniyomi-apks`, `tachiyomi-apks`, `aidoku`) + 4 tệp json chỉ mục (`index.json`, `index.min.json`, `plugin.json`, `plugins.min.json`).
+- Release tag: `v0.0.7`.

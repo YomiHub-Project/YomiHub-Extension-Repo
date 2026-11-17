@@ -1,4 +1,11 @@
 load('config.js');
-load('lib_common.js');
-load('lib_generic.js');
-function execute() { var t = []; for (var k in G.tabs) t.push({ title: k, input: k, script: "browse.js" }); return Response.success(t); }
+
+function execute() {
+  var t = [
+    ['Thịnh hành', 'trending'],
+    ['Phổ biến', 'popular']
+  ];
+  return Response.success(t.map(function (x) {
+    return { title: x[0], input: x[1], script: 'gen.js' };
+  }));
+}

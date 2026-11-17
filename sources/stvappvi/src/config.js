@@ -1,15 +1,22 @@
 var BASE_URL = "https://sangtacviet.com";
 try { if (DOMAIN) BASE_URL = String(DOMAIN).replace(/\/+$/, ""); } catch (e) {}
 var G = {
- "tabs": {
-  "Mới cập nhật": "/[?page={p}]"
- },
- "search": "/?id={q}[&page={p}]",
- "item": "div.book-list-item",
- "title": "h3 || .book-title || img@alt || a@title",
- "link": "a@href",
- "d_title": "h1 || meta[property=og:title]@content",
- "d_cover": "meta[property=og:image]@content || .thumb img@img || .poster img@img || img@img",
- "d_desc": "meta[name=description]@content",
- "ch_list": "a[href*=chuong], a[href*=chap], a[href*=tap-], a[href*=episode]"
+  "tabs": {
+    "Mới cập nhật": "/"
+  },
+  "search_post": {
+    "url": "/io/searchtp/searchBooks?find=&findinname={q}",
+    "body": "ignores="
+  },
+  "item": "a.cap[href*='/truyen/'], a.booksearch[href*='/truyen/']",
+  "title": "b.searchbooktitle || b",
+  "link": ":self@href",
+  "cover": ".bookthumb img@src || img@src",
+  "d_title": "meta[property=og:title]@content || h1",
+  "d_cover": "meta[property=og:image]@content || img@img",
+  "d_desc": "meta[property=og:description]@content",
+  "s_item": "a.booksearch[href*='/truyen/'], a.cap[href*='/truyen/']",
+  "s_title": "b.searchbooktitle || b",
+  "s_cover": "img@src",
+  "s_link": ":self@href"
 };

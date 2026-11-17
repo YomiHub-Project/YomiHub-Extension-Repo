@@ -1,4 +1,13 @@
 load('config.js');
-load('lib_common.js');
-load('lib_generic.js');
-function execute(url) { return X.toc(url); }
+load('vtv.js');
+
+function execute(url) {
+  var slug = VTV.slug(url);
+  return Response.success([
+    {
+      name: '🔴 Trực tiếp',
+      url: BASE_URL + '/channel/' + slug,
+      pay: false
+    }
+  ]);
+}

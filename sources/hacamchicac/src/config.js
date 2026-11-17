@@ -18,8 +18,8 @@ var G = {
  "ch_next": "#chapter-list ul.uk-pagination a[aria-label='Trang sau']",
  "ch_reverse": true,
  "initmanga": true,
- "s_item": "article.uk-grid-small, div.manga-item-grid",
- "s_title": "a.uk-link-heading || h3",
+ "s_item": "div.manga-item-ranking, div.manga-item-grid, article.uk-grid-small",
+ "s_title": "a.uk-link-heading || h3 || img@alt",
  "s_link": "a.uk-link-heading@href || a@href",
  "s_cover": "img@img"
 };

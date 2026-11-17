@@ -1,4 +1,9 @@
 load('config.js');
-load('lib_common.js');
-load('lib_generic.js');
-function execute(url) { return X.servers(url); }
+load('vtv.js');
+
+function execute(url) {
+  var slug = VTV.slug(url);
+  return Response.success([
+    { title: 'VTV Go Server', data: slug }
+  ]);
+}

@@ -4,6 +4,24 @@ import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath, 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const a = process.argv.slice(2); const id = a[0]; const opt = k => { const i = a.indexOf(k); return i >= 0 ? a[i + 1] : null; };
 const REC = opt('--record'), REP = opt('--replay'), N = +(opt('--n') || 5);
+const dnsOpt = opt('--dns');
+const DNS = dnsOpt === 'none' || dnsOpt === 'system' || dnsOpt === '' ? '' : (dnsOpt || '1.1.1.1,8.8.8.8');
+if (DNS) {
+  const dns = await import('node:dns'); const R = new dns.Resolver(); R.setServers(DNS.split(','));
+  const orig = dns.default.lookup;
+  dns.default.lookup = function (host, o, cb) {
+    if (typeof o === 'function') { cb = o; o = {}; } if (typeof o === 'number') o = { family: o }; o = o || {};
+    if (host === 'localhost' || /^[\d.]+$|:/.test(host)) return orig.call(this, host, o, cb);
+    R.resolve4(host, (e, a4) => {
+      const done = (list) => o.all ? cb(null, list) : cb(null, list[0].address, list[0].family);
+      if (!e && a4 && a4.length) return done(a4.map(addr => ({ address: addr, family: 4 })));
+      R.resolve6(host, (e6, a6) => {
+        if (!e6 && a6 && a6.length) return done(a6.map(addr => ({ address: addr, family: 6 })));
+        orig.call(this, host, o, cb);
+      });
+    });
+  };
+}
 if (REC || REP) {
   const { createHash } = await import('node:crypto'); const realFetch = globalThis.fetch; const D = path.resolve(REC || REP); fs.mkdirSync(D, { recursive: true });
   const key = (u, o) => createHash('sha1').update(((o && o.method) || 'GET') + ' ' + u + ' ' + ((o && typeof o.body === 'string') ? o.body : '')).digest('hex').slice(0, 24);

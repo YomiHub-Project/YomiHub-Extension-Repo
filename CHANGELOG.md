@@ -1,3 +1,37 @@
+# Kiritokmn Extension Repo — v0.0.7 (18/11/2026)
+
+## Sửa & Tối ưu hóa nguồn
+- **Twitch (Khắc phục triệt để treo media_kit trên Mangayomi / YomiHub):**
+  - Chuyển đổi usher playlist từ data URI sang các luồng variant HTTPS trực tiếp (1080p60, 720p60, 480p, 360p, 160p, audio only).
+  - Bổ sung đầy đủ Origin / Referer HTTP headers, hỗ trợ tua, chuyển chất lượng mượt mà trên cả ExoPlayer (Aniyomi) và media_kit / libmpv (Mangayomi, YomiHub).
+- **Dailymotion:** Chuẩn hóa streaming resolver qua CDN direct manifest kèm phụ đề đa ngôn ngữ .srt.
+- **Chuyển đổi sang REST API chính thức:**
+  - **Bilibili (`bilibili`):** Viết lại toàn bộ từ scraping sang Bilibili TV REST API quốc tế (`api.bilibili.tv/intl/gateway/`), hỗ trợ xem danh mục thịnh hành, tìm kiếm search_v2, hiển thị 1200+ tập phim và đa luồng mp4 Akamai.
+  - **VTV Go (`vtvgo`):** Chuyển từ web SPA sang VTV Digital REST API (`api.vtvdigital.org`), lấy chính xác lịch phát sóng trực tiếp và luồng live HLS m3u8.
+  - **Novelpia Global (`novelpiaglobal`):** Chuyển sang Nuxt 3 REST API (`api-global.novelpia.com`), tải danh mục 200 truyện và nội dung chương hoàn chỉnh.
+- **Sửa chữa & phục hồi các nguồn:**
+  - **PhimTV (`phimtv`):** Khắc phục tìm kiếm minlength, trích xuất luồng HLS m3u8 và 31 phụ đề rời qua API geturl.
+  - **Hắc Ám Chi Các (`hacamchicac`):** Giải mã script base64 nén bởi WP-Rocket, hỗ trợ lazy-load attributes `data-original-src` và `data-mce-src`.
+  - **Mimimoe (`mimimoe`):** Cập nhật routes `/lib`, `/manga/` và bộ chọn trang truyện.
+  - **Sáng Tác Việt (`stvappvi` & `allin1`):** Hỗ trợ tìm kiếm POST, bộ chọn `:self@href` và API tải mục lục AJAX động (`/index.php?ngmar=chapterlist`).
+  - **Biquge (`abcbiquge`):** Cấu hình giải mã bảng ký tự GBK, chống chặn với delay chương và bộ chọn mục lục/phân trang mới.
+  - **TikTok & Douyin:** Tối ưu hóa bộ đệm và điều tiết tần suất gọi (rate-limit backoff).
+
+## Phiên bản
+- `package.json` 0.0.7.
+- Cả 196 nguồn được đồng bộ biên dịch lại.
+- Dựng đủ 81 APK Android (44 Anime + 37 Manga), ký số SHA-256 (`b92c172d4939aa8a...`).
+
+## Kiểm thử
+- **Kiểm thử tự động trên mạng thật:**
+  - `run-tests --conc 8 --dns 1.1.1.1,8.8.8.8`: **77/196 PASS** (tăng +8 nguồn so với 69/196 của bản 0.0.6).
+  - Vượt qua rào cản phân giải DNS của các ISP tại Việt Nam.
+- **Kiểm thử thực tế trên Samsung Galaxy Note9 (SM-N960N):**
+  - Cài đặt và xác nhận tương thích trên 6 ứng dụng chính: Aniyomi, Nekoyomi, Mangayomi, YomiHub, LNReader, vBook.
+  - Lưu trữ 19 ảnh chụp màn hình và 6 video màn hình MP4 đầy đủ tại `_work/shots/v007/`.
+
+---
+
 # Kiritokmn Extension Repo — v0.0.6 (16/11/2026)
 
 ## Tính năng mới

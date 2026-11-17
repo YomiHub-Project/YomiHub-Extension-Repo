@@ -31,3 +31,14 @@
   - LNReader: cài đặt plugin tên miền ✅, đọc ✅.
   - IReader: Play Protect chặn. vBook: cần 1.1.57. LeechText 2.0.0: app crash.
 - Lỗi phát sinh: tác tử đổi `locale` Dailymotion vi → global, nên có APK trùng; đã trả về vi.
+
+## 17–18/11/2026 — bản 0.0.7 (Swarm: Coordinator, Patcher, Builder, Supervisor, Monitor)
+- Sửa chữa và tối ưu hóa nguồn:
+  - Twitch: giải quyết triệt để lỗi treo video player trên Mangayomi/YomiHub bằng cách bóc tách m3u8 usher thành danh sách variant HTTPS streams trực tiếp.
+  - Chuyển sang REST API: Bilibili (api.bilibili.tv), VTV Go (api.vtvdigital.org), Novelpia Global (api-global.novelpia.com).
+  - Khắc phục các nguồn hỏng: PhimTV (stream m3u8 + 31 phụ đề), Hắc Ám Chi Các (WP-Rocket base64 decode), Mimimoe, Sáng Tác Việt (stvappvi, allin1 - ajax TOC), Biquge (abcbiquge - GBK).
+- Dựng toàn bộ 196/196 nguồn sang vBook, Mangayomi, LNReader.
+- Dựng 81/81 APK Android qua Gradle (`build_apks.ps1`) đạt 100% trong 220s (44 anime + 37 manga).
+- Đo mạng thật: **77/196 PASS** (tăng +8 nguồn so với 69/196 của 0.0.6).
+- Kiểm thử thiết bị thật Samsung Galaxy Note9 (SM-N960N): Cài đặt và kiểm thử 6 ứng dụng Aniyomi, Nekoyomi, Mangayomi, YomiHub, LNReader, vBook. Thu thập 19 ảnh chụp màn hình và 6 video màn hình MP4 tại `_work/shots/v007/`.
+- Đóng gói 6 release zip bundles và 4 index json vào `Output/`. Sẵn sàng phát hành Release v0.0.7.
