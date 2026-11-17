@@ -21,6 +21,17 @@ L "push exit $LASTEXITCODE"
 # token from the Git credential manager (same login GitHub Desktop uses)
 $cred = "protocol=https`nhost=github.com`n`n" | & $git credential fill 2>$null
 $tok = ($cred | Where-Object { $_ -like 'password=*' }) -replace '^password=', ''
+if (-not $tok) {
+  $gcm = "C:\Program Files\Git\ucrt64\bin\git-credential-manager.exe"
+  if (Test-Path $gcm) {
+    $tmpIn = Join-Path $Root '_work\cred_in.txt'; $tmpOut = Join-Path $Root '_work\cred_out.txt'
+    Set-Content $tmpIn -Value "protocol=https`nhost=github.com`n`n" -NoNewline -Encoding ASCII
+    $p = Start-Process -FilePath $gcm -ArgumentList "get" -PassThru -NoNewWindow -RedirectStandardInput $tmpIn -RedirectStandardOutput $tmpOut
+    $p.WaitForExit(5000)
+    $lines = Get-Content $tmpOut -ErrorAction SilentlyContinue
+    $tok = ($lines | Where-Object { $_ -like 'password=*' }) -replace '^password=', ''
+  }
+}
 if (-not $tok) { L 'NO TOKEN: cannot create release automatically (sign in to GitHub Desktop / Git Credential Manager)'; exit 1 }
 $H = @{ Authorization = "token $tok"; 'User-Agent' = 'kiritokmn-publish'; Accept = 'application/vnd.github+json' }
 $api = "https://api.github.com/repos/$Owner/$Repo"
