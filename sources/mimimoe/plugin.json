@@ -2,13 +2,13 @@
   "metadata": {
     "name": "Mimimoe",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://mimihentai.moe",
     "description": "Mimimoe — Kiritokmn Extension Repo",
     "locale": "vi",
     "regexp": "mimihentai\\.moe",
     "type": "comic",
-    "nsfw": false
+    "nsfw": true
   },
   "script": {
     "home": "home.js",

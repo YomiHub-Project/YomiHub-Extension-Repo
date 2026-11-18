@@ -2,13 +2,13 @@
   "metadata": {
     "name": "NetTruyen18",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://nettruyen18.com",
     "description": "NetTruyen18 — Kiritokmn Extension Repo",
     "locale": "vi",
     "regexp": "nettruyen18\\.com",
     "type": "comic",
-    "nsfw": false
+    "nsfw": true
   },
   "script": {
     "home": "home.js",

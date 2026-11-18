@@ -416,12 +416,12 @@
    "name": "E Hentai",
    "author": "Kiritokmn",
    "path": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/vbook/ehentai.zip",
-   "version": 5,
+   "version": 6,
    "source": "https://e-hentai.org",
    "icon": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/ehentai.png",
    "description": "E Hentai — Kiritokmn Extension Repo",
    "type": "comic",
-   "locale": "vi_VN",
+   "locale": "global",
    "nsfw": true
   },
   {
@@ -608,13 +608,13 @@
    "name": "HentaiVN (Ngừng hoạt động)",
    "author": "vBook (Kiritokmn repack)",
    "path": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/vbook/hentaivn.zip",
-   "version": 31,
+   "version": 32,
    "source": "https://hentaihvn.tv",
    "icon": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/hentaivn.png",
    "description": "⛔ Ngừng hoạt động: tên miền chết. Đọc truyện trên trang HentaiVN — gốc: vBook (vbook-extensions)",
    "type": "comic",
    "locale": "vi_VN",
-   "nsfw": false
+   "nsfw": true
   },
   {
    "name": "HHPanda",
@@ -1040,13 +1040,13 @@
    "name": "Mimimoe",
    "author": "Kiritokmn",
    "path": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/vbook/mimimoe.zip",
-   "version": 5,
+   "version": 6,
    "source": "https://mimihentai.moe",
    "icon": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/mimimoe.png",
    "description": "Mimimoe — Kiritokmn Extension Repo",
    "type": "comic",
    "locale": "vi_VN",
-   "nsfw": false
+   "nsfw": true
   },
   {
    "name": "Mino Truyện",
@@ -1208,13 +1208,13 @@
    "name": "NetTruyen18",
    "author": "Kiritokmn",
    "path": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/vbook/nettruyen18.zip",
-   "version": 4,
+   "version": 5,
    "source": "https://nettruyen18.com",
    "icon": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/nettruyen18.png",
    "description": "NetTruyen18 — Kiritokmn Extension Repo",
    "type": "comic",
    "locale": "vi_VN",
-   "nsfw": false
+   "nsfw": true
   },
   {
    "name": "NetTruyenViet",
@@ -2096,13 +2096,13 @@
    "name": "VinaHentai",
    "author": "Kiritokmn",
    "path": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/vbook/vinahentai.zip",
-   "version": 6,
+   "version": 7,
    "source": "https://vinahentai.bio",
    "icon": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/vinahentai.png",
    "description": "VinaHentai — Kiritokmn Extension Repo",
    "type": "comic",
    "locale": "vi_VN",
-   "nsfw": false
+   "nsfw": true
   },
   {
    "name": "【VIP】Bạch Ngọc Sách (Ngừng hoạt động)",

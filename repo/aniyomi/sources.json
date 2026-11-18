@@ -182,14 +182,14 @@
  {
   "id": "ehentai",
   "name": "E Hentai",
-  "lang": "vi",
+  "lang": "all",
   "baseUrl": "https://e-hentai.org",
   "type": "comic",
   "nsfw": true,
   "sourceId": 1567453988,
   "short": false,
-  "pkg": "eu.kanade.tachiyomi.extension.vi.kiriehentai",
-  "version": "1.4.1005"
+  "pkg": "eu.kanade.tachiyomi.extension.all.kiriehentai",
+  "version": "1.4.1006"
  },
  {
   "id": "fapreel",
@@ -293,11 +293,11 @@
   "lang": "vi",
   "baseUrl": "https://hentaihvn.tv",
   "type": "comic",
-  "nsfw": false,
+  "nsfw": true,
   "sourceId": 1484689734,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirihentaivn",
-  "version": "1.4.1031"
+  "version": "1.4.1032"
  },
  {
   "id": "hhpanda",
@@ -473,11 +473,11 @@
   "lang": "vi",
   "baseUrl": "https://mimihentai.moe",
   "type": "comic",
-  "nsfw": false,
+  "nsfw": true,
   "sourceId": 512017899,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirimimimoe",
-  "version": "1.4.1005"
+  "version": "1.4.1006"
  },
  {
   "id": "misskon",
@@ -545,11 +545,11 @@
   "lang": "vi",
   "baseUrl": "https://nettruyen18.com",
   "type": "comic",
-  "nsfw": false,
+  "nsfw": true,
   "sourceId": 822700156,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirinettruyen18",
-  "version": "1.4.1004"
+  "version": "1.4.1005"
  },
  {
   "id": "nettruyenviet",
@@ -869,11 +869,11 @@
   "lang": "vi",
   "baseUrl": "https://vinahentai.bio",
   "type": "comic",
-  "nsfw": false,
+  "nsfw": true,
   "sourceId": 923234510,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirivinahentai",
-  "version": "1.4.1006"
+  "version": "1.4.1007"
  },
  {
   "id": "vtvgo",

@@ -2,13 +2,13 @@
   "metadata": {
     "name": "VinaHentai",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://vinahentai.bio",
     "description": "VinaHentai — Kiritokmn Extension Repo",
     "locale": "vi",
     "regexp": "vinahentai\\.bio",
     "type": "comic",
-    "nsfw": false
+    "nsfw": true
   },
   "script": {
     "home": "home.js",

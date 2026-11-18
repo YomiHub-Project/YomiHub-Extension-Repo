@@ -2,10 +2,10 @@
   "metadata": {
     "name": "E Hentai",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://e-hentai.org",
     "description": "E Hentai — Kiritokmn Extension Repo",
-    "locale": "vi",
+    "locale": "global",
     "regexp": "e-hentai\\.org",
     "type": "comic",
     "nsfw": true
