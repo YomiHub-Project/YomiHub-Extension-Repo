@@ -2,11 +2,11 @@
   "metadata": {
     "name": "Phimmoi",
     "author": "Kiritokmn",
-    "version": 4,
-    "source": "https://messiahelartista.com",
+    "version": 5,
+    "source": "https://phimmoii.run",
     "description": "Phimmoi — Kiritokmn Extension Repo",
     "locale": "vi",
-    "regexp": "messiahelartista\\.com",
+    "regexp": "(phimmoii|phimmoi|messiahelartista)",
     "type": "video",
     "nsfw": false
   },
@@ -22,17 +22,16 @@
     "DOMAIN": {
       "title": "Tên miền",
       "subtitle": "Đổi khi trang đổi tên miền",
-      "default": "https://messiahelartista.com",
+      "default": "https://phimmoii.run",
       "values": [
-        "https://messiahelartista.com",
+        "https://phimmoii.run",
+        "https://phimmoii.beer",
+        "https://phimmoic.vc",
         "https://phimmoii.mom",
-        "https://phimmoii.bid",
-        "https://phimmoii.mom",
-        "https://phimmoic.ws",
-        "https://phimmois.sh"
+        "https://phimmoii.bid"
       ],
       "mode": "select",
-      "format": "single"
+      "format": "text"
     }
   }
 }

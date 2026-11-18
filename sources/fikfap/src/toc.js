@@ -1,4 +1,6 @@
 load('config.js');
 load('lib_common.js');
-load('lib_generic.js');
-function execute(url) { return X.toc(url); }
+
+function execute(url) {
+  return Response.success([{ name: "Xem video", url: url, host: BASE_URL }]);
+}

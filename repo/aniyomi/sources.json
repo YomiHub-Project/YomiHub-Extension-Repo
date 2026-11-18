@@ -9,7 +9,7 @@
   "sourceId": 780775032,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirianime47",
-  "version": "14.1004"
+  "version": "14.1005"
  },
  {
   "id": "animevnnet",
@@ -21,19 +21,19 @@
   "sourceId": 1527072694,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirianimevnnet",
-  "version": "14.1004"
+  "version": "14.1005"
  },
  {
   "id": "avsubanimevietsub",
   "name": "AVSub – AnimeVietsub (Ngừng hoạt động)",
   "lang": "vi",
-  "baseUrl": "https://animevietsub.sale",
+  "baseUrl": "https://animevsub.co.uk",
   "type": "video",
   "nsfw": false,
   "sourceId": 513314104,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriavsubanimevietsub",
-  "version": "14.1004"
+  "version": "14.1005"
  },
  {
   "id": "bilibili",
@@ -213,7 +213,7 @@
   "sourceId": 1189313281,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kirifikfap",
-  "version": "14.1004"
+  "version": "14.1005"
  },
  {
   "id": "freereels",
@@ -615,13 +615,13 @@
   "id": "phimmoi",
   "name": "Phimmoi (Ngừng hoạt động)",
   "lang": "vi",
-  "baseUrl": "https://messiahelartista.com",
+  "baseUrl": "https://phimmoii.run",
   "type": "video",
   "nsfw": false,
   "sourceId": 1001551078,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriphimmoi",
-  "version": "14.1004"
+  "version": "14.1005"
  },
  {
   "id": "phimmoihd",
@@ -669,7 +669,7 @@
   "sourceId": 1255718966,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kiripornhub",
-  "version": "14.1004"
+  "version": "14.1005"
  },
  {
   "id": "roadsteam",
@@ -709,15 +709,15 @@
  },
  {
   "id": "sexviettop",
-  "name": "SexVietTop (Ngừng hoạt động)",
+  "name": "SexVietTop",
   "lang": "vi",
-  "baseUrl": "https://top1sexvn.com",
+  "baseUrl": "https://sexvietnam69.com",
   "type": "video",
   "nsfw": true,
   "sourceId": 2025759030,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirisexviettop",
-  "version": "14.1004"
+  "version": "14.1005"
  },
  {
   "id": "showbox",

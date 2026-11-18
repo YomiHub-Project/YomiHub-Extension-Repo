@@ -2,11 +2,11 @@
   "metadata": {
     "name": "AVSub – AnimeVietsub",
     "author": "Kiritokmn",
-    "version": 4,
-    "source": "https://animevietsub.sale",
+    "version": 5,
+    "source": "https://animevsub.co.uk",
     "description": "AVSub – AnimeVietsub — Kiritokmn Extension Repo",
     "locale": "vi",
-    "regexp": "animevietsub\\.sale",
+    "regexp": "(animevietsub|animevsub)",
     "type": "video",
     "nsfw": false
   },
@@ -22,14 +22,20 @@
     "DOMAIN": {
       "title": "Tên miền",
       "subtitle": "Đổi khi trang đổi tên miền",
-      "default": "https://animevietsub.sale",
+      "default": "https://animevsub.co.uk",
       "values": [
+        "https://animevsub.co.uk",
+        "https://animevietsub.bid",
+        "https://animevietsub.tv",
+        "https://animevietsub.fan",
+        "https://animevietsub.moe",
+        "https://animevietsub.cc",
+        "https://animevietsub.vip",
         "https://animevietsub.sale",
-        "https://animevietsub.nl",
-        "https://animevietsub.news"
+        "https://animevietsub.nl"
       ],
       "mode": "select",
-      "format": "single"
+      "format": "text"
     }
   }
 }

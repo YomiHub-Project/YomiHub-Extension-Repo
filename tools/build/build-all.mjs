@@ -50,6 +50,92 @@ const CF = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/cloudflare.json'), '
 const STATUS = fs.existsSync(path.join(ROOT, 'data/status.json')) ? JSON.parse(fs.readFileSync(path.join(ROOT, 'data/status.json'), 'utf8')) : {};
 const CF_IDS = new Set([...(CF.auto || []), ...(CF.interactive || []), ...(CF.ipblock || [])]);
 
+const TEST_RUNNER_TAIL = `
+if (typeof process !== 'undefined' && process.argv && process.argv[1]) {
+  const { pathToFileURL, fileURLToPath } = await import('node:url');
+  if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+    const dns = await import('node:dns');
+    const R = new dns.Resolver();
+    R.setServers(['1.1.1.1', '8.8.8.8']);
+    const orig = dns.default.lookup;
+    dns.default.lookup = function (host, o, cb) {
+      if (typeof o === 'function') { cb = o; o = {}; }
+      if (typeof o === 'number') o = { family: o };
+      o = o || {};
+      if (host === 'localhost' || /^[\\d.]+$|:/.test(host)) return orig.call(this, host, o, cb);
+      R.resolve4(host, (e, a4) => {
+        const done = (list) => o.all ? cb(null, list) : cb(null, list[0].address, list[0].family);
+        if (!e && a4 && a4.length) return done(a4.map(a => ({ address: a, family: 4 })));
+        R.resolve6(host, (e6, a6) => (!e6 && a6 && a6.length) ? done(a6.map(a => ({ address: a, family: 6 }))) : orig.call(this, host, o, cb));
+      });
+    };
+    const path = await import('node:path');
+    const { makeEngineFor } = await import(pathToFileURL(path.join(path.dirname(fileURLToPath(import.meta.url)), '../_runtime.mjs')).href);
+    const eng = makeEngineFor(META, SCRIPTS, { log: () => {} });
+    const steps = {};
+    const timeout = (p, ms, what) => Promise.race([p, new Promise((_, r) => setTimeout(() => r(new Error('timeout ' + what)), ms))]);
+    const step = async (name, fn) => {
+      const s = Date.now();
+      try {
+        const v = await timeout(fn(), 60000, name);
+        steps[name] = { ok: true, ms: Date.now() - s, ...v };
+        return v;
+      } catch (e) {
+        steps[name] = { ok: false, ms: Date.now() - s, error: String(e.message || e).slice(0, 200) };
+        return null;
+      }
+    };
+    const pop = await step('popular', async () => {
+      const r = await eng.popular(1);
+      if (!r || !r.items || !r.items.length) throw new Error('0 items');
+      return { n: r.items.length, first: r.items[0], hasNext: r.hasNext };
+    });
+    await step('search', async () => {
+      const q = (pop && pop.first && pop.first.name) ? pop.first.name.split(/\\s+/).slice(0, 2).join(' ') : 'a';
+      const r = await eng.search(q, 1);
+      if (!r || !r.items || !r.items.length) throw new Error('0 items for ' + q);
+      return { n: r.items.length, q };
+    });
+    if (pop && pop.first && pop.first.link) {
+      const link = pop.first.link;
+      await step('detail', async () => {
+        const d = await eng.detail(link);
+        if (!d || !d.name) throw new Error('no name');
+        return { name: d.name, author: d.author, genres: (d.genres || []).length, cover: !!d.cover, desc: (d.description || '').length };
+      });
+      const ch = await step('chapters', async () => {
+        const c = await eng.chapters(link);
+        if (!c || !c.length) throw new Error('0 chapters');
+        return { n: c.length, first: c[0] };
+      });
+      if (ch && ch.first && ch.first.url) {
+        const u = ch.first.url;
+        if (META.type === 'novel') await step('content', async () => {
+          const c = await eng.content(u);
+          const len = (c && c.html ? c.html : '').replace(/<[^>]+>/g, '').trim().length;
+          if (len < 50) throw new Error('content too short: ' + len);
+          return { len };
+        });
+        if (META.type === 'comic') await step('pages', async () => {
+          const p = await eng.pages(u);
+          if (!p || !p.length) throw new Error('0 pages');
+          return { n: p.length, first: p[0] };
+        });
+        if (META.type === 'video') await step('videos', async () => {
+          const v = await eng.videos(u);
+          if (!v || !v.length) throw new Error('0 streams');
+          return { n: v.length, first: v[0].url };
+        });
+      }
+    }
+    const need = ['popular', 'detail', 'chapters', META.type === 'novel' ? 'content' : META.type === 'comic' ? 'pages' : 'videos'];
+    const pass = need.every(n => steps[n] && steps[n].ok);
+    console.log((pass ? 'PASS ' : 'FAIL ') + (META.id || META.name) + ' ' + Object.entries(steps).map(([k, v]) => k + (v.ok ? '✓' : '✗')).join(' '));
+    process.exit(pass ? 0 : 1);
+  }
+}
+`;
+
 function hash31(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 1) % 2000000000 + 100000000; }
 const ITEM_TYPE = { comic: 0, video: 1, novel: 2 };
 const VB_LOCALE = { vi: 'vi_VN', zh: 'zh_CN', en: 'en_US', ja: 'ja_JP', all: 'global' };
@@ -218,7 +304,7 @@ for (const id of ids) {
     fs.writeFileSync(genFile, generateScriptsModule(id, pj, dir, reg));
     // ---- self-contained script module for the Node test runners
     { const r = await esbuild.build({ entryPoints: [genFile], bundle: true, write: false, format: 'esm', platform: 'neutral', target: 'es2022', nodePaths: [path.join(ROOT, 'node_modules'), path.join(ROOT, '_work/deps/node_modules'), path.join(ROOT, '../_work/deps/node_modules')], mainFields: ['module', 'main'], logLevel: 'silent' });
-      fs.mkdirSync(path.join(GEN, 'test'), { recursive: true }); fs.writeFileSync(path.join(GEN, 'test', id + '.mjs'), r.outputFiles[0].text); }
+      fs.mkdirSync(path.join(GEN, 'test'), { recursive: true }); fs.writeFileSync(path.join(GEN, 'test', id + '.mjs'), r.outputFiles[0].text + '\n' + TEST_RUNNER_TAIL); }
     // ---- Mangayomi / YomiHub
     const ver = `0.5.${md.version}`; // 0.1.x: pure-JS URL resolver; 0.2.x: image Referer; 0.3.x: lazy fallback; 0.4.x: Shorts flag; 0.5.x: stable URLs (resume/history keep across domains) + GET cache
     const mgMeta = { name: md.name, lang: md.locale === 'all' ? 'all' : md.locale, id: hash31('kiritokmn:' + id), baseUrl: md.source, apiUrl: '', iconUrl: icon, typeSource: 'single', itemType: ITEM_TYPE[md.type], isNsfw: !!md.nsfw, version: ver, dateFormat: '', dateFormatLocale: '', pkgPath: `repo/mangayomi/${id}.js`, shorts: !!reg.short, hasShorts: !!reg.short };
