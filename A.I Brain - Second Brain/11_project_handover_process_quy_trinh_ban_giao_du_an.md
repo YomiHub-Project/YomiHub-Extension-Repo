@@ -30,9 +30,9 @@
 - **Sau 0.0.7, đã push lên `main`, chưa có Release/APK mới:**
   - `441e6a7` (Antigravity `/swarm`, ghi nhầm "v0.5.9"): sửa 7 nguồn Anime47, Phimmoi, AVSub, AnimeVN, FikFap, SexVietTop (gỡ `dead`), Pornhub; `lib/lib_generic.js` thêm UA; dựng lại `repo/`. Nhật ký `_work/NOTES_swarm_0.5.9.md`.
   - `c919f87`: bật `nsfw` cho hentaivn, mimimoe, nettruyen18, vinahentai; **đổi `locale` ehentai vi → global**.
-  - Hai commit này **chưa được ghi vào `TECHNICAL_UPDATE_NOTES.md` và `CHANGELOG.md`** → ghi ở đầu bản 0.0.8.
-- **Cần quyết định trước khi dựng APK 0.0.8:** ehentai đổi `locale` sẽ đổi gói APK `extension.vi.kiriehentai` → `extension.all.kiriehentai` (APK trùng như Dailymotion 0.0.6). Hỏi chủ dự án: trả về `vi`, hoặc giữ `global` và ghi hướng dẫn gỡ gói cũ trong CHANGELOG. Tương tự, cờ `nsfw` mới của 4 nguồn làm đổi nhãn 18+ của APK.
-- **Runner nền đang tắt** (heartbeat cuối 16/11 17:43): phiên sau phải bấm đúp `_work/!RUNNER.bat`.
+  - Hai commit này đã có tóm tắt ở đầu `CHANGELOG.md` (18/11 tối) nhưng **chưa ghi vào `TECHNICAL_UPDATE_NOTES.md`** → ghi ở đầu bản 0.0.8.
+- **Đã quyết định (18/11 22:04, chủ dự án): giữ ehentai `locale: global`.** Lần dựng APK 0.0.8 sẽ sinh gói `extension.all.kiriehentai` thay cho `extension.vi.kiriehentai`; hướng dẫn gỡ gói cũ đã ghi ở đầu `CHANGELOG.md` (mục bản kế tiếp) — nhớ đưa vào thân Release 0.0.8 và kiểm trên Note9 (gỡ gói `vi`, cài gói `all`). Cờ `nsfw` mới của 4 nguồn làm đổi nhãn 18+ của APK, không đổi tên gói.
+- **Runner nền** bật lại 18/11 22:03 (job `m039_brain_push`), tự tắt sau 12 giờ: phiên sau xem `_work/run/heartbeat.txt`, cũ thì bấm đúp `_work/!RUNNER.bat`.
 - **Việc còn mở cho 0.0.8:**
   - iQIYI, MGTV, FreeReels (DRM/chống bot di động) — cần reverse proxy hoặc máy chủ ký riêng của người dùng, không đưa thuật toán ký vào tiện ích.
   - Nguồn WordPress đổi permalink (Truyện CV `truyencvio`); TruyenH; Cloudflare Turnstile tương tác chậm.

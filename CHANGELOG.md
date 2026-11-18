@@ -1,3 +1,20 @@
+# Kiritokmn Extension Repo — bản kế tiếp (đang làm, sau v0.0.7)
+
+## Thay đổi đã có trên kho (chưa có bản phát hành mới)
+- **Sửa 7 nguồn:** Anime47, Phimmoi, AVSub, AnimeVN, FikFap, SexVietTop (hoạt động lại với tên miền `sexvietnam69.com`), Pornhub Shorts.
+- **Gắn nhãn 18+** cho HentaiVN, Mimimoe, NetTruyen18, VinaHentai: app sẽ ẩn các nguồn này nếu bạn tắt nội dung 18+.
+- **E-Hentai chuyển ngôn ngữ từ Tiếng Việt sang Đa ngôn ngữ (`global`).**
+
+## Lưu ý cho người dùng Nekoyomi (APK)
+Vì E-Hentai đổi ngôn ngữ, gói APK của nguồn này đổi tên từ `eu.kanade.tachiyomi.extension.vi.kiriehentai` sang `eu.kanade.tachiyomi.extension.all.kiriehentai`. Sau khi cập nhật lên bản APK mới, bạn sẽ thấy **2 tiện ích E-Hentai**. Hãy gỡ bản cũ:
+1. Mở Nekoyomi → **Duyệt** → **Tiện ích**.
+2. Tìm **E-Hentai** có nhãn ngôn ngữ **Tiếng Việt** (bản cũ) → bấm vào → **Gỡ cài đặt**.
+3. Giữ bản mới ở nhóm **Đa ngôn ngữ**. Truyện trong thư viện từ bản cũ cần chuyển nguồn (Migrate) sang bản mới.
+
+Các app khác (Mangayomi, YomiHub, LNReader, vBook, Aidoku) không bị ảnh hưởng; chỉ thấy nguồn chuyển sang mục ngôn ngữ khác.
+
+---
+
 # Kiritokmn Extension Repo — v0.0.7 (18/11/2026)
 
 ## Sửa & Tối ưu hóa nguồn

@@ -57,3 +57,4 @@ Mỗi phiên thêm một mục ở **cuối tệp**: ngày, người/tác nhân,
 - Đã làm: viết lại 00–11 theo đúng chủ đề (trước đó nội dung lệch số: 01 là quy trình, 02 là công cụ, 06 là Short Video, 11 chứa phát hành + bàn giao 0.0.5 bị lặp; 03, 07–10 trống). Đổi tên `01_quy-trinh-lam-viec.md` → `01_architecture_kien_truc.md`. Bản cũ lưu ở `_work/_old/second-brain-truoc-2026-11-18/`. Sửa tên tệp 00 trong `AGENTS.md`.
 - Phát hiện khi rà: runner tắt từ 16/11; 2 commit sau 0.0.7 chưa có trong notes; ehentai đổi `locale` sẽ sinh APK trùng.
 - Việc tiếp theo: bản 0.0.8 (xem 11-D).
+- Chủ dự án đồng ý push Second Brain (`83f63fa`, qua runner vì máy ảo Linux không vào được GitHub; bật lại runner bằng File Explorer). Quyết định **giữ ehentai `global`** → thêm mục "bản kế tiếp" ở đầu `CHANGELOG.md` với hướng dẫn gỡ gói APK cũ.
