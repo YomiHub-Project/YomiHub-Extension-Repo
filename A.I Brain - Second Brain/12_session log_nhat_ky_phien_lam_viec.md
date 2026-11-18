@@ -1,4 +1,6 @@
-# 07 – Nhật ký phiên
+# 12 – Nhật ký phiên làm việc
+
+Mỗi phiên thêm một mục ở **cuối tệp**: ngày, người/tác nhân, yêu cầu, đã làm, kết quả, việc tiếp theo. Chi tiết kỹ thuật ghi ở `TECHNICAL_UPDATE_NOTES.md`.
 
 ## 13/11/2026 — bản 0.0.4 (Claude, Cowork)
 - Đọc 2 Excel và TECHNICAL_UPDATE_NOTES, tóm tắt rồi được xác nhận. Quyết định: không sửa YomiHub (để hướng dẫn), giữ + đánh dấu nguồn chết, kiểm thử trên máy ảo.
@@ -42,3 +44,16 @@
 - Đo mạng thật: **77/196 PASS** (tăng +8 nguồn so với 69/196 của 0.0.6).
 - Kiểm thử thiết bị thật Samsung Galaxy Note9 (SM-N960N): Cài đặt và kiểm thử 6 ứng dụng Aniyomi, Nekoyomi, Mangayomi, YomiHub, LNReader, vBook. Thu thập 19 ảnh chụp màn hình và 6 video màn hình MP4 tại `_work/shots/v007/`.
 - Đóng gói 6 release zip bundles và 4 index json vào `Output/`. Sẵn sàng phát hành Release v0.0.7.
+
+## 18/11/2026 sáng–trưa — sau 0.0.7 (Google Antigravity `/swarm`, Claude điều phối)
+- @ext_anime sửa Anime47 (API mới `/home-page/latest-episode-posts`, `/search/full/`), Phimmoi (`phimmoii.run` + tên miền dự phòng), AVSub (`animevsub.co.uk` + `anime-api.clubc.org`), AnimeVN (search AJAX POST, `trim()` URL, thử lại có backoff).
+- @ext_adult sửa FikFap (header `Authorization-Anonymous`, dự phòng trang web), SexVietTop (`sexvietnam69.com`, gỡ `dead`, POST `/api/player`), Pornhub Shorts (Referer/UA/cookie tuổi).
+- @verifier: `node .build/test/<id>.mjs` 7/7 đạt, `npm run build`, commit `441e6a7` (ghi nhầm "v0.5.9" — số phiên bản YomiHub). Nhật ký `_work/NOTES_swarm_0.5.9.md`.
+- Commit `c919f87`: cờ `nsfw` cho hentaivn, mimimoe, nettruyen18, vinahentai; `locale` ehentai vi → global (cần quyết định, xem 11-D).
+- Cả hai commit đã lên `main`; chưa có Release, chưa ghi `TECHNICAL_UPDATE_NOTES.md`/`CHANGELOG.md`.
+
+## 18/11/2026 tối — sắp xếp lại Second Brain (Claude)
+- Yêu cầu: cập nhật nội dung các tệp theo bộ 00–12 (00 bắt buộc đọc, 01 kiến trúc, 02 quy trình, 03 xây dựng bản phát hành, 04 bài học kỹ thuật, 05 kiểm tra, 06 công cụ, 07 quy tắc, 08 mẹo phiên AI, 09 điều phối tác nhân, 10 cấu trúc thư mục, 11 bàn giao, 12 nhật ký).
+- Đã làm: viết lại 00–11 theo đúng chủ đề (trước đó nội dung lệch số: 01 là quy trình, 02 là công cụ, 06 là Short Video, 11 chứa phát hành + bàn giao 0.0.5 bị lặp; 03, 07–10 trống). Đổi tên `01_quy-trinh-lam-viec.md` → `01_architecture_kien_truc.md`. Bản cũ lưu ở `_work/_old/second-brain-truoc-2026-11-18/`. Sửa tên tệp 00 trong `AGENTS.md`.
+- Phát hiện khi rà: runner tắt từ 16/11; 2 commit sau 0.0.7 chưa có trong notes; ehentai đổi `locale` sẽ sinh APK trùng.
+- Việc tiếp theo: bản 0.0.8 (xem 11-D).
