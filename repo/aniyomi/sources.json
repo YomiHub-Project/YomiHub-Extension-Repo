@@ -213,7 +213,7 @@
   "sourceId": 1189313281,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kirifikfap",
-  "version": "14.1005"
+  "version": "14.1006"
  },
  {
   "id": "freereels",
@@ -621,7 +621,7 @@
   "sourceId": 1001551078,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriphimmoi",
-  "version": "14.1005"
+  "version": "14.1006"
  },
  {
   "id": "phimmoihd",

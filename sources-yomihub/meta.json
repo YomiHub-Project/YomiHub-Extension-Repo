@@ -1,5 +1,5 @@
 {
- "version": "0.5.3",
+ "version": "0.6.3",
  "note": "Tiện ích YomiHub (định dạng Mangayomi JS, gồm _common.js). Chuyển từ bản tích hợp sẵn trong YomiHub 0.5.3. Cùng id với bản tích hợp cũ để bản đã cài nhận cập nhật từ repo.",
  "sources": [
   {

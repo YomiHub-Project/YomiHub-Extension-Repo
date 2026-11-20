@@ -1,4 +1,4 @@
-const mangayomiSources = [{"name":"HihiSex (18+)","lang":"vi","id":920260011,"baseUrl":"https://hihisex.men","apiUrl":"","iconUrl":"https://hihisex.men/favicon.ico","typeSource":"single","itemType":1,"isNsfw":true,"version":"0.5.3","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/hihisex.js"}];
+const mangayomiSources = [{"name":"HihiSex (18+)","lang":"vi","id":920260011,"baseUrl":"https://hihisex.men","apiUrl":"","iconUrl":"https://hihisex.men/favicon.ico","typeSource":"single","itemType":1,"isNsfw":true,"version":"0.6.3","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/hihisex.js"}];
 // ---- YomiHub shared helpers (prepended to every bundled extension) ----
 const YH_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36";
 function yhPref(key, def) {

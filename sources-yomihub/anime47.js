@@ -2,6 +2,8 @@
 // Danh sách và tìm kiếm không cần tài khoản; xem tập phim cần đăng nhập.
 // Cách dễ nhất: mở một phim -> nút Webview -> đăng nhập Anime47 như trên trình
 // duyệt. Tiện ích tự lấy phiên đăng nhập từ WebView (không cần nhập mật khẩu).
+// 0.6.3 (log 20/11: "/anime/filter/<thể loại>" → HTTP 404): API animevui lọc thể loại bằng ?genres=<id,id> (từ /api/genres).
+const A47_GENRE_IDS = {"action":1,"adventure":2,"avant-garde":3,"award-winning":4,"boys-love":5,"comedy":6,"drama":7,"fantasy":8,"girls-love":9,"gourmet":10,"horror":11,"mystery":12,"romance":13,"sci-fi":14,"slice-of-life":15,"sports":16,"supernatural":17,"suspense":18,"ecchi":19,"isekai":38,"mecha":44,"music":47,"psychological":54,"school":60,"shounen":78,"seinen":76,"shoujo":77,"josei":74,"historical":35,"martial-arts":43,"military":46,"super-power":64,"vampire":68};
 const A47_SORT = [["Mới cập nhật","latest"],["Xem nhiều","views"],["Đánh giá","rating"],["Tên A-Z","title"],["Cũ nhất","oldest"]];
 const A47_TYPE = [["Tất cả",""],["TV","tv"],["Movie","movie"],["OVA","ova"],["ONA","ona"],["Special","special"]];
 const A47_STATUS = [["Tất cả",""],["Đang chiếu","airing"],["Hoàn thành","completed"],["Sắp chiếu","upcoming"]];
@@ -155,9 +157,13 @@ class DefaultExtension extends MProvider {
     const g = opts.genre || "";
     const o = Object.assign({ page: page }, opts);
     delete o.genre;
+    if (g) {
+      const id = A47_GENRE_IDS[g] || (/^\d+(,\d+)*$/.test(g) ? g : "");
+      if (id) o.genres = "" + id;
+    }
     const q = Object.entries(o).filter(([k, v]) => v !== "" && v !== null && v !== undefined)
       .map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join("&");
-    const d = await this.json(`${this.api()}/anime/filter${g ? "/" + g : ""}?${q}`);
+    const d = await this.json(`${this.api()}/anime/filter?${q}`);
     const data = d.data || {};
     const pg = data.pagination || {};
     return { list: (data.posts || []).map((p) => this.item(p)), hasNextPage: (pg.current_page || 1) < (pg.last_page || 1) };
