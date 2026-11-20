@@ -6,12 +6,15 @@ function execute(data) {
   if (/\.(m3u8|mp4)(\?|$)/i.test(data)) {
     stream = data;
   } else {
-    var idMatch = data.match(/post\/([a-zA-Z0-9_-]+)/i);
-    var id = idMatch ? idMatch[1] : data.trim();
+    var idMatch = String(data || '').match(/post\/([a-zA-Z0-9_-]+)/i);
+    var id = idMatch ? idMatch[1] : String(data || '').trim();
 
     // 1. Try API
-    var apiUrl = API_URL + '/posts/' + id;
+    var apiUrl = API_BASE + '/posts/' + encodeURIComponent(id);
     var res = C.get(apiUrl, { headers: API_HEADERS });
+    if (res && res.status === 404) {
+      return Response.error('FikFap: video #' + id + ' không tồn tại hoặc đã bị xóa (HTTP 404).');
+    }
     if (res && res.ok) {
       try {
         var d = JSON.parse(res.text());
@@ -19,7 +22,7 @@ function execute(data) {
       } catch (e) {}
     }
 
-    // 2. Fallback to Web
+    // 2. Fallback to Web only if API wasn't 404
     if (!stream) {
       var webUrl = BASE_URL + '/post/' + id;
       var webRes = C.get(webUrl, { headers: WEB_HEADERS });

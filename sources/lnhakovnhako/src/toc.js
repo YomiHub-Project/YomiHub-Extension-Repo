@@ -1,34 +1,30 @@
 load('config.js');
 
 function execute(url) {
-    url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
+  var doc = hakoFetchDoc(url);
+  var list = [];
+  var sections = doc.select('section.volume-list, .volume-list');
 
-    var browser = Engine.newBrowser();
-    browser.setUserAgent(UserAgent.android());
-    let doc = browser.launch(url, 15000);
+  for (var i = 0; i < sections.size(); i++) {
+    var section = sections.get(i);
+    var sectionName = (section.select('.sect-title').first().text() || '').replace(/\s+/g, ' ').trim();
+    var chapters = section.select('ul.list-chapters li, .list-chapters li');
 
-    if (doc) {
-        let list = [];
-        doc.select(".volume-list").forEach(section => {
-            let sectionName = section.select(".sect-title").text();
-            let chapters = section.select(".list-chapters li");
-
-            for (let j = 0; j < chapters.size(); j++) {
-                let chapter = chapters.get(j);
-                let name = chapter.select(".chapter-name a").text();
-                if (j === 0)
-                    name = sectionName + " " + name;
-                list.push({
-                    name: name,
-                    url: chapter.select(".chapter-name").select("a").first().attr("href"),
-                    host: BASE_URL
-                });
-            }
-        });
-
-        browser.close();
-        return Response.success(list);
+    for (var j = 0; j < chapters.size(); j++) {
+      var chapter = chapters.get(j);
+      var a = chapter.select('.chapter-name a').first();
+      if (!a) continue;
+      var chName = (a.attr('title') || a.text() || '').replace(/\s+/g, ' ').trim();
+      var href = hakoFixUrl(a.attr('href'));
+      if (!href) continue;
+      var fullName = sectionName ? (sectionName + ' - ' + chName) : chName;
+      list.push({
+        name: fullName,
+        url: href,
+        host: BASE_URL
+      });
     }
+  }
 
-    browser.close();
+  return Response.success(list);
 }

@@ -1,31 +1,44 @@
 load('config.js');
 
 function execute(key, page) {
-    if (!page) page = '1';
+  var q = String(key || '').trim();
+  if (!q) return Response.success([]);
 
-    let url = BASE_URL + "/tim-kiem?keywords=" + encodeURIComponent(key) + "&page=" + page;
+  var p = parseInt(page || '1', 10);
+  if (isNaN(p) || p < 1) p = 1;
 
-    var browser = Engine.newBrowser();
-    browser.setUserAgent(UserAgent.android());
-    let doc = browser.launch(url, 15000);
+  var url = BASE_URL + '/tim-kiem?keywords=' + encodeURIComponent(q) + '&page=' + p;
+  var doc = hakoFetchDoc(url);
 
-    if (doc) {
-        let next = doc.select(".pagination-footer a.current + a").text();
-        let novelList = [];
-        doc.select(".sect-body .thumb-item-flow").forEach(e => {
-            novelList.push({
-                name: e.select(".series-title a").text(),
-                link: e.select(".series-title a").attr("href"),
-                description: e.select(".chapter-title").text(),
-                cover: e.select(".img-in-ratio").attr("data-bg"),
-                host: BASE_URL
-            });
-        });
+  var novelList = [];
+  var cards = doc.select('.sect-body .thumb-item-flow, .thumb-item-flow');
+  var seen = {};
 
-        browser.close();
-        return Response.success(novelList, next);
-    }
+  for (var i = 0; i < cards.size(); i++) {
+    var e = cards.get(i);
+    var a = e.select('.series-title a').first();
+    if (!a) continue;
+    var name = (a.attr('title') || a.text() || '').replace(/\s+/g, ' ').trim();
+    var link = hakoFixUrl(a.attr('href'));
+    if (!name || !link || seen[link]) continue;
+    seen[link] = true;
+    var cover = hakoExtractBg(e.select('.img-in-ratio').first());
+    var desc = (e.select('.chapter-title').text() || '').replace(/\s+/g, ' ').trim();
+    novelList.push({
+      name: name,
+      link: link,
+      description: desc,
+      cover: cover,
+      host: BASE_URL
+    });
+  }
 
-    browser.close();
-    return null;
+  var nextEl = doc.select('.pagination-footer a.current + a, .pagination_wrap a.current + a').first();
+  var next = nextEl ? (nextEl.text() || '').trim() : '';
+  if (!next) {
+    var nextBtn = doc.select('a.paging_item.next:not(.disabled), a.paging_prevnext.next:not(.disabled)').first();
+    if (nextBtn && novelList.length > 0) next = String(p + 1);
+  }
+
+  return Response.success(novelList, next || null);
 }

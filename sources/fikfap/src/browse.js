@@ -3,35 +3,35 @@ load('lib_common.js');
 
 function execute(url, page) {
   var sort = url || 'trending';
-  var endpoint = API_URL + '/posts?sort=' + sort + '&amount=12';
+  var endpoint = API_BASE + '/posts?sort=' + encodeURIComponent(sort) + '&amount=12';
   if (page && page !== 1 && typeof page === 'string' && page.length > 5) {
     endpoint += '&afterId=' + encodeURIComponent(page);
   }
   var res = C.get(endpoint, { headers: API_HEADERS });
   if (!res || !res.ok) {
-    return Response.error('FikFap API error: ' + (res ? res.status : 'no response'));
+    return Response.error('FikFap API lỗi: HTTP ' + (res ? res.status : 0) + ' (' + API_BASE + '). Nếu nhà mạng chặn, hãy bật DNS-over-HTTPS hoặc VPN.');
   }
   var data = [];
   try {
-    data = JSON.parse(res.text());
+    var parsed = JSON.parse(res.text());
+    data = Array.isArray(parsed) ? parsed : (parsed.posts || parsed.data || []);
   } catch (e) {
-    return Response.error('FikFap parse error: ' + e.message);
+    return Response.error('FikFap lỗi phân tích JSON: ' + e.message);
   }
   var items = [];
-  (data || []).forEach(function(item) {
+  for (var i = 0; i < data.length; i++) {
+    var item = data[i];
+    if (!item) continue;
     var id = item.postId || item.id || item._id;
-    if (!id) return;
-    var name = item.label || item.description || ('FikFap #' + id);
-    name = name.replace(/#[a-zA-Z0-9_]+/g, '').trim() || ('FikFap #' + id);
-    var cover = item.thumbnailUrl || (item.preview ? item.preview.url : '') || '';
+    if (!id) continue;
     items.push({
-      name: name,
+      name: ffPickName(item, id),
       link: BASE_URL + '/post/' + id,
-      cover: cover,
-      description: item.description || '',
+      cover: ffPickCover(item),
+      description: item.description || (item.author && item.author.username ? '@' + item.author.username : '') || '',
       host: BASE_URL
     });
-  });
+  }
   var lastId = data && data.length ? (data[data.length - 1].postId || data[data.length - 1].id) : null;
   return Response.success(items, lastId ? String(lastId) : null);
 }

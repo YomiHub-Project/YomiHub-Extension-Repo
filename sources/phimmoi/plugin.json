@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Phimmoi",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://phimmoii.run",
     "description": "Phimmoi — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -27,8 +27,10 @@
         "https://phimmoii.run",
         "https://phimmoii.beer",
         "https://phimmoic.vc",
+        "https://phimmoii.bid",
         "https://phimmoii.mom",
-        "https://phimmoii.bid"
+        "https://phimmoic.ws",
+        "https://phimmois.sh"
       ],
       "mode": "select",
       "format": "text"

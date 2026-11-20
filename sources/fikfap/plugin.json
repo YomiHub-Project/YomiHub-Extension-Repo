@@ -2,7 +2,7 @@
   "metadata": {
     "name": "FikFap",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://fikfap.com",
     "description": "FikFap — Kiritokmn Extension Repo",
     "locale": "global",
@@ -25,6 +25,16 @@
       "default": "https://fikfap.com",
       "values": [
         "https://fikfap.com"
+      ],
+      "mode": "input",
+      "format": "text"
+    },
+    "API_URL": {
+      "title": "Địa chỉ API",
+      "subtitle": "Mặc định https://api.fikfap.com",
+      "default": "https://api.fikfap.com",
+      "values": [
+        "https://api.fikfap.com"
       ],
       "mode": "input",
       "format": "text"

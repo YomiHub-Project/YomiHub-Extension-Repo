@@ -1,36 +1,43 @@
 load('config.js');
 
 function execute(url, page) {
-    url = url.replace(/^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)/img, BASE_URL);
+  var p = parseInt(page || '1', 10);
+  if (isNaN(p) || p < 1) p = 1;
 
-    if (!page) page = '1';
+  var target = hakoNormalizeUrl(url, BASE_URL).replace(/[?&]page=\d+/g, '');
+  var sep = target.indexOf('?') > -1 ? '&' : '?';
+  var fullUrl = target + sep + 'page=' + p;
 
-    // Append page param to URL
-    let separator = url.indexOf('?') > -1 ? '&' : '?';
-    let fullUrl = url + separator + 'page=' + page;
+  var doc = hakoFetchDoc(fullUrl);
+  var novelList = [];
+  var cards = doc.select('.thumb-section-flow .thumb-item-flow, .thumb-item-flow');
+  var seen = {};
 
-    var browser = Engine.newBrowser();
-    browser.setUserAgent(UserAgent.android());
-    let doc = browser.launch(fullUrl, 15000);
+  for (var i = 0; i < cards.size(); i++) {
+    var e = cards.get(i);
+    var a = e.select('.series-title a').first();
+    if (!a) continue;
+    var name = (a.attr('title') || a.text() || '').replace(/\s+/g, ' ').trim();
+    var link = hakoFixUrl(a.attr('href'));
+    if (!name || !link || seen[link]) continue;
+    seen[link] = true;
+    var cover = hakoExtractBg(e.select('.img-in-ratio').first());
+    var desc = (e.select('.chapter-title').text() || '').replace(/\s+/g, ' ').trim();
+    novelList.push({
+      name: name,
+      link: link,
+      description: desc,
+      cover: cover,
+      host: BASE_URL
+    });
+  }
 
-    if (doc) {
-        let next = doc.select(".pagination-footer a.current + a").text();
+  var nextEl = doc.select('.pagination-footer a.current + a, .pagination_wrap a.current + a').first();
+  var next = nextEl ? (nextEl.text() || '').trim() : '';
+  if (!next) {
+    var nextBtn = doc.select('a.paging_item.next:not(.disabled), a.paging_prevnext.next:not(.disabled)').first();
+    if (nextBtn && novelList.length > 0) next = String(p + 1);
+  }
 
-        let novelList = [];
-        doc.select(".thumb-section-flow .thumb-item-flow").forEach(e => {
-            novelList.push({
-                name: e.select(".series-title a").text(),
-                link: e.select(".series-title a").attr("href"),
-                description: e.select(".chapter-title").text(),
-                cover: e.select(".img-in-ratio").attr("data-bg"),
-                host: BASE_URL
-            });
-        });
-
-        browser.close();
-        return Response.success(novelList, next);
-    }
-
-    browser.close();
-    return null;
+  return Response.success(novelList, next || null);
 }
