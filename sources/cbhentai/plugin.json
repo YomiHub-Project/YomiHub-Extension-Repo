@@ -2,9 +2,9 @@
   "metadata": {
     "name": "HentaiCube -18+ (iOS)",
     "author": "hieu05 (Kiritokmn repack)",
-    "version": 18,
+    "version": 19,
     "source": "https://hentaicube.xyz",
-    "regexp": "hentaicube\\.xyz\\/read\\/[^\\/]+\\/?$",
+    "regexp": "(hentaicube\\.xyz|2tencb\\.pro)\\/read\\/[^\\/]+\\/?$",
     "description": "HentaiCube - Truyện Hentai Online 18+ (forked from Meo) — gốc: hieu05 (yae-miko-313/ext-vbook)",
     "locale": "vi_VN",
     "tag": "NSFW",
@@ -20,5 +20,18 @@
     "search": "search.js",
     "toc": "toc.js",
     "chap": "chap.js"
+  },
+  "config": {
+    "DOMAIN": {
+      "title": "Tên miền",
+      "subtitle": "Đổi khi trang đổi tên miền",
+      "default": "https://hentaicube.xyz",
+      "values": [
+        "https://hentaicube.xyz",
+        "https://2tencb.pro"
+      ],
+      "mode": "select",
+      "format": "text"
+    }
   }
 }

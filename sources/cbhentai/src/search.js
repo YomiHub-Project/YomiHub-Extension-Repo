@@ -4,6 +4,7 @@ function execute(keyword, page) {
     var q = encodeURIComponent(keyword);
     var fetchUrl = BASE_URL + "/?s=" + q + "&post_type=wp-manga";
     var res = fetch(fetchUrl, FETCH_OPTIONS);
+    checkCloudflare(res);
     if (!res || !res.ok) return Response.success([], null);
     var doc = res.html();
     if (!doc) return Response.success([], null);
