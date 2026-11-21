@@ -2,11 +2,11 @@
   "metadata": {
     "name": "SexVietTop",
     "author": "Kiritokmn",
-    "version": 5,
-    "source": "https://sexvietnam69.com",
+    "version": 6,
+    "source": "https://sexviettuyenchon.com",
     "description": "SexVietTop — Kiritokmn Extension Repo",
     "locale": "vi",
-    "regexp": "(sexvietnam69|sexviettop|top1sexvn|phimsexviet113)\\.(com|net)",
+    "regexp": "(sexviettuyenchon|sexvietnam69|sexviettop|top1sexvn|phimsexviet113)\\.(com|net)",
     "type": "video",
     "nsfw": true
   },
@@ -22,12 +22,13 @@
     "DOMAIN": {
       "title": "Tên miền",
       "subtitle": "Đổi khi trang đổi tên miền",
-      "default": "https://sexvietnam69.com",
+      "default": "https://sexviettuyenchon.com",
       "values": [
+        "https://sexviettuyenchon.com",
         "https://sexvietnam69.com",
-        "https://sexviettop.net",
         "https://phimsexviet113.com",
-        "https://top1sexvn.com"
+        "https://top1sexvn.com",
+        "https://sexviettop.net"
       ],
       "mode": "input",
       "format": "text"

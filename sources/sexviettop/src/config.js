@@ -1,4 +1,11 @@
-var BASE_URL = "https://sexvietnam69.com";
+var BACKUP_DOMAINS = [
+  "https://sexviettuyenchon.com",
+  "https://sexvietnam69.com",
+  "https://phimsexviet113.com",
+  "https://top1sexvn.com",
+  "https://sexviettop.net"
+];
+var BASE_URL = BACKUP_DOMAINS[0];
 try { if (DOMAIN) BASE_URL = String(DOMAIN).replace(/\/+$/, ""); } catch (e) {}
 
 var UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";

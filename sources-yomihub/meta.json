@@ -1,5 +1,5 @@
 {
- "version": "0.6.5",
+ "version": "0.6.6",
  "note": "Tiện ích YomiHub (định dạng Mangayomi JS, gồm _common.js). Chuyển từ bản tích hợp sẵn trong YomiHub 0.5.3. Cùng id với bản tích hợp cũ để bản đã cài nhận cập nhật từ repo.",
  "sources": [
   {
@@ -214,12 +214,12 @@
    "id": 920260017,
    "name": "SexVietTop (18+)",
    "asset": "sexviettop.js",
-   "baseUrl": "https://top1sexvn.com",
+   "baseUrl": "https://sexviettuyenchon.com",
    "itemType": 1,
    "appVersion": "0.2.5",
    "nsfw": true,
    "lang": "vi",
-   "iconUrl": "https://top1sexvn.com/favicon.ico",
+   "iconUrl": "https://sexviettuyenchon.com/favicon.ico",
    "notes": "Phim sex Việt Nam, clip ngắn nóng bỏng. Có Short Video. Cần bật DNS hoặc VPN nếu bị nhà mạng chặn.",
    "shorts": true
   },

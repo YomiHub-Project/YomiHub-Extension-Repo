@@ -1,4 +1,4 @@
-const mangayomiSources = [{"name":"SexVietTop (18+)","lang":"vi","id":920260017,"baseUrl":"https://top1sexvn.com","apiUrl":"","iconUrl":"https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/sexviettop.png","typeSource":"single","itemType":1,"isNsfw":true,"version":"0.6.5","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/sexviettop.js"}];
+const mangayomiSources = [{"name":"SexVietTop (18+)","lang":"vi","id":920260017,"baseUrl":"https://sexviettuyenchon.com","apiUrl":"","iconUrl":"https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/sexviettop.png","typeSource":"single","itemType":1,"isNsfw":true,"version":"0.6.6","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/sexviettop.js"}];
 // ---- YomiHub shared helpers (prepended to every bundled extension) ----
 const YH_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36";
 function yhPref(key, def) {
@@ -196,10 +196,10 @@ function yhInnerM3u8(u) {
 // ---- end helpers ----
 
 // SexVietTop (18+) – phim sex Việt Nam, clip ngắn. Bundled with YomiHub.
-// 0.3.6: rewritten for the current site (top1sexvn.com now redirects to
-// phimsexviet113.com): cards "li.item-movie", pages "/trang/N/", search
-// "/search/<từ khoá>/", video from POST /api/player {id, server}.
-const SVT_MIRRORS = ["https://phimsexviet113.com", "https://top1sexvn.com", "https://sexviettop.com"];
+// 0.6.6: updated live mirror (sexvietnam69.com redirects 301 to sexviettuyenchon.com;
+// top1sexvn.com / phimsexviet113.com currently timeout): cards "li.item-movie",
+// pages "/trang/N/", search "/search/<từ khoá>/", video from POST /api/player {id, server}.
+const SVT_MIRRORS = ["https://sexviettuyenchon.com", "https://sexvietnam69.com", "https://phimsexviet113.com", "https://top1sexvn.com", "https://sexviettop.com"];
 const SVT_CATS = [
   ["Mới nhất", ""], ["Sex Việt", "phim-sex-viet-nam"], ["Sex Nhật", "phim-sex-nhat-ban"], ["Sex Trung", "phim-sex-trung-quoc"],
   ["Sex Âu", "phim-sex-chau-au"], ["Vietsub", "phim-sex-vietsub"],
@@ -208,14 +208,15 @@ const SVT_CATS = [
 class DefaultExtension extends MProvider {
   constructor() { super(); this.client = new Client(); }
   get supportsLatest() { return true; }
-  base() { return yhBase(this); }
+  base() { return this.host || yhBase(this); }
   getHeaders(url) { return { "User-Agent": YH_UA, "Referer": this.base() + "/" }; }
   async get(path) {
     const first = this.base();
+    const list = [...new Set([first, ...SVT_MIRRORS])];
     let err = null;
-    for (const h of [first].concat(SVT_MIRRORS.filter((m) => m !== first))) {
+    for (const h of list) {
       try {
-        const r = await this.client.get(h + path, this.getHeaders(h + path));
+        const r = await this.client.get(h + path, { "User-Agent": YH_UA, "Referer": h + "/" });
         if (r.statusCode < 400 && r.body) { this.host = ((r.request && r.request.url) || h + path).replace(/^(https?:\/\/[^/]+).*$/, "$1"); return r.body; }
         err = new Error("HTTP " + r.statusCode);
       } catch (e) { err = e; }
@@ -296,6 +297,6 @@ class DefaultExtension extends MProvider {
     return videos;
   }
   getFilterList() { return [yhHeader("Bộ lọc dùng khi ô tìm kiếm trống"), yhSelect("cat", "Danh mục", SVT_CATS)]; }
-  getSourcePreferences() { return [yhDomainPref("https://phimsexviet113.com", "địa chỉ trong danh sách: top1sexvn.com (chuyển hướng tới đây)")]; }
+  getSourcePreferences() { return [yhDomainPref("https://sexviettuyenchon.com", "dự phòng: sexvietnam69.com, top1sexvn.com")]; }
 }
 

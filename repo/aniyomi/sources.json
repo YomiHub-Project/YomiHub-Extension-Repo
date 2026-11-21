@@ -711,13 +711,13 @@
   "id": "sexviettop",
   "name": "SexVietTop",
   "lang": "vi",
-  "baseUrl": "https://sexvietnam69.com",
+  "baseUrl": "https://sexviettuyenchon.com",
   "type": "video",
   "nsfw": true,
   "sourceId": 2025759030,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirisexviettop",
-  "version": "14.1005"
+  "version": "14.1006"
  },
  {
   "id": "showbox",
