@@ -45,13 +45,13 @@
    "id": 920260010,
    "name": "AVSub – AnimeVietsub",
    "asset": "avsub.js",
-   "baseUrl": "https://animevietsub.news",
+   "baseUrl": "https://animevsub.co.uk",
    "itemType": 1,
-   "appVersion": "0.4.3",
+   "appVersion": "0.4.4",
    "nsfw": false,
    "lang": "vi",
-   "iconUrl": "https://animevietsub.news/favicon.ico",
-   "notes": "Anime Vietsub. Máy chủ DU/HDX phát bằng trình phát web của trang (mã hoá phía trang); tự chuyển máy chủ khi lỗi. Đổi tên miền trong cài đặt tiện ích nếu trang đổi địa chỉ.",
+   "iconUrl": "https://animevsub.co.uk/favicon.ico",
+   "notes": "Anime Vietsub (máy chủ animevsub.co.uk). Máy chủ DU/HDX phát bằng trình phát web của trang (mã hoá phía trang); tự chuyển máy chủ/tên miền khi lỗi mạng.",
    "shorts": false
   },
   {

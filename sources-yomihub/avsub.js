@@ -1,4 +1,5 @@
-// AVSub – AnimeVietsub (animevietsub.news; animevietsub.nl trong sheet và .sale đều chuyển hướng 301 về .news, kiểm tra 28/10/2026). Bundled with YomiHub 0.1.4, updated 0.2.0, 0.4.3.
+// AVSub – AnimeVietsub (animevsub.co.uk; các tên miền phụ .news, .bid, .fan, .nl; cập nhật 11/2026). Bundled with YomiHub.
+const AVS_MIRRORS = ["https://animevsub.co.uk", "https://animevietsub.news", "https://animevietsub.bid", "https://animevietsub.fan", "https://animevietsub.moe", "https://animevietsub.nl"];
 const AVS_GENRES = [["Tất cả",""],["Hành động","hanh-dong"],["Phiêu lưu","phieu-luu"],["Hài hước","hai-huoc"],["Tình cảm","tinh-cam"],["Học đường","truong-hoc"],["Siêu nhiên","sieu-nhien"],["Phép thuật","phep-thuat"],["Ma thuật","ma-thuat"],["Kinh dị","kinh-di"],["Bí ẩn","mystery"],["Tâm lý","psychological"],["Drama","drama"],["Đời thường","doi-thuong"],["Thể thao","the-thao"],["Âm nhạc","am-nhac"],["Mecha","mecha"],["Sci-Fi","sci-fi"],["Shounen","shounen"],["Seinen","seinen"],["Shoujo","shoujo"],["Josei","josei"],["Harem","harem"],["Ecchi","ecchi"],["Isekai / Trò chơi","tro-choi"],["Lịch sử","lich-su"],["Quân đội","quan-doi"],["Samurai","samurai"],["Võ thuật","martial-arts"],["Vampire","vampire"],["Demons","demons"],["Siêu năng lực","super-power"],["Không gian","space"],["Thriller","thriller"],["Hồi hộp","hoi-hop"],["Cartoon","cartoon"],["Trẻ em","tre-em"],["Live Action","live-action"],["Tokusatsu","tokusatsu"]];
 const AVS_LISTS = [["Anime mới cập nhật","/anime-moi/"],["Đang chiếu","/danh-sach/list-dang-chieu/"],["Trọn bộ","/danh-sach/list-tron-bo/"],["Anime bộ","/anime-bo/"],["Anime lẻ (movie)","/anime-le/"],["Sắp chiếu","/anime-sap-chieu/"],["Hoạt hình Trung Quốc","/hoat-hinh-trung-quoc/"],["Xếp hạng ngày","/bang-xep-hang/day.html"],["Xếp hạng tháng","/bang-xep-hang/month.html"],["Xếp hạng mùa","/bang-xep-hang/season.html"],["Xếp hạng năm","/bang-xep-hang/year.html"],["Được bình chọn","/bang-xep-hang/voted.html"]];
 const AVS_SEASONS = [["Không chọn",""],["Xuân","spring"],["Hạ","summer"],["Thu","autumn"],["Đông","winter"]];
@@ -40,7 +41,28 @@ class DefaultExtension extends MProvider {
   }
   async get(url) {
     this._dbg = [];
-    let res = await this.client.get(url, this.getHeaders(url));
+    let res = null;
+    let lastErr = null;
+    const path = url.replace(/^https?:\/\/[^/]+/, "");
+    const primary = url.replace(path, "");
+    const candHosts = [primary];
+    for (const m of AVS_MIRRORS) {
+      if (!candHosts.includes(m)) candHosts.push(m);
+    }
+    for (const host of candHosts) {
+      const curUrl = host + path;
+      try {
+        let r = await this.client.get(curUrl, this.getHeaders(curUrl));
+        if (r && r.statusCode < 500) {
+          res = r;
+          url = curUrl;
+          break;
+        }
+      } catch (e) {
+        lastErr = e;
+      }
+    }
+    if (!res) throw (lastErr || new Error("AVSub: không thể kết nối sau khi thử các tên miền dự phòng"));
     this._dbg.push(res.statusCode + ":" + Object.keys((res.headers || {})).filter((k) => /cookie/i.test(k)).map((k) => ("" + res.headers[k]).split(/,\s*(?=[A-Za-z0-9_\-]+=)/).map((c) => c.split("=")[0]).join("+")).join("|"));
     if (res.statusCode === 403 && this.mergeCookies(res)) res = await this.client.get(url, this.getHeaders(url));
     else if (res.statusCode === 403 && this.cookie()) {
@@ -269,5 +291,5 @@ class DefaultExtension extends MProvider {
       yhText_("year", "Năm (dùng cùng Mùa, vd. 2026)"),
     ];
   }
-  getSourcePreferences() { return [yhDomainPref("https://animevietsub.news", "AnimeVietsub hay đổi tên miền – animevietsub.nl (sheet Website Extension) và .sale hiện chuyển về animevietsub.news (kiểm tra 28/10/2026)")]; }
+  getSourcePreferences() { return [yhDomainPref("https://animevsub.co.uk", "AnimeVietsub hay đổi tên miền – hiện dùng animevsub.co.uk; các tên miền dự phòng: animevietsub.news, .bid, .fan, .nl (cập nhật 11/2026)")]; }
 }
