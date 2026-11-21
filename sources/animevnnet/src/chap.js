@@ -18,18 +18,25 @@ function execute(url) {
     }
   }
 
-  // Extract AnimeVN player server
+  // Extract AnimeVN player server (only if URL is complete)
   var mAhs = /case\s*['"]AHS['"][\s\S]*?src=["']([^"']+)["']/i.exec(html);
   if (mAhs && mAhs[1]) {
-    servers.push({ title: 'Server AnimeVN', data: mAhs[1].trim() });
+    var ahsUrl = mAhs[1].trim();
+    if (ahsUrl && !/[?=\/]$/.test(ahsUrl)) {
+      servers.push({ title: 'Server AnimeVN', data: ahsUrl });
+    }
   }
 
-  // Extract backup server
-  var mFem = /case\s*['"]FEM['"][\s\S]*?src=["']([^"']+)["']/i.exec(html);
-  if (mFem && mFem[1]) {
-    var femUrl = mFem[1].trim();
-    if (femUrl !== 'https://hh3dvietsub.com/embed/' && femUrl !== 'https://hh3dvietsub.com/embed') {
-      servers.push({ title: 'Server Dự phòng', data: femUrl });
+  // Extract backup servers (FEM / DAI)
+  var backups = [['FEM', 'Server Dự phòng'], ['DAI', 'Server Dailymotion']];
+  for (var b = 0; b < backups.length; b++) {
+    var reB = new RegExp("case\\s*['\"]" + backups[b][0] + "['\"][\\s\\S]*?src=[\"']([^\"']+)[\"']", 'i');
+    var mB = reB.exec(html);
+    if (mB && mB[1]) {
+      var bUrl = mB[1].trim();
+      if (bUrl && !/\/embed\/?$/i.test(bUrl) && !/[?=\/]$/.test(bUrl)) {
+        servers.push({ title: backups[b][1], data: bUrl });
+      }
     }
   }
 

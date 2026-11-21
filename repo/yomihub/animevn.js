@@ -1,4 +1,4 @@
-const mangayomiSources = [{"name":"AnimeVN","lang":"vi","id":920260009,"baseUrl":"https://animevn.net","apiUrl":"","iconUrl":"https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/animevnnet.png","typeSource":"single","itemType":1,"isNsfw":false,"version":"0.6.4","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/animevn.js"}];
+const mangayomiSources = [{"name":"AnimeVN","lang":"vi","id":920260009,"baseUrl":"https://animevn.net","apiUrl":"","iconUrl":"https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/animevnnet.png","typeSource":"single","itemType":1,"isNsfw":false,"version":"0.6.5","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/animevn.js"}];
 // ---- YomiHub shared helpers (prepended to every bundled extension) ----
 const YH_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36";
 function yhPref(key, def) {
@@ -204,8 +204,19 @@ class DefaultExtension extends MProvider {
   get supportsLatest() { return true; }
   base() { return yhBase(this); }
   getHeaders(url) { return { "User-Agent": YH_UA, "Referer": this.base() + "/" }; }
+  async req(fn) {
+    let err = null;
+    for (let i = 0; i < 3; i++) {
+      try {
+        const res = await fn();
+        if (res && (res.statusCode < 500 || i === 2)) return res;
+        err = new Error("HTTP " + (res ? res.statusCode : 0));
+      } catch (e) { err = e; }
+    }
+    throw err || new Error("AnimeVN: lỗi kết nối");
+  }
   async doc(url) {
-    const res = await this.client.get(url, this.getHeaders(url));
+    const res = await this.req(() => this.client.get(("" + url).trim(), this.getHeaders(url)));
     return new Document(res.body);
   }
   listUrl(path, page) {
@@ -218,14 +229,14 @@ class DefaultExtension extends MProvider {
     for (const li of doc.select(".list_wrap li")) {
       const a = li.selectFirst(".main_text .title a") || li.selectFirst(".anime-cover a");
       if (!a) continue;
-      const link = (a.attr("href") || "").replace(/^https?:\/\/[^/]+/, "");
+      const link = (a.attr("href") || "").trim().replace(/^https?:\/\/[^/]+/, "");
       if (!/^\/anime\/[^/]+\/?$/.test(link) || seen[link]) continue;
       seen[link] = 1;
       const img = li.selectFirst("img");
       list.push({
         name: yhText(a.attr("title") || a.text || (img ? img.attr("alt") : "")),
         link,
-        imageUrl: img ? (img.attr("data-original") || img.attr("src") || "") : "",
+        imageUrl: img ? (img.attr("data-original") || img.attr("src") || "").trim() : "",
       });
     }
     const hasNextPage = doc.select('.pagination a[aria-label="Next"]').length > 0;
@@ -236,19 +247,24 @@ class DefaultExtension extends MProvider {
   async search(query, page, filters) {
     query = (query || "").trim();
     if (query) {
-      if (page > 1) return { list: [], hasNextPage: false };
-      const res = await this.client.post(`${this.base()}/search/html/1`,
-        { "User-Agent": YH_UA, "Referer": this.base() + "/", "X-Requested-With": "XMLHttpRequest",
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
-        "keyword=" + encodeURIComponent(query.toLowerCase()));
-      const doc = new Document(res.body || "");
-      const list = [];
-      for (const a of doc.select("a.item")) {
-        const img = a.selectFirst("img");
-        const name = img ? img.attr("alt") : yhText(a.text);
-        list.push({ name: yhText(name), link: (a.attr("href") || "").replace(/^https?:\/\/[^/]+/, ""), imageUrl: img ? img.attr("src") : "" });
+      if (page === 1) {
+        try {
+          const res = await this.req(() => this.client.post(`${this.base()}/search/html/1`,
+            { "User-Agent": YH_UA, "Referer": this.base() + "/", "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+            "keyword=" + encodeURIComponent(query.toLowerCase())));
+          const doc = new Document(res.body || "");
+          const list = [];
+          for (const a of doc.select("a.item")) {
+            const img = a.selectFirst("img");
+            const name = img ? img.attr("alt") : yhText(a.text);
+            const link = (a.attr("href") || "").trim().replace(/^https?:\/\/[^/]+/, "");
+            if (link) list.push({ name: yhText(name), link, imageUrl: img ? (img.attr("src") || "").trim() : "" });
+          }
+          if (list.length) return { list, hasNextPage: false };
+        } catch (e) {}
       }
-      return { list, hasNextPage: false };
+      return this.parse(await this.doc(this.listUrl(`search.html?q=${encodeURIComponent(query)}`, page)));
     }
     const genre = yhF(filters, "genre") || "";
     const listPath = yhF(filters, "list") || "";
@@ -280,7 +296,7 @@ class DefaultExtension extends MProvider {
     const chapters = [];
     const seen = {};
     for (const a of doc.select("#chapter-list li a, ul.chapter-list li a")) {
-      const href = (a.attr("href") || "").replace(/^https?:\/\/[^/]+/, "");
+      const href = (a.attr("href") || "").trim().replace(/^https?:\/\/[^/]+/, "");
       if (!href || seen[href]) continue;
       seen[href] = 1;
       const n = yhText(a.text);
@@ -291,29 +307,30 @@ class DefaultExtension extends MProvider {
   }
   async getVideoList(url) {
     const full = yhAbs(this.base(), url);
-    const res = await this.client.get(full, this.getHeaders(full));
+    const res = await this.req(() => this.client.get(full, this.getHeaders(full)));
     const html = res.body || "";
     const servers = {};
     const re = /case\s*'(\w+)'\s*:\s*_video_player\.innerHTML\s*=\s*'<iframe[^>]*?src="([^"]*)"/g;
     let m;
-    while ((m = re.exec(html)) !== null) servers[m[1]] = m[2];
+    while ((m = re.exec(html)) !== null) servers[m[1]] = (m[2] || "").trim();
     const listed = [];
     const re2 = /id="sv_(\w+)"/g;
     while ((m = re2.exec(html)) !== null) listed.push(m[1]);
     const videos = [];
     // 1) Site's own HLS player (AHS) – only usable when it carries a stream key.
-    const ahs = servers["AHS"] || "";
+    const ahs = (servers["AHS"] || "").trim();
     if (/[?&]s=[^&"]+/.test(ahs) || /\/player\/v\/u=[^&]+&s=[A-Za-z0-9]/.test(ahs)) {
       try {
-        const p = await this.client.get(ahs, { "User-Agent": YH_UA, "Referer": full });
+        const p = await this.req(() => this.client.get(ahs, { "User-Agent": YH_UA, "Referer": full }));
         const sm = (p.body || "").match(/<source[^>]+src="([^"]+)"/) || (p.body || "").match(/file\s*:\s*["']([^"']+\.m3u8[^"']*)/);
-        if (sm && sm[1]) videos.push({ url: sm[1], originalUrl: sm[1], quality: "AnimeVN HLS", headers: { "User-Agent": YH_UA, "Referer": this.base() + "/" } });
+        if (sm && sm[1] && sm[1].trim()) videos.push({ url: sm[1].trim(), originalUrl: sm[1].trim(), quality: "AnimeVN HLS", headers: { "User-Agent": YH_UA, "Referer": this.base() + "/" } });
       } catch (e) {}
     }
     // 2) Embedded players (Hydrax/Abyss, hh3d…): let a hidden WebView play
     //    the episode page and pick up the real stream.
-    const usable = listed.filter((k) => servers[k] && !/[?=\/]$/.test(servers[k]));
-    if (!videos.length && usable.length) {
+    const keys = listed.length ? listed : Object.keys(servers).filter((k) => k !== "AHS");
+    const usable = keys.filter((k) => servers[k] && !/[?=\/]$/.test(servers[k]) && !/\/embed\/?$/i.test(servers[k]));
+    if (!videos.length && usable.length && typeof evaluateJavascriptViaWebview === "function") {
       try {
         // Hydrax/Abyss serves a plain <video> (no Service Worker) to UC Browser.
         const out = await evaluateJavascriptViaWebview(full, { "User-Agent": YH_UA, "Referer": this.base() + "/" },

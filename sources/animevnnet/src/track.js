@@ -34,7 +34,7 @@ function execute(data) {
     try {
       var rPlayer = fetchWithRetry(target);
       var hPlayer = rPlayer.text();
-      var mSrc = /<source[^>]+src=["']([^"']+)["']/i.exec(hPlayer);
+      var mSrc = /<source[^>]+src=["']([^"']+)["']/i.exec(hPlayer) || /file\s*:\s*["']([^"']+\.(?:m3u8|mp4)[^"']*)/i.exec(hPlayer);
       if (mSrc && mSrc[1]) {
         var stream = mSrc[1].trim();
         if (stream) {
