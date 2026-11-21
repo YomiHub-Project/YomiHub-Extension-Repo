@@ -1,4 +1,4 @@
-const mangayomiSources = [{"name":"FikFap (18+)","lang":"all","id":920260008,"baseUrl":"https://fikfap.com","apiUrl":"","iconUrl":"https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/fikfap.png","typeSource":"single","itemType":1,"isNsfw":true,"version":"0.6.3","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/fikfap.js"}];
+const mangayomiSources = [{"name":"FikFap (18+)","lang":"all","id":920260008,"baseUrl":"https://fikfap.com","apiUrl":"","iconUrl":"https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/fikfap.png","typeSource":"single","itemType":1,"isNsfw":true,"version":"0.6.4","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/fikfap.js"}];
 // ---- YomiHub shared helpers (prepended to every bundled extension) ----
 const YH_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36";
 function yhPref(key, def) {
@@ -227,6 +227,10 @@ class DefaultExtension extends MProvider {
     if (!Array.isArray(arr)) arr = arr.posts || arr.data || [];
     return this.mapPosts(arr, key, page, arr.length > 0);
   }
+  pickCover(p) {
+    if (!p) return "";
+    return p.thumbnailStreamUrl || p.thumbnailUrl || (p.preview ? p.preview.url : "") || (p.author ? (p.author.thumbnailUrl || p.author.thumbnailLargeUrl || "") : "") || "";
+  }
   mapPosts(arr, key, page, hasNext) {
     const sp = new SharedPreferences();
     if (arr.length) sp.setString(`ff_after_${key}_${page + 1}`, "" + arr[arr.length - 1].postId);
@@ -234,7 +238,7 @@ class DefaultExtension extends MProvider {
     if (orient) arr = arr.filter((p) => !p.sexualOrientation || p.sexualOrientation === orient);
     const list = arr.map((p) => ({
       name: yhText(p.label || "Video") + (p.author && p.author.username ? " · @" + p.author.username : ""),
-      imageUrl: p.thumbnailStreamUrl || "",
+      imageUrl: this.pickCover(p),
       link: JSON.stringify({ id: p.postId, u: p.author ? p.author.username : "" }),
     }));
     return { list, hasNextPage: hasNext };
@@ -252,8 +256,17 @@ class DefaultExtension extends MProvider {
         const res = await this.client.get(url, this.getHeaders(url));
         const b = ("" + (res.body || "")).trimStart();
         if (res.statusCode < 400 && (b.startsWith("[") || b.startsWith("{"))) return JSON.parse(b);
+        if (res.statusCode === 404) {
+          const mPost = pq.match(/^\/posts\/([^/?]+)/);
+          if (mPost) throw new Error("FikFap: video #" + mPost[1] + " không tồn tại hoặc đã bị xóa (HTTP 404).");
+          last = new Error("FikFap: HTTP 404 – " + url);
+          continue;
+        }
         last = new Error("FikFap: " + (b.startsWith("<") ? "máy chủ trả về trang HTML (bị chặn hoặc Cloudflare)" : "HTTP " + res.statusCode) + " – " + h);
-      } catch (e) { last = e; }
+      } catch (e) {
+        if (/không tồn tại hoặc đã bị xóa/.test(e && e.message)) throw e;
+        last = e;
+      }
     }
     throw last || new Error("FikFap: không tải được dữ liệu");
   }
@@ -326,7 +339,7 @@ class DefaultExtension extends MProvider {
     const a = p.author || {};
     return {
       name: yhText(p.label || "FikFap video"),
-      imageUrl: p.thumbnailStreamUrl || "",
+      imageUrl: this.pickCover(p),
       author: a.username ? "@" + a.username : "",
       description: [p.label, a.description, (p.hashtags || []).map((h) => "#" + (h.label || h)).join(" ")].filter(Boolean).join("\n\n"),
       genre: (p.hashtags || []).map((h) => h.label || h).slice(0, 20),
@@ -339,7 +352,7 @@ class DefaultExtension extends MProvider {
     // 0.1.8: a list item link ({"id":…}) works too (Short Video feed)
     url = this.postId(url);
     const p = await this.getJsonAny(`/posts/${url}`);
-    const v = p.videoStreamUrl;
+    const v = p.videoStreamUrl || p.videoUrl || p.playbackUrl || (p.video && p.video.url);
     if (!v) throw new Error("Video chưa sẵn sàng.");
     return [{ url: v, originalUrl: v, quality: "FikFap HLS", headers: { "User-Agent": YH_UA, "Referer": yhBase(this) + "/" } }];
   }
