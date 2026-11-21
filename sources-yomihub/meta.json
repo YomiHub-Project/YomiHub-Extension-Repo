@@ -331,13 +331,13 @@
    "id": 920260026,
    "name": "Phimmoi",
    "asset": "phimmoi.js",
-   "baseUrl": "https://phimmoii.mom",
+   "baseUrl": "https://phimmoii.run",
    "itemType": 1,
-   "appVersion": "0.3.8",
+   "appVersion": "0.3.9",
    "nsfw": false,
    "lang": "vi",
-   "iconUrl": "https://phimmoii.mom/favicon.ico",
-   "notes": "Kho phim bộ, phim lẻ, phim chiếu rạp Phimmoi Vietsub. Tên miền dự phòng: messiahelartista.com, phimmois.sh.",
+   "iconUrl": "https://phimmoii.run/favicon.ico",
+   "notes": "Kho phim bộ, phim lẻ, phim chiếu rạp Phimmoi Vietsub. Tên miền dự phòng: phimmoii.beer, phimmoic.vc, phimmois.sh. Thử bật VPN/Tor nếu mạng chặn.",
    "shorts": false
   },
   {

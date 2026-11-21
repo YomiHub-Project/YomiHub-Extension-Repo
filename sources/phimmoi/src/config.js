@@ -85,5 +85,5 @@ function fetchWithDomainFallback(pathOrUrl, opt) {
       lastErr = dom + ': ' + (e && e.message ? e.message : String(e));
     }
   }
-  throw new Error('Không thể kết nối đến máy chủ Phimmoi sau khi thử các tên miền dự phòng (' + (lastErr || 'lỗi mạng') + ').');
+  throw new Error('Không thể kết nối đến máy chủ Phimmoi sau khi thử các tên miền dự phòng (' + (lastErr || 'lỗi mạng') + ') – trang có thể đang lỗi hoặc bị nhà mạng chặn. Thử bật VPN/Tor cho tiện ích hoặc đổi tên miền.');
 }
