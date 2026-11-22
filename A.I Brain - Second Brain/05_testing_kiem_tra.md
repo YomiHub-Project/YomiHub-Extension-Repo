@@ -19,7 +19,7 @@
 | `node .build/test/<id>.mjs` | Kiểm nhanh một nguồn đã dựng (Antigravity dùng, 18/11) |
 | `tools/test/Http2BridgeTest.kt` | Test JVM cầu nối HTTP/2 (18/18; cách chạy ở đầu tệp) |
 
-Kết quả qua các bản (mạng thật): 0.0.4: 60 · 0.0.5: 66 · 0.0.6: 69 · **0.0.7: 77/196**. Aidoku-sim 0.0.6: 63/152.
+Kết quả qua các bản (mạng thật): 0.0.4: 60 · 0.0.5: 66 · 0.0.6: 69 · 0.0.7: 77/196 · **0.0.8: 94/196 (+ AVSub v14.1008 PASS 100%)**. Aidoku-sim: 0.0.6: 63/152 · **0.0.8: 74/152**.
 
 ## 2. Điều khiển thiết bị từ máy ảo Linux
 - `_work/phone4.ps1` (máy ảo Android) / `_work/phone5.ps1` (Galaxy Note9): chạy qua runner bằng job một dòng `& '...\_work\phone5.ps1'` (**không** dùng Start-Process lồng trong job vì tiến trình con bị mất). Đọc lệnh từ `_work/phone_cmd.txt`; sau mỗi lô lệnh chụp `shots/phone_now.png` + `ui_now.xml`. Tắt bằng lệnh `quit`.
@@ -57,8 +57,14 @@ Kết quả qua các bản (mạng thật): 0.0.4: 60 · 0.0.5: 66 · 0.0.6: 69 
 ## 6. Bằng chứng
 - Ảnh/video lưu ở `_work/shots/v<ver>/` (`v003` … `v008`), kèm `phone_settings_before.txt`. Liệt kê tên tệp trong `TECHNICAL_UPDATE_NOTES.md`.
 - 0.0.7: 19 ảnh + 6 video (mỗi app 1 video 0,5–1 MB) — chủ yếu là màn hình chính/duyệt.
-- 0.0.8: Đã kiểm thử tự động toàn diện qua script `_work/run_note9_tests_v008.ps1` trên Galaxy Note9 thật (SM-N960N):
-  - 81/81 APK mới 0.0.8 được cài đặt thành công (81 OK, 0 FAIL).
-  - 6 video screenrecord (.mp4): `01_aniyomi_rec.mp4` (4.04 MB - kiểm tra NguonC HLS, tua và Resume), `02_nekoyomi_rec.mp4` (1.11 MB - kiểm tra chỉ có nguồn Manga, đọc TruyenQQ), `03_mangayomi_rec.mp4` (836 KB - duyệt tiện ích), `04_yomihub_rec.mp4` (3.15 MB - tab Shorts video ngắn dọc và vuốt video), `05_lnreader_rec.mp4` (1.23 MB - đọc tiểu thuyết), `06_vbook_leechtext_rec.mp4` (2.66 MB - giao diện vBook/LeechText).
-  - Hơn 20 ảnh chụp màn hình chi tiết từng bước lưu tại `_work/shots/v008/`.
-  - Kết quả kiểm thử mạng thật: **94/196 PASS** (tăng +17 nguồn so với 77/196 của 0.0.7), Phim đạt 20/44 PASS (+5). Aidoku đạt 74/152 PASS.
+- 0.0.8 (kiểm thử lại tương tác, xác minh trực quan 100% trên Galaxy Note9 SM-N960N, Android 10 — bài học: **TUYỆT ĐỐI KHÔNG chạy script ADB mù không xem ảnh**, đợt 1 chạy khi màn hình khoá / "Bảo vệ tránh chạm vô tình" đã phải huỷ và làm lại):
+  - 81/81 APK 0.0.8 + `avsubanimevietsub-v14.1008.apk` cài đặt thành công; cài đặt máy lưu ở `phone_settings_before.txt` và trả lại nguyên trạng sau khi kiểm.
+  - **8 video screenrecord (.mp4, `ftypmp42`)** + **44 ảnh chụp màn hình (.png)** đã được kiểm định trực quan từng tệp tại `_work/shots/v008/`:
+    - `01_aniyomi_browse_rec.mp4` (6.2 MB, 02:49) & `01_aniyomi_rec.mp4` (19.6 MB, 01:37) + `01a..01i`: Aniyomi duyệt nguồn, tuỳ chỉnh `Tên miền / Custom domain` (Anime47), NguonC phát HLS `PlayerActivity` (`00:40/23:19`) và lưu Resume (`Đã xem: 0:43/23:19`).
+    - `07_avsub_inapp_play_rec.mp4` (25.8 MB, 02:33) + `07a..07e`: **AVSub – AnimeVietsub v14.1008** phát trực tiếp `[Vietsub] Tập 01` (*Đảo Hải Tặc*, `00:54/24:14`) bằng trình phát nội bộ Aniyomi, không mở WebView/web.
+    - `02_nekoyomi_rec.mp4` (6.0 MB, 01:48) + `02a..02f`: Nekoyomi chỉ có Manga (gồm `E Hentai` đa ngôn ngữ), TruyenQQ mở & vuốt đọc trang 1/9 → 2/9 sắc nét.
+    - `03_mangayomi_rec.mp4` (24.0 MB, 02:44) + `03a..03i`: Mangayomi duyệt TruyenQQ & Twitch thành công (ghi nhận trung thực: bản tiện ích cũ `0.0.3`/`0.0.6` cài sẵn trên máy lỗi ảnh TruyenQQ & quay vòng VOD Twitch 6h, cần *Update all* sau Release).
+    - `04_yomihub_rec.mp4` (20.7 MB, 02:49) + `04a..04d`: YomiHub duyệt Manga/Video, VTVgo tải VTV1–VTV4 (bản cài trên máy chưa bật tab đáy Shorts riêng).
+    - `05_lnreader_rec.mp4` (14.1 MB, 02:51) + `05a..05e`: LNReader duyệt `Bàn Long`, mở chi tiết & đọc chương *Ô Long Sơn tu hành bút ký* mượt.
+    - `06_vbook_leechtext_rec.mp4` (1.8 MB, 00:41) + `06a..06c`: vBook `v1.1.57` hiển thị Thư viện 25 nguồn; LeechText `2.0.0` tự dừng khi mở trên Android 10 (lỗi app).
+  - Kết quả kiểm thử mạng thật: **94/196 PASS** (+17 nguồn so với 0.0.7) + `avsubanimevietsub` v14.1008 PASS 100% (`--stream`). Aidoku đạt 74/152 PASS.

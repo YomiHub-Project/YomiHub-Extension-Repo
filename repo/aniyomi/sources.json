@@ -25,7 +25,7 @@
  },
  {
   "id": "avsubanimevietsub",
-  "name": "AVSub – AnimeVietsub (Ngừng hoạt động)",
+  "name": "AVSub – AnimeVietsub",
   "lang": "vi",
   "baseUrl": "https://animevsub.co.uk",
   "type": "video",
@@ -33,7 +33,7 @@
   "sourceId": 513314104,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriavsubanimevietsub",
-  "version": "14.1007"
+  "version": "14.1008"
  },
  {
   "id": "bilibili",

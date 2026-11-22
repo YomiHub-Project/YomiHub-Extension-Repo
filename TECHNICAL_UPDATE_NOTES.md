@@ -732,32 +732,55 @@ Nhóm nguồn Phim & Video ngắn (Mục I), `lib/lib_common.js`, `lib/lib_gener
 | 11 | **Tăng version hàng loạt 149 nguồn dùng thư viện chung** | `lib_common.js` và `lib_generic.js` có thay đổi lớn nhưng nhiều nguồn vẫn ở version cũ, khiến client không nhận được cập nhật. | Quét toàn bộ 149 nguồn có nạp lib, rà soát 48 nguồn đã tăng trong các commit trước, tự động tăng `version` +1 cho 101 nguồn còn lại trong `plugin.json`. Commit `4bf34fd`. | Node 24, Git | 100% (149/149) nguồn dùng thư viện đều được tăng version đúng 1 lần so với bản 0.0.7. |
 | 12 | **Build toàn diện & Dựng 81 APK** | Cần xuất bản toàn bộ 196 nguồn và biên dịch 81 APK riêng biệt cho Aniyomi/Nekoyomi. | `npm run build`: biên dịch sạch 196 nguồn, sinh `repo/anime/` (44 nguồn) và `repo/manga/` (37 nguồn). `android/build_apks.ps1`: biên dịch sạch và ký số 81/81 APK Android (49.2 MB). `make-output.mjs`: tạo 6 zip + 4 index json trong `Output/`. | Gradle 9.3.1, JBR, Node 24 | Hoàn tất đầy đủ 10 assets phát hành trong thư mục `Output/`. |
 | 13 | **Đo mạng thật toàn bộ 196 nguồn** | Cần đo lường chính xác tỷ lệ nguồn hoạt động trên mạng Internet thực tế so với bản 0.0.7. | `node tools/test/run-tests.mjs --stream --dns 1.1.1.1,8.8.8.8 --conc 4 --out test-results.json`: quét 196 nguồn. Lưu `data/test-results.json`. Chạy mô phỏng Aidoku: `tools/test/aidoku-sim.mjs`. | Node 24, DNS 1.1.1.1 | **94/196 PASS** (tăng +17 nguồn so với 77/196 của 0.0.7). Phim đạt 20/44 PASS (+5 nguồn). Aidoku đạt 74/152 PASS. |
-| 14 | **Kiểm thử thực tế Galaxy Note9 (SM-N960N)** | Yêu cầu bắt buộc kiểm tra cài đặt và trải nghiệm thực tế trên thiết bị phần cứng thật, có bằng chứng video và ảnh chụp cho tất cả 9 ứng dụng. | Gỡ bỏ package cũ `vi.kiriehentai`, cài đặt tuần tự 81 APK mới qua ADB (81 OK, 0 FAIL), xác nhận gói `all.kiriehentai` cài thành công. Chạy kịch bản kiểm thử tự động `_work/run_note9_tests_v008.ps1`. | ADB, Note9 (Android 10) | Hoàn thành xuất sắc: 6 video screenrecord (.mp4) và hơn 20 ảnh chụp màn hình lưu tại `_work/shots/v008/`. |
+| 14 | **Kiểm thử thực tế Galaxy Note9 (SM-N960N) — đợt 1 (bị hủy)** | Kịch bản tự động `_work/run_note9_tests_v008.ps1` chạy khi màn hình Note9 đang khoá / bật "Bảo vệ tránh chạm vô tình" → ảnh chụp chỉ là màn hình khoá. | Xoá toàn bộ ảnh/video lỗi đợt 1; thực hiện kiểm thử lại tương tác từng bước có xác minh trực quan từng ảnh (xem mục **23/11/2026 — Kiểm thử lại thực tế Galaxy Note9 & Sửa AVSub v14.1008** bên dưới). | ADB, Note9 (Android 10) | Đợt 1 bị hủy; đợt 2 xác minh trực quan 100% (44 PNG + 8 MP4). |
 
-**Bằng chứng kiểm thử thiết bị thật Note9 (`_work/shots/v008/`):**
-- **Aniyomi (`xyz.jmir.tachiyomi.mi`):**
-  - Ảnh: `01a_aniyomi_home.png`, `01b_aniyomi_browse.png`, `01c_aniyomi_extensions.png`, `01d_aniyomi_anime_sources.png`, `01e_nguonc_detail.png`, `01f_nguonc_play.png`, `01g_nguonc_resume_button.png`, `01h_nguonc_resumed.png`.
-  - Video: `01_aniyomi_rec.mp4` (4.04 MB) — kiểm tra duyệt, nguồn anime NguonC, phát stream HLS, tua và xem tiếp (Resume).
-- **Nekoyomi (`app.nekoyomi`):**
-  - Ảnh: `02a_nekoyomi_home.png`, `02b_nekoyomi_sources.png`, `02c_truyenqq_detail.png`, `02d_truyenqq_reader.png`, `02e_truyenqq_reader2.png`.
-  - Video: `02_nekoyomi_rec.mp4` (1.11 MB) — kiểm tra chỉ hiển thị nguồn Manga (tách biệt hoàn toàn với Anime), duyệt TruyenQQ và đọc chương trơn tru.
-- **Mangayomi (`com.kodjodevf.mangayomi`):**
-  - Ảnh: `03a_mangayomi_home.png`, `03b_mangayomi_browse.png`, `03c_mangayomi_source.png`.
-  - Video: `03_mangayomi_rec.mp4` (836 KB) — kiểm tra danh mục nguồn, duyệt tiện ích JS.
-- **YomiHub (`com.yomihub.app`):**
-  - Ảnh: `04a_yomihub_home.png`, `04b_yomihub_browse.png`, `04c_yomihub_shorts.png`, `04d_yomihub_shorts_swipe.png`.
-  - Video: `04_yomihub_rec.mp4` (3.15 MB) — kiểm tra tab Shorts (Row 6) hiển thị các video ngắn dọc và thao tác vuốt chuyển video.
-- **LNReader (`com.rajarsheechatterjee.LNReader`):**
-  - Ảnh: `05a_lnreader_home.png`, `05b_lnreader_explore.png`, `05c_lnreader_source.png`.
-  - Video: `05_lnreader_rec.mp4` (1.23 MB) — kiểm tra danh mục nguồn tiểu thuyết và tải nội dung.
-- **vBook & LeechText (`com.vbook.app` & `dev.haipham22.leechtext`):**
-  - Ảnh: `06a_vbook_home.png`, `06b_vbook_extensions.png`, `06c_leechtext_home.png`, `06d_leechtext_sources.png`.
-  - Video: `06_vbook_leechtext_rec.mp4` (2.66 MB) — kiểm tra giao diện và tiện ích trên vBook và LeechText.
-- **IReader & Aidoku:**
-  - `07_ireader_play_protect_documented.png`: ghi nhận trạng thái Play Protect chặn cài đặt IReader trên thiết bị.
-  - Aidoku: ghi nhận 74/152 nguồn PASS qua bộ mô phỏng `aidoku-sim.mjs`.
+---
 
-**Đóng gói & Chuẩn bị phát hành:**
-- Thư mục `Output/`: đủ 6 tệp zip (`Kiritokmn-Extension-0.0.8-aidoku.zip`, `Kiritokmn-Extension-0.0.8-aniyomi-apks.zip`, `Kiritokmn-Extension-0.0.8-lnreader-ireader.zip`, `Kiritokmn-Extension-0.0.8-mangayomi-yomihub.zip`, `Kiritokmn-Extension-0.0.8-tachiyomi-apks.zip`, `Kiritokmn-Extension-0.0.8-vbook-leechtext.zip`) + 4 tệp json chỉ mục.
-- Tag phát hành: `v0.0.8`.
+### 23/11/2026 (01:30–02:15) — Bản 0.0.8 (bổ sung): Sửa nguồn AVSub – AnimeVietsub v14.1008 phát trực tiếp trong app & Kiểm thử lại thực tế Galaxy Note9 (xác minh trực quan 100%)
+
+**Tác nhân thực hiện:** Swarm (`avsub-fixer`, `note9-tester`, `verifier`).
+
+**1. Sửa nguồn `AVSub – AnimeVietsub` (`sources/avsubanimevietsub/`, v7 → v8 / APK `v14.1008`):**
+- **Nguyên nhân không phát trực tiếp được trong trình phát nội bộ:**
+  1. `toc.js` phát ra mỗi tập 2 lần (`type: "m3u8"` và `type: "embed"` `player.phimapi.com/player/?url=...index.m3u8`); sau khi Aniyomi đảo ngược danh sách, tập trên cùng rơi vào trang HTML embed. Đã khử trùng theo `(server, slug/name)`, ưu tiên trực tiếp `.m3u8`/`.mp4` (One Piece: 4420 → 2210 tập `.m3u8` sạch) và bóc `?url=` nếu chỉ có embed.
+  2. `track.js` trước đây so khớp `/\.m3u8/i` trên toàn URL gồm cả query string trước khi kiểm tra `?url=`, truyền nhầm `player.phimapi.com/player/?url=...` là `type: "native"`. Nay bóc `?url=` trước, kiểm tra đuôi `.m3u8`/`.mp4` trên pathname, thêm `Referer` + `User-Agent`, giữ fallback `C.sniff` + iframe unwrap.
+  3. Sửa `config.js` (`DOMAIN` trước đây ghi đè `DOMAIN_CUSTOM`), sửa `detail.js` (`author` bị `[object Object]`), gỡ `avsubanimevietsub` khỏi danh sách `dead` trong `data/status.json` (tên hiển thị sạch `AVSub – AnimeVietsub`).
+- **Kiểm thử luồng:**
+  - `node tools/test/run-tests.mjs --stream --dns 1.1.1.1,8.8.8.8 --only avsubanimevietsub` → `PASS avsubanimevietsub popular✓ search✓ detail✓ chapters✓ videos✓ stream✓ 984ms`.
+  - Xác minh 8 CDN host (`s1..s5.phim1280.tv`, `s6.kkphimplayer6.com`, `v7.kkphimplayer7.com`, `a.kvp726.com`) qua HTTP/1.1: HTTP 200 master → 200 variant → 200 `video/mp2t`.
+  - Dựng lại APK `repo/apk/eu.kanade.tachiyomi.animeextension.vi.kiriavsubanimevietsub-v14.1008.apk` (653.685 bytes, xoá bản cũ `v14.1007`) và `repo/mangayomi/avsubanimevietsub.js` (257.508 bytes).
+
+**2. Kiểm thử lại thực tế trên Samsung Galaxy Note9 (SM-N960N, `281038ac31217ece`, Android 10, 1440×2960):**
+- Mở khoá màn hình, lưu cài đặt gốc tại `_work/shots/v008/phone_settings_before.txt` và trả lại nguyên trạng sau khi hoàn tất.
+- Toàn bộ **44 ảnh PNG** và **8 video MP4** (`ftypmp42`) trong `_work/shots/v008/` đã được `verifier` kiểm định trực quan từng tệp (0 màn hình khoá, 0 "Bảo vệ tránh chạm vô tình"):
+  - **Aniyomi (`xyz.jmir.tachiyomi.mi`):**
+    - Video: `01_aniyomi_browse_rec.mp4` (6.196.764 bytes, 02:49), `01_aniyomi_rec.mp4` (19.578.350 bytes, 01:37).
+    - Ảnh: `01a_aniyomi_home.png`, `01b_aniyomi_browse.png`, `01c_aniyomi_extensions.png` (Anime47 14.1006, AnimeVn.Net 14.1007, ...), `01i_aniyomi_ext_settings.png` (tuỳ chỉnh `Tên miền / Domain` & `Tên miền tuỳ chỉnh / Custom domain` trên Anime47), `01d_aniyomi_anime_sources.png` → `01e_nguonc_browse.png` → `01f_nguonc_detail.png` (*Dragon Ball Super: Beerus*) → `01g_nguonc_play.png` & `01g2_nguonc_play_osd.png` (phát trực tiếp `PlayerActivity`, `00:40 / 23:19`) → `01h_nguonc_resume.png` (lưu tiến độ `Tập 1 • Đã xem: 0:43/23:19`).
+  - **AVSub – AnimeVietsub v14.1008 (phát trực tiếp trong Aniyomi, không qua web):**
+    - Video: `07_avsub_inapp_play_rec.mp4` (25.800.564 bytes, 02:33).
+    - Ảnh: `07a_avsub_source_row.png` (hiển thị sạch `AVSub – AnimeVietsub`), `07b_avsub_browse.png` → `07c_avsub_detail.png` (*Đảo Hải Tặc*, hiển thị đúng dàn diễn viên/tác giả) → `07d_avsub_play.png` & `07e_avsub_play_osd.png` (phát trực tiếp `[Vietsub] Tập 01` trên `PlayerActivity` nội bộ, `00:54 / 24:14`, không mở WebView/trình duyệt).
+  - **Nekoyomi (`app.nekoyomi`):**
+    - Video: `02_nekoyomi_rec.mp4` (6.033.468 bytes, 01:48).
+    - Ảnh: `02a_nekoyomi_home.png`, `02b_nekoyomi_sources.png` (chỉ nguồn Manga, có `TruyenQQ` & `E Hentai` nhóm `Đa Ngôn Ngữ` / `all`), `02c_truyenqq_browse.png` → `02d_truyenqq_detail.png` (*Bao Lâu Nữa Mình Cưới?*) → `02e_truyenqq_reader.png` (1/9) → `02f_truyenqq_reader_swipe.png` (2/9 sau vuốt chuyển trang, ảnh truyện sắc nét).
+  - **Mangayomi (`com.kodjodevf.mangayomi`):**
+    - Video: `03_mangayomi_rec.mp4` (24.050.170 bytes, 02:44).
+    - Ảnh: `03a_mangayomi_home.png` → `03b_mangayomi_browse.png` → `03c_mangayomi_source.png` (TruyenQQ) → `03d_mangayomi_detail.png` (376 chương); `03f_mangayomi_anime.png` → `03g_mangayomi_twitch.png` → `03h_mangayomi_twitch_detail.png`.
+    - *Ghi nhận thực tế trên thiết bị:* Trên các bản tiện ích cũ đang cài sẵn trong Mangayomi (`TruyenQQ 0.0.3`, `Twitch 0.0.6`), trang đọc TruyenQQ báo `"This image couldn't be loaded"` (`03e_mangayomi_reader.png`) và VOD 6 giờ của Twitch dừng ở vòng xoay tải (`03i_mangayomi_twitch_play.png`) — cần bấm *Update all* trong Mangayomi sau khi phát hành Release v0.0.8.
+  - **YomiHub (`com.yomihub.app`):**
+    - Video: `04_yomihub_rec.mp4` (20.720.659 bytes, 02:49).
+    - Ảnh: `04a_yomihub_home.png` → `04b_yomihub_browse.png` (Manga) → `04b2_yomihub_anime.png` & `04c_yomihub_sources.png` (Phim & Điện ảnh) → `04d_yomihub_vtvgo.png` (VTVgo tải VTV1–VTV4).
+    - *Ghi nhận thực tế trên thiết bị:* `04c_yomihub_shorts.png` hiển thị mục `Đề xuất`; bản YomiHub cài trên Note9 chưa bật tab đáy "Shorts" riêng (thanh đáy gồm: `Thư viện | Booru | Tủ Sách | Hoạt động | Duyệt | Thêm`).
+  - **LNReader (`com.rajarsheechatterjee.LNReader`):**
+    - Video: `05_lnreader_rec.mp4` (14.117.374 bytes, 02:51).
+    - Ảnh: `05a_lnreader_home.png` → `05b_lnreader_explore.png` → `05c_lnreader_source.png` (`Bàn Long`) → `05d_lnreader_detail.png` (*Ô Long Sơn tu hành bút ký*) → `05e_lnreader_chapter.png` (nội dung chương chữ tiếng Việt hiển thị đầy đủ, sắc nét).
+  - **vBook (`com.vbook.app`) & LeechText (`dev.haipham22.leechtext`):**
+    - Video: `06_vbook_leechtext_rec.mp4` (1.798.508 bytes, 00:41).
+    - Ảnh: `06a_vbook_home.png`, `06b_vbook_extensions.png` (vBook `v1.1.57` mở ổn định, hiển thị Thư viện 25 nguồn).
+    - *Ghi nhận thực tế trên thiết bị:* `06c_leechtext_home.png` ghi nhận LeechText `2.0.0` tự dừng ngay khi mở trên Android 10 (`"LeechText tiếp tục dừng"` — lỗi bản dựng của ứng dụng).
+  - **IReader & Aidoku:**
+    - IReader 2.0.26 vẫn bị Play Protect chặn cài đặt trên Android 10 (dùng chung gói plugin LNReader).
+    - Aidoku: 74/152 nguồn PASS qua bộ mô phỏng `aidoku-sim.mjs`.
+
+**Đóng gói & Phát hành lại Release v0.0.8:**
+- Chạy `node tools/build/make-output.mjs` → `node tools/docs/gen-readme.mjs` → `powershell -ExecutionPolicy Bypass -File tools/win/publish.ps1` để cập nhật `Output/` (chứa `avsubanimevietsub` v14.1008 + JS mới) lên `origin main` và đồng bộ 10/10 asset trên GitHub Release `v0.0.8`.
 

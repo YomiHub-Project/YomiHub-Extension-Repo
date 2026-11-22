@@ -11,23 +11,16 @@ var BACKUP_DOMAINS = [
 ];
 var BASE_URL = BACKUP_DOMAINS[0];
 try {
-  if (typeof DOMAIN_CUSTOM !== 'undefined' && DOMAIN_CUSTOM && DOMAIN_CUSTOM.trim()) {
+  if (typeof DOMAIN_CUSTOM !== 'undefined' && DOMAIN_CUSTOM && String(DOMAIN_CUSTOM).trim()) {
     BASE_URL = String(DOMAIN_CUSTOM).trim().replace(/\/+$/, "");
-  } else if (typeof DOMAIN !== 'undefined' && DOMAIN) {
-    BASE_URL = String(DOMAIN).replace(/\/+$/, "");
+  } else if (typeof DOMAIN !== 'undefined' && DOMAIN && String(DOMAIN).trim()) {
+    BASE_URL = String(DOMAIN).trim().replace(/\/+$/, "");
+  }
+  if (BASE_URL && BACKUP_DOMAINS.indexOf(BASE_URL) === -1) {
+    BACKUP_DOMAINS.unshift(BASE_URL);
   }
 } catch (e) {}
 var API_URL = "https://anime-api.clubc.org";
-
-try {
-  if (typeof DOMAIN !== 'undefined' && DOMAIN) {
-    var d = String(DOMAIN).replace(/\/+$/, "");
-    if (d) {
-      BASE_URL = d;
-      if (BACKUP_DOMAINS.indexOf(d) === -1) BACKUP_DOMAINS.unshift(d);
-    }
-  }
-} catch (e) {}
 
 var G = {
   "tabs": {

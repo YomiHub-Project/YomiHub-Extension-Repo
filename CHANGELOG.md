@@ -27,7 +27,8 @@
   - **Xôi Lạc TV (`xoilac`):** Khôi phục phát luồng trực tiếp bóng đá HLS m3u8 và hỗ trợ `DOMAIN_CUSTOM` (PASS 100%).
   - **FapReel (`fapreel`):** Khôi phục trích xuất mp4 dọc trực tiếp và tối ưu tìm kiếm thông minh (PASS 100%).
   - **Hồng Quả (`hongqua`):** Cập nhật search API `/api/search/result` và player episode selector (PASS 100%).
-  - **Anime47, Phimmoi, AVSub, AnimeVN, FikFap, SexVietTop:** Khôi phục tên miền mới và dự phòng kết nối.
+  - **AVSub – AnimeVietsub (`avsubanimevietsub`, v14.1008):** Khử trùng danh sách tập và ưu tiên luồng `.m3u8` trực tiếp, sửa `track.js` bóc `?url=` trước khi kiểm tra đuôi m3u8/mp4 kèm header `Referer`/`User-Agent`, sửa lỗi `DOMAIN_CUSTOM` và `author`, gỡ khỏi danh sách `dead` — **phát video trực tiếp bằng trình phát có sẵn trên Aniyomi (không cần mở web/WebView)**, PASS 100% kiểm thử `--stream` trên cả 8 CDN host và đã xác minh phát thật trên Galaxy Note9.
+  - **Anime47, Phimmoi, AnimeVN, FikFap, SexVietTop:** Khôi phục tên miền mới và dự phòng kết nối.
 - **Nhóm Truyện tranh & Tiểu thuyết:**
   - **Syosetu R18 (`syosetur18`):** Sửa Nocturne ranking selector, cookie `over18=yes`, kết nối `noc.syosetu.com` (PASS 100%).
   - **Truyện Net (`truyennet`):** Đổi tên miền sang `truyennet.org`, loại bỏ vòng lặp fetch 20 request đồng bộ tránh lỗi Cloudflare 429 (PASS 100%).
@@ -46,9 +47,15 @@ Sau khi cập nhật lên bản 0.0.8, bạn sẽ thấy 2 tiện ích E-Hentai.
 3. Giữ bản mới ở nhóm **Đa ngôn ngữ**. Truyện trong thư viện từ bản cũ cần chuyển nguồn (Migrate) sang bản mới.
 
 ## Kết quả kiểm thử & Thiết bị thật Galaxy Note9
-- **Kiểm thử mạng thật toàn bộ:** Đạt **94/196 PASS** (48.0%), tăng +17 nguồn so với bản 0.0.7 (77/196). Nhóm phim đạt 20/44 PASS (+5 nguồn).
+- **Kiểm thử mạng thật toàn bộ:** Đạt **94/196 PASS** (48.0%) ở lượt đo toàn bộ (+17 nguồn so với 0.0.7), bổ sung **AVSub – AnimeVietsub (`avsubanimevietsub` v14.1008)** PASS 100% (`popular✓ search✓ detail✓ chapters✓ videos✓ stream✓`).
 - **Mô phỏng Aidoku:** 74/152 nguồn PASS trọn chuỗi.
-- **Kiểm thử trên Samsung Galaxy Note9 (SM-N960N):** Cài đặt thành công 81/81 APK (81 OK, 0 FAIL). Chạy và ghi hình đầy đủ 6 video screenrecord (.mp4) và hơn 20 ảnh chụp màn hình kiểm thử từng ứng dụng (`_work/shots/v008/`).
+- **Kiểm thử trực quan trên Samsung Galaxy Note9 (SM-N960N, Android 10):** Cài đặt thành công 81/81 APK + cập nhật `avsubanimevietsub-v14.1008.apk`, xác minh trực quan 100% với **8 video screenrecord (.mp4)** và **44 ảnh chụp màn hình (.png)** tại `_work/shots/v008/`:
+  - **Aniyomi:** NguonC phát HLS + lưu tiến độ Resume (`0:43/23:19`), **AVSub – AnimeVietsub v14.1008** phát trực tiếp trong `PlayerActivity` (`00:54/24:14`, không qua web), Anime47 hiển thị tuỳ chỉnh tên miền (`Tên miền / Custom domain`).
+  - **Nekoyomi:** Chỉ hiển thị nguồn Manga (có `E Hentai` nhóm `Đa Ngôn Ngữ`), TruyenQQ tải & vuốt đọc trang mượt.
+  - **LNReader:** `Bàn Long` mở chi tiết & đọc chương tiếng Việt đầy đủ.
+  - **YomiHub:** Duyệt nguồn Manga/Video, VTVgo tải danh sách kênh VTV1–VTV4 (bản cài trên máy chưa bật tab Shorts riêng).
+  - **Mangayomi:** Duyệt TruyenQQ & Twitch thành công (các bản tiện ích cũ `0.0.3`/`0.0.6` cài sẵn trên máy cần bấm *Update all* sau khi phát hành Release v0.0.8).
+  - **vBook (`v1.1.57`):** Mở sạch, hiển thị Thư viện 25 nguồn. **LeechText (`2.0.0`):** tự dừng khi mở trên Android 10 (lỗi ứng dụng).
 
 ---
 

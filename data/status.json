@@ -1,7 +1,6 @@
 {
   "_note": "0.0.4 (13/11/2026): trạng thái nguồn do kiểm tra thủ công + domprobe/run-tests trên mạng VN. dead = giữ trong kho nhưng đánh dấu (Ngừng hoạt động) theo yêu cầu chủ dự án; các nhóm khác chỉ ghi chú trong README.",
   "dead": {
-    "avsubanimevietsub": "mọi tên miền không phân giải (ENOTFOUND) / chứng chỉ lỗi",
     "damconuong": "tên miền chết (ENOTFOUND / 525)",
     "dualeotruyen": "tên miền chết",
     "guphim": "tên miền chết (guphimz.com, guphim.com/.net)",

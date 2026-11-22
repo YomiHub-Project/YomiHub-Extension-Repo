@@ -94,3 +94,17 @@ Mỗi phiên thêm một mục ở **cuối tệp**: ngày, người/tác nhân,
     * Trả lại cài đặt xoay màn hình và hiển thị Note9 về chuẩn sau khi test.
   - **Việc F (Tài liệu):** Cập nhật chi tiết 0.0.8 trong `TECHNICAL_UPDATE_NOTES.md`, `CHANGELOG.md`, sinh lại `README.md` (chuẩn Standard, kèm link tải 10 asset Release v0.0.8), cập nhật Second Brain (04, 05, 09, 11, 12).
   - **Việc G & H (Phát hành & Báo cáo):** Push commit `main` lên GitHub, tạo GitHub Release `v0.0.8` đính kèm 10 files `Output/`, đối chiếu asset đầy đủ, báo cáo thống kê hoàn tất cho chủ dự án.
+
+## 23/11/2026 01:30–02:15 — bản 0.0.8 (bổ sung): Kiểm thử lại thực tế Galaxy Note9 (xác minh trực quan) & Sửa AVSub v14.1008 phát trực tiếp trong app (Swarm: `avsub-fixer`, `note9-tester`, `verifier`)
+- **Lý do làm lại kiểm thử:** Chủ dự án phát hiện bộ ảnh đợt 1 của `_work/run_note9_tests_v008.ps1` chạy mù khi Note9 đang ở màn hình khoá / "Bảo vệ tránh chạm vô tình", đồng thời yêu cầu sửa nguồn **AnimeVietSub Online (`avsubanimevietsub`)** phát trực tiếp bằng trình phát nội bộ không qua web.
+- **`avsub-fixer` sửa `sources/avsubanimevietsub/` (v7 → v8 / APK `v14.1008`):**
+  - Khử trùng tập trong `toc.js` ưu tiên `.m3u8` trực tiếp, bóc `?url=` trong `track.js` trước khi kiểm tra đuôi stream kèm header `Referer`/`User-Agent`, sửa `DOMAIN_CUSTOM` trong `config.js` và `author` trong `detail.js`, gỡ khỏi `dead` trong `data/status.json`.
+  - `run-tests.mjs --stream --dns 1.1.1.1,8.8.8.8 --only avsubanimevietsub` → PASS 100% (984ms), xác minh HTTP 200 MPEG-TS trên cả 8 CDN host; dựng lại `eu.kanade.tachiyomi.animeextension.vi.kiriavsubanimevietsub-v14.1008.apk` và `repo/mangayomi/avsubanimevietsub.js`.
+- **`note9-tester` kiểm thử tương tác thực tế trên Note9 (`281038ac31217ece`, Android 10) & `verifier` kiểm định trực quan 100% (44 PNG + 8 MP4 tại `_work/shots/v008/`):**
+  - Aniyomi: NguonC phát HLS (`00:40/23:19`) + lưu Resume (`0:43/23:19`), Anime47 tuỳ chỉnh tên miền, **AVSub v14.1008** phát trực tiếp `[Vietsub] Tập 01` (*Đảo Hải Tặc*, `00:54/24:14`) trong `PlayerActivity` không mở WebView.
+  - Nekoyomi: chỉ Manga + `E Hentai` đa ngôn ngữ, TruyenQQ mở & vuốt trang 1/9 → 2/9 sắc nét.
+  - LNReader: `Bàn Long` đọc chương tiếng Việt đầy đủ.
+  - YomiHub: duyệt Manga/Video, VTVgo tải VTV1–VTV4 (ghi nhận bản cài trên máy chưa bật tab đáy Shorts riêng).
+  - Mangayomi: duyệt TruyenQQ & Twitch OK (bản tiện ích cũ `0.0.3`/`0.0.6` cài sẵn trên máy lỗi ảnh/quay vòng VOD, cần *Update all* sau Release).
+  - vBook `v1.1.57`: mở sạch, Thư viện 25 nguồn; LeechText `2.0.0`: tự dừng ngay khi mở trên Android 10 (lỗi app).
+- **Cập nhật tài liệu & phát hành lại Release v0.0.8:** Cập nhật `TECHNICAL_UPDATE_NOTES.md`, `CHANGELOG.md`, `05_testing_kiem_tra.md`, `12_session log_nhat_ky_phien_lam_viec.md`; chạy `make-output.mjs`, `gen-readme.mjs`, `tools/win/publish.ps1` để đồng bộ `origin main` và 10/10 asset trên Release `v0.0.8`.

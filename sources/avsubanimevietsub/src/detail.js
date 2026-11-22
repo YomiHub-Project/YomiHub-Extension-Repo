@@ -26,10 +26,23 @@ function execute(url) {
               if (m.categories[i] && m.categories[i].name) genres.push(m.categories[i].name);
             }
           }
+          var fmtNames = function (arr) {
+            if (!arr) return '';
+            if (typeof arr === 'string') return arr.trim();
+            if (!Array.isArray(arr)) return arr.name ? String(arr.name).trim() : '';
+            var out = [];
+            for (var k = 0; k < arr.length; k++) {
+              var n = typeof arr[k] === 'string' ? arr[k] : (arr[k] && arr[k].name ? arr[k].name : '');
+              n = String(n || '').trim();
+              if (n && n.toLowerCase() !== 'đang cập nhật' && out.indexOf(n) === -1) out.push(n);
+            }
+            return out.slice(0, 5).join(', ');
+          };
+          var author = fmtNames(m.directors) || fmtNames(m.actors) || 'AnimeVietsub';
           return Response.success({
             name: m.name,
             cover: cover,
-            author: m.directors || m.actors || 'AnimeVietsub',
+            author: author,
             description: (m.content || m.content2 || '').replace(/<[^>]+>/g, '').trim(),
             detail: m.episode_current ? ('Tiến độ: ' + m.episode_current) : '',
             ongoing: m.status === 'ongoing',

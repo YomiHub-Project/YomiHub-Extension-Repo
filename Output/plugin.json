@@ -173,13 +173,13 @@
    "nsfw": false
   },
   {
-   "name": "AVSub – AnimeVietsub (Ngừng hoạt động)",
+   "name": "AVSub – AnimeVietsub",
    "author": "Kiritokmn",
    "path": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/vbook/avsubanimevietsub.zip",
-   "version": 7,
+   "version": 8,
    "source": "https://animevsub.co.uk",
    "icon": "https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main/repo/icons/avsubanimevietsub.png",
-   "description": "⛔ Ngừng hoạt động: mọi tên miền không phân giải (ENOTFOUND) / chứng chỉ lỗi. AVSub – AnimeVietsub — Kiritokmn Extension Repo",
+   "description": "AVSub – AnimeVietsub — Kiritokmn Extension Repo",
    "type": "video",
    "locale": "vi_VN",
    "nsfw": false
