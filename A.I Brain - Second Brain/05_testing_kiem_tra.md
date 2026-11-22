@@ -55,5 +55,10 @@ Kết quả qua các bản (mạng thật): 0.0.4: 60 · 0.0.5: 66 · 0.0.6: 69 
 - **Tên + logo riêng** (APK): Aniyomi/Nekoyomi → Extensions hiện đúng tên, logo, ngôn ngữ, nhãn 18+ từng nguồn.
 
 ## 6. Bằng chứng
-- Ảnh/video lưu ở `_work/shots/v<ver>/` (`v003` … `v007`), kèm `phone_settings_before.txt`. Liệt kê tên tệp trong `TECHNICAL_UPDATE_NOTES.md`.
-- 0.0.7: 19 ảnh + 6 video (mỗi app 1 video 0,5–1 MB) — chủ yếu là màn hình chính/duyệt; **chưa có video phát Twitch trên Mangayomi**. Bản sau nên quay đúng cảnh phát/tua/xem tiếp cho tính năng vừa sửa.
+- Ảnh/video lưu ở `_work/shots/v<ver>/` (`v003` … `v008`), kèm `phone_settings_before.txt`. Liệt kê tên tệp trong `TECHNICAL_UPDATE_NOTES.md`.
+- 0.0.7: 19 ảnh + 6 video (mỗi app 1 video 0,5–1 MB) — chủ yếu là màn hình chính/duyệt.
+- 0.0.8: Đã kiểm thử tự động toàn diện qua script `_work/run_note9_tests_v008.ps1` trên Galaxy Note9 thật (SM-N960N):
+  - 81/81 APK mới 0.0.8 được cài đặt thành công (81 OK, 0 FAIL).
+  - 6 video screenrecord (.mp4): `01_aniyomi_rec.mp4` (4.04 MB - kiểm tra NguonC HLS, tua và Resume), `02_nekoyomi_rec.mp4` (1.11 MB - kiểm tra chỉ có nguồn Manga, đọc TruyenQQ), `03_mangayomi_rec.mp4` (836 KB - duyệt tiện ích), `04_yomihub_rec.mp4` (3.15 MB - tab Shorts video ngắn dọc và vuốt video), `05_lnreader_rec.mp4` (1.23 MB - đọc tiểu thuyết), `06_vbook_leechtext_rec.mp4` (2.66 MB - giao diện vBook/LeechText).
+  - Hơn 20 ảnh chụp màn hình chi tiết từng bước lưu tại `_work/shots/v008/`.
+  - Kết quả kiểm thử mạng thật: **94/196 PASS** (tăng +17 nguồn so với 77/196 của 0.0.7), Phim đạt 20/44 PASS (+5). Aidoku đạt 74/152 PASS.

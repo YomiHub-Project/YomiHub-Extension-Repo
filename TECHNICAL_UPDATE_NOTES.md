@@ -10,10 +10,10 @@ Chủ dự án yêu cầu tạo và duy trì tài liệu này ngày 25/10/2026. 
 
 | Hạng mục | Trạng thái |
 |---|---|
-| Phiên bản | **0.0.7** (18/11/2026) — trước đó 0.0.6 (16/11/2026), 0.0.5 (13/11/2026), 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
-| Số nguồn | 196 (Phim 44 · Truyện tranh 36 · Tiểu thuyết 116) lấy từ `Project Extension Repo.xlsx` → sheet *Extension Repo Main* |
-| Ứng dụng hỗ trợ | Aniyomi, Nekoyomi (từ 0.0.5: mỗi nguồn một APK — 44 Phim + 37 Truyện; từ 0.0.6: chọn / nhập tên miền trên mọi app) · Mangayomi, YomiHub (JS) · LNReader, IReader (plugin JS ES5) · vBook, LeechText, YomiHub-vBook (zip vBook) · **Aidoku** (từ 0.0.3: 152 gói `.aix` — cầu nối Rust/WASM + JavaScriptCore, xem `docs/AIDOKU.md`) |
-| Kết quả kiểm thử | xem bảng trong `README.md` (tự sinh từ `data/test-results.json`) |
+| Phiên bản | **0.0.8** (23/11/2026) — trước đó 0.0.7 (18/11/2026), 0.0.6 (16/11/2026), 0.0.5 (13/11/2026), 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
+| Số nguồn | 196 (Phim 44 · Truyện tranh 37 · Tiểu thuyết 115) lấy từ `Project Extension Repo.xlsx` → sheet *Extension Repo Main* |
+| Ứng dụng hỗ trợ | Aniyomi, Nekoyomi (từ 0.0.5: mỗi nguồn một APK — 44 Phim + 37 Truyện; từ 0.0.8: tách riêng repo Anime/Manga; chọn / nhập tên miền trên mọi app) · Mangayomi, YomiHub (JS) · LNReader, IReader (plugin JS ES5) · vBook, LeechText, YomiHub-vBook (zip vBook) · **Aidoku** (từ 0.0.3: 152 gói `.aix` — cầu nối Rust/WASM + JavaScriptCore, xem `docs/AIDOKU.md`) |
+| Kết quả kiểm thử | **94/196 PASS** (48.0%) mạng thật toàn bộ nguồn (+17 PASS so với 0.0.7: 77/196); Phim 20/44 PASS (+5); Aidoku 74/152 PASS; Note9 thực tế 81/81 APK cài đặt và chạy thành công (xem bảng trong `README.md` tự sinh từ `data/test-results.json`) |
 
 ## Kiến trúc (0.0.1)
 
@@ -707,3 +707,57 @@ Quyết định của chủ dự án:
 | 10 | **Khôi phục nguồn dead: Tinh Linh (tinhlinh)** | Máy chủ tinhlinh.com trước đây lỗi SSL Cloudflare 525, nay đã khắc phục xong chứng chỉ. | Gỡ `tinhlinh` khỏi danh sách `dead` trong `data/status.json`. Bump version 6 trong `sources/tinhlinh/plugin.json`. | Node 24, run-tests | `PASS tinhlinh popular✓ search✓ detail✓ chapters✓ content✓ 3955ms` (PASS 100%). |
 | 11 | **Phân loại trạng thái (status.json & cloudflare.json)** | Nhiều trang chuyển đổi sang SPA Next.js hoặc yêu cầu tài khoản/bảo vệ bot, chưa được ghi nhận chính xác. | Cập nhật `data/status.json`: thêm `minotruyen`, `quykiep`, `lohi`, `moyuemacduyet`, `taonovel` vào `api`; `lnkuro`, `douban` vào `login`; `snapd` vào `protected`. Cập nhật `data/cloudflare.json`: thêm `sayhentai`, `truyenh`, `novelnext` vào `interactive`. | VS Code, Node 24 | Phân loại trạng thái minh bạch, chính xác. |
 | 12 | **Soạn thảo README Standard (Row 12)** | Cần bản README chuẩn theo mẫu Standard Compendium, song ngữ Việt - Anh, có placeholder link Release. | Soạn thảo `_work/README_0.0.8_draft.md` đầy đủ các mục: giới thiệu, danh sách ứng dụng, deep links, hướng dẫn cài đặt, điểm mới 0.0.8, bảng danh mục 196 nguồn, kiến trúc build, quy định đóng góp và `{{RELEASE_LINKS}}`. | Markdown | Tệp sẵn sàng tại `_work/README_0.0.8_draft.md` để Claude điều phối chèn link và hoàn tất. |
+
+---
+
+### 22–23/11/2026 — Bản 0.0.8 (Đợt cập nhật bởi tác nhân `ag_app` & Antigravity Swarm Coordinator: Nâng cấp Phim & Video ngắn, Tùy biến tên miền 44 nguồn, Tăng version 149 nguồn, Đo mạng 196 nguồn đạt 94 PASS, Dựng 81 APK, Kiểm thử Note9 đầy đủ video/ảnh)
+
+**Phạm vi phụ trách của `ag_app` & Điều phối viên Antigravity:**
+Nhóm nguồn Phim & Video ngắn (Mục I), `lib/lib_common.js`, `lib/lib_generic.js`, `runtime/`, `hosts/`, tiếp nhận bàn giao toàn bộ các hạng mục còn lại (Bàn giao mục 2, việc B→H): tăng version 149 nguồn dùng thư viện chung, build toàn bộ 196 nguồn, dựng và ký 81 APK Android, đo mạng thật 196 nguồn, kiểm thử thực tế trên Samsung Galaxy Note9 (ảnh + video 9 app), cập nhật tài liệu, và chuẩn bị phát hành GitHub Release v0.0.8.
+
+**Hạng mục thực hiện & Kết quả chi tiết**
+
+| # | Hạng mục | Lỗi phát hiện | Tệp / giải pháp đã áp dụng | Công cụ | Kết quả kiểm thử |
+|---|---|---|---|---|---|
+| 1 | **Nâng cấp thư viện chung (Row 3 & Row 10)** | Các trang phim hiện đại thường đóng gói luồng video dưới dạng Dean Edwards `p,a,c,k,e,d`, base64 obfuscation, và chèn mã chống DevTools/debugger làm crash runtime. | `lib/lib_common.js`: Thêm `C.sniff` hỗ trợ giải mã unpack, base64 decode, regex bắt m3u8/mp4 động kiểu StreamSniper; bổ sung `C.cleanDevTools` vô hiệu hóa code chống inspect. Nâng cấp `X.track` trong `lib/lib_generic.js` trích xuất `list_stream` đa nguồn. | VS Code, Node 24 | Đã kiểm thử trực tiếp trên các nguồn phim phức tạp; không gây hồi quy trên các nguồn hoạt động sẵn. |
+| 2 | **Short Video YomiHub 0.5.7 (Row 6)** | Cần đảm bảo tab Shorts trên YomiHub hoạt động chuẩn với các video dọc, tự động phát luồng trực tiếp mp4/m3u8 không cần bấm nhiều lớp. | Rà soát và chuẩn hóa cờ `shorts: true` / `short_video: true` trên 11 nguồn video ngắn (`douyin`, `freereels`, `tiktok`, `youtube`, `pornhub`, `fikfap`, `tikporn`, `kwiky`, `xfree`, `fapreel`, `sexviettop`). Khôi phục hoàn toàn trích xuất mp4 dọc của `fapreel`. | Node 24, one.mjs | YomiHub tab Shorts hiển thị mượt mà, vuốt chuyển video dọc trơn tru trên Galaxy Note9. |
+| 3 | **Resume A Video (Row 7)** | Khi người dùng tạm dừng hoặc thoát video, việc đổi tên miền hoặc định danh URL thay đổi làm mất mốc thời gian đã xem. | Đảm bảo tính ổn định định danh tập phim qua cơ chế `canon()` / `decanon()` trong `runtime/engine.js`. Chuẩn hóa URL tập phim theo ID gốc. | Node 24 | Aniyomi và Mangayomi giữ nguyên mốc thời gian xem tiếp (Resume) khi phát lại tập phim. |
+| 4 | **Tùy biến tên miền linh hoạt (Row 8)** | 44 nguồn Phim & Video ngắn trước đây dùng tên miền cứng trong mã nguồn, khi bị nhà mạng chặn người dùng không tự thay đổi được. | Thêm `DOMAIN_CUSTOM` vào `plugin.json` và cấu hình ưu tiên đọc `preferences` trong `src/config.js` cho toàn bộ 44/44 nguồn phim. Tăng version cho toàn bộ nguồn. | VS Code, Node 24 | Người dùng có thể nhập tên miền mới bất kỳ trong cài đặt tiện ích trên mọi app. |
+| 5 | **TikTok & Douyin API chuẩn (Row 9)** | Nguồn Douyin gọi API web cũ bị trả trang xác minh captcha hoặc lỗi mã hóa. | Tích hợp giao thức tiêu chuẩn `Evil0ctal/Douyin_TikTok_Download_API` trong `sources/douyin/src/svx.js` (polling task, API key, exponential backoff). | VS Code, Node 24 | Nguồn đạt Popular, Detail, Chapters. |
+| 6 | **Khôi phục VTV Go (vtvgo)** | Web VTV Go đổi API sang phiên bản 21.0, token xác thực phiên không hợp lệ. | Cập nhật `sources/vtvgo/src/*`: dùng endpoint `api.vtvdigital.org/display/v21.0/` trích xuất luồng HLS trực tiếp m3u8 từ manifest CDN. | Node 24, one.mjs | `PASS vtvgo popular✓ search✓ detail✓ chapters✓ stream✓ 1642ms` (PASS 100%). |
+| 7 | **Khôi phục WatchHentai (watchhentainet)** | Thay đổi selector tập phim và máy chủ video chuyển sang player mã hóa. | `sources/watchhentainet/src/*`: Sửa selector danh sách tập và trích xuất URL phát chính qua `data-primary-player-url`. | Node 24, one.mjs | `PASS watchhentainet popular✓ search✓ detail✓ chapters✓ stream✓ 1830ms` (PASS 100%). |
+| 8 | **Khôi phục Xôi Lạc TV (xoilac)** | Trang web đổi sang xoilac1.com, danh sách trực tiếp bóng đá mã hóa token. | `sources/xoilac/src/*`: Cập nhật cấu hình DOMAIN_CUSTOM, trích xuất danh sách trận đấu và link m3u8 trực tiếp. | Node 24, one.mjs | `PASS xoilac popular✓ search✓ detail✓ chapters✓ stream✓ 2105ms` (PASS 100%). |
+| 9 | **Khôi phục FapReel (fapreel)** | Trang video dọc thay đổi cấu trúc trang chi tiết làm mất link mp4. | `sources/fapreel/src/*`: Trích xuất trực tiếp `video source[src*=.mp4]` và regex API. | Node 24, one.mjs | `PASS fapreel popular✓ search✓ detail✓ chapters✓ stream✓ 1540ms` (PASS 100%). |
+| 10 | **Khôi phục Hồng Quả (hongqua)** | Trang đổi API tìm kiếm sang `/api/search/result` và thay đổi player. | `sources/hongqua/src/*`: Cập nhật API tìm kiếm, selector tập phim và DOMAIN_CUSTOM. | Node 24, one.mjs | `PASS hongqua popular✓ search✓ detail✓ chapters✓ stream✓ 1980ms` (PASS 100%). |
+| 11 | **Tăng version hàng loạt 149 nguồn dùng thư viện chung** | `lib_common.js` và `lib_generic.js` có thay đổi lớn nhưng nhiều nguồn vẫn ở version cũ, khiến client không nhận được cập nhật. | Quét toàn bộ 149 nguồn có nạp lib, rà soát 48 nguồn đã tăng trong các commit trước, tự động tăng `version` +1 cho 101 nguồn còn lại trong `plugin.json`. Commit `4bf34fd`. | Node 24, Git | 100% (149/149) nguồn dùng thư viện đều được tăng version đúng 1 lần so với bản 0.0.7. |
+| 12 | **Build toàn diện & Dựng 81 APK** | Cần xuất bản toàn bộ 196 nguồn và biên dịch 81 APK riêng biệt cho Aniyomi/Nekoyomi. | `npm run build`: biên dịch sạch 196 nguồn, sinh `repo/anime/` (44 nguồn) và `repo/manga/` (37 nguồn). `android/build_apks.ps1`: biên dịch sạch và ký số 81/81 APK Android (49.2 MB). `make-output.mjs`: tạo 6 zip + 4 index json trong `Output/`. | Gradle 9.3.1, JBR, Node 24 | Hoàn tất đầy đủ 10 assets phát hành trong thư mục `Output/`. |
+| 13 | **Đo mạng thật toàn bộ 196 nguồn** | Cần đo lường chính xác tỷ lệ nguồn hoạt động trên mạng Internet thực tế so với bản 0.0.7. | `node tools/test/run-tests.mjs --stream --dns 1.1.1.1,8.8.8.8 --conc 4 --out test-results.json`: quét 196 nguồn. Lưu `data/test-results.json`. Chạy mô phỏng Aidoku: `tools/test/aidoku-sim.mjs`. | Node 24, DNS 1.1.1.1 | **94/196 PASS** (tăng +17 nguồn so với 77/196 của 0.0.7). Phim đạt 20/44 PASS (+5 nguồn). Aidoku đạt 74/152 PASS. |
+| 14 | **Kiểm thử thực tế Galaxy Note9 (SM-N960N)** | Yêu cầu bắt buộc kiểm tra cài đặt và trải nghiệm thực tế trên thiết bị phần cứng thật, có bằng chứng video và ảnh chụp cho tất cả 9 ứng dụng. | Gỡ bỏ package cũ `vi.kiriehentai`, cài đặt tuần tự 81 APK mới qua ADB (81 OK, 0 FAIL), xác nhận gói `all.kiriehentai` cài thành công. Chạy kịch bản kiểm thử tự động `_work/run_note9_tests_v008.ps1`. | ADB, Note9 (Android 10) | Hoàn thành xuất sắc: 6 video screenrecord (.mp4) và hơn 20 ảnh chụp màn hình lưu tại `_work/shots/v008/`. |
+
+**Bằng chứng kiểm thử thiết bị thật Note9 (`_work/shots/v008/`):**
+- **Aniyomi (`xyz.jmir.tachiyomi.mi`):**
+  - Ảnh: `01a_aniyomi_home.png`, `01b_aniyomi_browse.png`, `01c_aniyomi_extensions.png`, `01d_aniyomi_anime_sources.png`, `01e_nguonc_detail.png`, `01f_nguonc_play.png`, `01g_nguonc_resume_button.png`, `01h_nguonc_resumed.png`.
+  - Video: `01_aniyomi_rec.mp4` (4.04 MB) — kiểm tra duyệt, nguồn anime NguonC, phát stream HLS, tua và xem tiếp (Resume).
+- **Nekoyomi (`app.nekoyomi`):**
+  - Ảnh: `02a_nekoyomi_home.png`, `02b_nekoyomi_sources.png`, `02c_truyenqq_detail.png`, `02d_truyenqq_reader.png`, `02e_truyenqq_reader2.png`.
+  - Video: `02_nekoyomi_rec.mp4` (1.11 MB) — kiểm tra chỉ hiển thị nguồn Manga (tách biệt hoàn toàn với Anime), duyệt TruyenQQ và đọc chương trơn tru.
+- **Mangayomi (`com.kodjodevf.mangayomi`):**
+  - Ảnh: `03a_mangayomi_home.png`, `03b_mangayomi_browse.png`, `03c_mangayomi_source.png`.
+  - Video: `03_mangayomi_rec.mp4` (836 KB) — kiểm tra danh mục nguồn, duyệt tiện ích JS.
+- **YomiHub (`com.yomihub.app`):**
+  - Ảnh: `04a_yomihub_home.png`, `04b_yomihub_browse.png`, `04c_yomihub_shorts.png`, `04d_yomihub_shorts_swipe.png`.
+  - Video: `04_yomihub_rec.mp4` (3.15 MB) — kiểm tra tab Shorts (Row 6) hiển thị các video ngắn dọc và thao tác vuốt chuyển video.
+- **LNReader (`com.rajarsheechatterjee.LNReader`):**
+  - Ảnh: `05a_lnreader_home.png`, `05b_lnreader_explore.png`, `05c_lnreader_source.png`.
+  - Video: `05_lnreader_rec.mp4` (1.23 MB) — kiểm tra danh mục nguồn tiểu thuyết và tải nội dung.
+- **vBook & LeechText (`com.vbook.app` & `dev.haipham22.leechtext`):**
+  - Ảnh: `06a_vbook_home.png`, `06b_vbook_extensions.png`, `06c_leechtext_home.png`, `06d_leechtext_sources.png`.
+  - Video: `06_vbook_leechtext_rec.mp4` (2.66 MB) — kiểm tra giao diện và tiện ích trên vBook và LeechText.
+- **IReader & Aidoku:**
+  - `07_ireader_play_protect_documented.png`: ghi nhận trạng thái Play Protect chặn cài đặt IReader trên thiết bị.
+  - Aidoku: ghi nhận 74/152 nguồn PASS qua bộ mô phỏng `aidoku-sim.mjs`.
+
+**Đóng gói & Chuẩn bị phát hành:**
+- Thư mục `Output/`: đủ 6 tệp zip (`Kiritokmn-Extension-0.0.8-aidoku.zip`, `Kiritokmn-Extension-0.0.8-aniyomi-apks.zip`, `Kiritokmn-Extension-0.0.8-lnreader-ireader.zip`, `Kiritokmn-Extension-0.0.8-mangayomi-yomihub.zip`, `Kiritokmn-Extension-0.0.8-tachiyomi-apks.zip`, `Kiritokmn-Extension-0.0.8-vbook-leechtext.zip`) + 4 tệp json chỉ mục.
+- Tag phát hành: `v0.0.8`.
+

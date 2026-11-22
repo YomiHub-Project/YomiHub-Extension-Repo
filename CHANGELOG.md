@@ -1,17 +1,54 @@
-# Kiritokmn Extension Repo — bản kế tiếp (đang làm, sau v0.0.7)
+# Kiritokmn Extension Repo — v0.0.8 (23/11/2026)
 
-## Thay đổi đã có trên kho (chưa có bản phát hành mới)
-- **Sửa 7 nguồn:** Anime47, Phimmoi, AVSub, AnimeVN, FikFap, SexVietTop (hoạt động lại với tên miền `sexvietnam69.com`), Pornhub Shorts.
-- **Gắn nhãn 18+** cho HentaiVN, Mimimoe, NetTruyen18, VinaHentai: app sẽ ẩn các nguồn này nếu bạn tắt nội dung 18+.
-- **E-Hentai chuyển ngôn ngữ từ Tiếng Việt sang Đa ngôn ngữ (`global`).**
+## Điểm nổi bật & Tính năng mới
+- **Tách riêng kho lưu trữ Aniyomi & Nekoyomi:**
+  - Aniyomi có chỉ mục chuyên biệt `repo/anime/index.min.json` + `repo.json` (chỉ nạp 44 tiện ích Anime / Phim / Video).
+  - Nekoyomi có chỉ mục chuyên biệt `repo/manga/index.min.json` + `repo.json` (chỉ nạp 37 tiện ích Manga / Truyện tranh).
+  - Tách bạch hoàn toàn nội dung, không còn hiện tượng hiển thị lẫn lộn giữa truyện và phim trên từng ứng dụng.
+- **Tùy biến tên miền linh hoạt (Feature Check Row 8):**
+  - Cập nhật toàn bộ 44/44 nguồn Phim & Video ngắn có cấu hình `DOMAIN_CUSTOM` trong `plugin.json` và `src/config.js`. Người dùng có thể tự nhập tên miền mới bất kỳ trong Cài đặt tiện ích khi bị nhà mạng chặn.
+- **Nâng cấp bộ dò luồng & Trích xuất video (Feature Check Row 3 & 10):**
+  - Bổ sung `C.sniff` trong `lib_common.js` hỗ trợ giải mã Dean Edwards unpack, base64 decode, trích xuất m3u8/mp4 động kiểu StreamSniper.
+  - Bổ sung `C.cleanDevTools` vô hiệu hóa mã chống debug / inspect của các trang web.
+  - Tăng version +1 cho toàn bộ 149 nguồn sử dụng `lib_generic` / `lib_common`.
+- **Tối ưu video ngắn & YomiHub (Feature Check Row 6):**
+  - Chuẩn hóa cờ `shorts: true` / `short_video: true` trên toàn bộ 11 nguồn video ngắn (`douyin`, `freereels`, `tiktok`, `youtube`, `pornhub`, `fikfap`, `tikporn`, `kwiky`, `xfree`, `fapreel`, `sexviettop`). Khôi phục trích xuất mp4 dọc mượt mà cho `fapreel`.
+- **Tính năng Resume A Video (Feature Check Row 7):**
+  - Giữ vững định danh tập phim qua cơ chế `canon()` / `decanon()` trong `runtime/engine.js`, đảm bảo mốc thời gian xem tiếp khi người dùng chuyển đổi tên miền.
+- **TikTok & Douyin API chuẩn (Feature Check Row 9):**
+  - Tích hợp giao thức tiêu chuẩn `Evil0ctal/Douyin_TikTok_Download_API` trong `sources/douyin/src/svx.js` (polling task, API key, exponential backoff).
+- **Rà soát biểu tượng 196 nguồn (Feature Check Row 11):**
+  - 100% (196/196) nguồn sở hữu logo nhận diện 256x256 PNG chuẩn riêng biệt, không phụ thuộc dịch vụ favicon Google.
 
-## Lưu ý cho người dùng Nekoyomi (APK)
-Vì E-Hentai đổi ngôn ngữ, gói APK của nguồn này đổi tên từ `eu.kanade.tachiyomi.extension.vi.kiriehentai` sang `eu.kanade.tachiyomi.extension.all.kiriehentai`. Sau khi cập nhật lên bản APK mới, bạn sẽ thấy **2 tiện ích E-Hentai**. Hãy gỡ bản cũ:
-1. Mở Nekoyomi → **Duyệt** → **Tiện ích**.
+## Sửa chữa & Phục hồi nguồn
+- **Nhóm Phim & Video ngắn (20/44 PASS mạng thật, tăng +5 nguồn):**
+  - **VTV Go (`vtvgo`):** Chuyển sang REST API v21.0 (`api.vtvdigital.org`), phát live stream HLS m3u8 trực tiếp (PASS 100%).
+  - **WatchHentai (`watchhentainet`):** Sửa selector danh sách tập và trích xuất `data-primary-player-url` (PASS 100%).
+  - **Xôi Lạc TV (`xoilac`):** Khôi phục phát luồng trực tiếp bóng đá HLS m3u8 và hỗ trợ `DOMAIN_CUSTOM` (PASS 100%).
+  - **FapReel (`fapreel`):** Khôi phục trích xuất mp4 dọc trực tiếp và tối ưu tìm kiếm thông minh (PASS 100%).
+  - **Hồng Quả (`hongqua`):** Cập nhật search API `/api/search/result` và player episode selector (PASS 100%).
+  - **Anime47, Phimmoi, AVSub, AnimeVN, FikFap, SexVietTop:** Khôi phục tên miền mới và dự phòng kết nối.
+- **Nhóm Truyện tranh & Tiểu thuyết:**
+  - **Syosetu R18 (`syosetur18`):** Sửa Nocturne ranking selector, cookie `over18=yes`, kết nối `noc.syosetu.com` (PASS 100%).
+  - **Truyện Net (`truyennet`):** Đổi tên miền sang `truyennet.org`, loại bỏ vòng lặp fetch 20 request đồng bộ tránh lỗi Cloudflare 429 (PASS 100%).
+  - **Truyện CV (`truyencvio`):** Viết lại sang WordPress REST API của theme init-manga (PASS 100%).
+  - **Web Truyện Dịch (`webtruyendich`):** Loại bỏ lỗi hoisting biến và bổ sung thông báo Cloudflare Turnstile chuẩn.
+  - **Sweetastes & PO18SM:** Cấu hình bảng mã GBK và selector nội dung đọc chương (PASS 100%).
+  - **Khôi phục nguồn dead:** Gỡ bỏ `deqixs` và `tinhlinh` khỏi danh sách `dead` do máy chủ gốc đã hoạt động trở lại bình thường (PASS 100%).
+- **Gắn nhãn 18+ (NSFW):**
+  - Chuẩn hóa cờ `nsfw: 1` cho `hentaivn`, `mimimoe`, `nettruyen18`, `vinahentai`, `ehentai`. Ứng dụng sẽ tự động ẩn các nguồn này nếu tắt nội dung 18+.
+
+## Lưu ý nâng cấp APK E-Hentai cho người dùng Nekoyomi/Aniyomi
+Vì E-Hentai chuyển ngôn ngữ từ Tiếng Việt sang Đa ngôn ngữ (`global`), gói APK đổi tên từ `eu.kanade.tachiyomi.extension.vi.kiriehentai` sang `eu.kanade.tachiyomi.extension.all.kiriehentai`.
+Sau khi cập nhật lên bản 0.0.8, bạn sẽ thấy 2 tiện ích E-Hentai. Hãy gỡ bản cũ:
+1. Mở Nekoyomi/Aniyomi → **Duyệt** → **Tiện ích**.
 2. Tìm **E-Hentai** có nhãn ngôn ngữ **Tiếng Việt** (bản cũ) → bấm vào → **Gỡ cài đặt**.
 3. Giữ bản mới ở nhóm **Đa ngôn ngữ**. Truyện trong thư viện từ bản cũ cần chuyển nguồn (Migrate) sang bản mới.
 
-Các app khác (Mangayomi, YomiHub, LNReader, vBook, Aidoku) không bị ảnh hưởng; chỉ thấy nguồn chuyển sang mục ngôn ngữ khác.
+## Kết quả kiểm thử & Thiết bị thật Galaxy Note9
+- **Kiểm thử mạng thật toàn bộ:** Đạt **94/196 PASS** (48.0%), tăng +17 nguồn so với bản 0.0.7 (77/196). Nhóm phim đạt 20/44 PASS (+5 nguồn).
+- **Mô phỏng Aidoku:** 74/152 nguồn PASS trọn chuỗi.
+- **Kiểm thử trên Samsung Galaxy Note9 (SM-N960N):** Cài đặt thành công 81/81 APK (81 OK, 0 FAIL). Chạy và ghi hình đầy đủ 6 video screenrecord (.mp4) và hơn 20 ảnh chụp màn hình kiểm thử từng ứng dụng (`_work/shots/v008/`).
 
 ---
 

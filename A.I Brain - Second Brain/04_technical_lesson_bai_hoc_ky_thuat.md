@@ -55,3 +55,11 @@
 ## G. Logo
 - `_work/x/logofetch.mjs` (Windows) gom icon ứng viên → `tools/gen/make_icons.py` chọn ảnh lớn nhất, bỏ ảnh trống và ảnh trùng giữa host khác nhau (hamming ≤ 12 trên average-hash 12×12), tạo logo chữ nếu không còn ảnh. Xem lại bằng bảng ghép và thêm `FORCE_LETTER` cho logo rác. Không dùng dịch vụ favicon của Google làm biểu tượng chính.
 - Aidoku yêu cầu logo **không trong suốt**. Lưu PNG bảng màu 128 màu cho nhẹ.
+
+## H. Bài học kỹ thuật phiên bản 0.0.8
+- **Tách riêng chỉ mục repo Anime & Manga (`aniyomi-index.mjs`):** Aniyomi và Nekoyomi cần hai kho lưu trữ chuyên biệt (`repo/anime/index.min.json` cho 44 nguồn anime và `repo/manga/index.min.json` cho 37 nguồn manga). Việc này giải quyết triệt để lỗi hiển thị lẫn lộn anime trong danh sách truyện hoặc ngược lại khi dùng chung `repo/index.min.json`.
+- **Tùy biến tên miền linh hoạt (`DOMAIN_CUSTOM`):** Khai báo trong `plugin.json` và ưu tiên đọc `preferences` trong `src/config.js` cho toàn bộ 44 nguồn phim. Giúp người dùng tự điền tên miền thay thế khi nhà mạng chặn IP/DNS mà không cần chờ bản cập nhật tiện ích mới.
+- **Bộ dò luồng nâng cao (`C.sniff`) & Dean Edwards Unpacking:** Các trang web xem phim hiện đại thường đóng gói luồng video dưới dạng packed script (`p,a,c,k,e,d`) hoặc base64 kết hợp mã chống DevTools. Việc giải mã trực tiếp bằng `C.sniff` trong `lib_common.js` giúp trích xuất link `.m3u8` / `.mp4` trực tiếp với tốc độ cực nhanh, không làm crash runtime.
+- **Cài đặt hàng loạt APK trên thiết bị thật:** Lệnh `adb install-multiple` được Android thiết kế dành riêng cho split APKs của cùng một ứng dụng. Khi cài đặt 81 APK độc lập, lệnh này sẽ báo lỗi `INSTALL_FAILED_INVALID_APK: Split null was defined multiple times`. Bắt buộc phải dùng script PowerShell lặp `adb install -r <apk>` tuần tự để đảm bảo 100% gói cài đặt thành công.
+- **Di chuyển package E-Hentai từ `vi` sang `all`:** Khi chuyển ngôn ngữ từ Tiếng Việt sang Đa ngôn ngữ, package name đổi từ `eu.kanade.tachiyomi.extension.vi.kiriehentai` sang `eu.kanade.tachiyomi.extension.all.kiriehentai`. Trên thiết bị Android cần gỡ package cũ (`adb uninstall`) để tránh xung đột thư viện và xuất hiện 2 extension cùng tên.
+

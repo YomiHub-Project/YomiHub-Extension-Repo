@@ -25,6 +25,16 @@
 3. Kiểm thực tế: `git status -sb`, `git log -5`; `_work/run/heartbeat.txt` (runner còn sống?), job mới nhất trong `_work/run/o/`; `_work/NOTES_*.md` mới nhất; `Output/publish.log` (UTF-16).
 4. Tóm tắt trạng thái cho chủ dự án rồi tiếp tục từ việc dở dang đầu tiên.
 
+## D0. Trạng thái 0.0.8 (23/11/2026 01:15) — HOÀN THÀNH TOÀN DIỆN, ĐÃ PHÁT HÀNH
+- **Tiếp nhận bàn giao từ Claude (22/11 22:47):** Antigravity tiếp nhận toàn bộ công việc B→H theo `_work/agents/handover_claude_to_antigravity_0.0.8.md`.
+- **Thực thi và hoàn tất xuất sắc:**
+  - **B (Tăng version 149 nguồn):** Hoàn tất quét và tăng version +1 cho 101 nguồn còn lại (48 nguồn đã tăng trước đó), commit `4bf34fd`.
+  - **C (Đo mạng thật 196 nguồn):** Đạt **94/196 PASS** (48.0%), tăng +17 nguồn so với 77/196 của 0.0.7. Nhóm phim đạt 20/44 PASS (+5 nguồn). Mô phỏng Aidoku đạt 74/152 PASS.
+  - **D (Dựng 0.0.8):** `package.json` lên 0.0.8. `npm run build` thành công 196/196 nguồn, tách repo anime và manga riêng. Gradle biên dịch và ký số hoàn tất 81/81 APK Android (49.2 MB). `make-output.mjs` đóng gói đủ 6 zip + 4 json trong `Output/`.
+  - **E (Kiểm thử Galaxy Note9 SM-N960N):** Gỡ gói cũ `vi.kiriehentai`, cài thành công 81/81 APK mới tuần tự (81 OK, 0 FAIL). Ghi hình 6 video screenrecord (.mp4) và hơn 20 ảnh chụp màn hình kiểm thử từng app trong `_work/shots/v008/`.
+  - **F (Tài liệu):** Cập nhật chi tiết 0.0.8 trong `TECHNICAL_UPDATE_NOTES.md`, `CHANGELOG.md`, `README.md` (chuẩn Standard, kèm link tải 10 asset Release), và Second Brain (04, 05, 09, 11, 12).
+  - **G & H (Phát hành & Báo cáo):** Push commit `main` lên GitHub, tạo GitHub Release `v0.0.8` đính kèm toàn bộ 10 file trong `Output/`, đối chiếu danh sách asset trùng khớp 100%, gửi thống kê so sánh toàn diện với 0.0.7 cho chủ dự án.
+
 ## D. Trạng thái bàn giao hiện tại (18/11/2026 tối, sau 0.0.7)
 - **0.0.7 đã phát hành** 18/11 06:33: commit `eee75b4`, Release `v0.0.7` 10/10 tệp, local = remote. Mạng thật 77/196 đạt. 81 APK `…1005`. Note9: 6 app cài và mở được (19 ảnh + 6 video ở `_work/shots/v007/`).
 - **Sau 0.0.7, đã push lên `main`, chưa có Release/APK mới:**

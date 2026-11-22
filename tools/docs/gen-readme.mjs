@@ -50,7 +50,9 @@ Mỗi nguồn được viết **một lần** theo chuẩn vBook (JavaScript). B
 
 | Ứng dụng | Thêm repo bằng đường dẫn | Định dạng |
 |---|---|---|
-| **Aniyomi / Nekoyomi** (Phim + Truyện tranh) | \`${RAW}/index.min.json\` | Mỗi nguồn một APK riêng, có tên + logo riêng (Rhino + jsoup) |
+| **Aniyomi** (chỉ Phim & Video, 44 nguồn) | \`${RAW}/anime/index.min.json\` | Mỗi nguồn một APK riêng, có tên + logo riêng (Rhino + jsoup) |
+| **Nekoyomi** (chỉ Truyện tranh, 37 nguồn) | \`${RAW}/manga/index.min.json\` | Mỗi nguồn một APK riêng, có tên + logo riêng (Rhino + jsoup) |
+| **Aniyomi / Nekoyomi gộp** (81 nguồn) | \`${RAW}/index.min.json\` | Cả Phim và Truyện gộp chung trong 1 kho |
 | **Mangayomi / YomiHub** | \`${RAW}/index.json\` | JS source (MProvider) |
 | **LNReader / IReader** (Tiểu thuyết) | \`${RAW}/plugins.min.json\` | Plugin JS (ES5) |
 | **vBook / LeechText / YomiHub (tab vBook)** | \`${RAW}/plugin.json\` | Gói vBook \`.zip\` |
@@ -76,11 +78,15 @@ aidoku://addSourceList?url=${RAW}/aidoku/index.min.json
 
 ### Có gì mới trong ${VERSION}
 Xem [CHANGELOG.md](CHANGELOG.md) — tóm tắt:
-- **Aniyomi / Nekoyomi: mỗi nguồn một APK riêng** (44 Phim + 37 Truyện tranh), mỗi tiện ích có **tên và logo của nguồn**, nên phân biệt được với nhau trong danh sách Tiện ích và Nguồn. Thay cho 4 APK gộp cũ; source ID giữ nguyên.
-- **NguonC phát được trong Aniyomi** (trước báo lỗi 403): CDN chỉ nhận HTTP/2, APK có cầu nối HTTP/1.1 → HTTP/2 nội bộ cho trình phát mpv.
-- **YouTube phát được trong Aniyomi** (trước quay mãi): luồng hình được ghép với luồng tiếng gốc thành rãnh âm thanh riêng.
-- Sửa thêm nguồn (Sohu, Syosetu, Mangadm hết "đạt nhầm", nhiều nguồn khác qua thêm bước); kiểm thử tự động có bước tải thử luồng phát (\`--stream\`).
-- Bản 0.0.4: logo riêng cho 196 nguồn, YouTube/TikTok/Douyin, đánh dấu **(Ngừng hoạt động)** — xem CHANGELOG.
+- **Tách riêng kho lưu trữ Aniyomi & Nekoyomi:** Aniyomi có kho riêng \`${RAW}/anime/index.min.json\` (44 Anime), Nekoyomi có kho riêng \`${RAW}/manga/index.min.json\` (37 Manga) tránh lẫn lộn.
+- **Tùy biến tên miền linh hoạt (Feature Check Row 8):** Toàn bộ 44 nguồn Phim & Video ngắn có cấu hình \`DOMAIN_CUSTOM\` cho phép người dùng tự điền tên miền thay thế khi bị nhà mạng chặn.
+- **Nâng cấp bộ dò luồng & Trích xuất video (Row 3 & 10):** Bổ sung \`C.sniff\` (StreamSniper unpack, base64, m3u8), \`C.cleanDevTools\` bypass chống debug trong \`lib_common.js\`. Tăng version cho 149 nguồn nạp lib.
+- **Tối ưu video ngắn & YomiHub (Row 6):** Chuẩn hóa 11 nguồn video ngắn với cờ \`shorts: true\`, khôi phục trích xuất mp4 dọc mượt mà cho FapReel.
+- **Resume A Video (Row 7):** Giữ ổn định ID/URL tập phim qua cơ chế \`canon()\`/\`decanon()\` trong \`runtime/engine.js\`.
+- **Khôi phục các nguồn phim lớn:** VTV Go (REST API v21.0 live HLS 100% PASS), WatchHentai, Xôi Lạc TV, FapReel, Hồng Quả.
+- **Sửa chữa nguồn Truyện & Tiểu thuyết:** Syosetu R18 (Nocturne ranking, cookie 18+), Truyện Net (truyennet.org), Truyện CV (WP REST API), Web Truyện Dịch, Sweetastes, PO18SM. Khôi phục Deqixs và Tinh Linh.
+- **Lưu ý di chuyển gói E-Hentai:** Gói APK đổi sang \`eu.kanade.tachiyomi.extension.all.kiriehentai\` (Đa ngôn ngữ). Vui lòng gỡ tiện ích cũ và cài bản mới.
+- **Đo mạng thật 94/196 PASS (48.0%):** Tăng +17 nguồn so với 0.0.7 (77/196). Kiểm thử thực tế trên Samsung Galaxy Note9 đạt 81/81 APKs hoạt động hoàn hảo.
 
 ${yhSection()}
 ## Tải về (Releases v${VERSION})
