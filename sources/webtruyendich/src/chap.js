@@ -4,7 +4,12 @@ function execute(url) {
     try {
         // Bước 1: Lấy HTML trang chương (fetch có cookie VBook → pass Cloudflare)
         var response = fetch(url);
-        if (!response || !response.ok) return Response.error("Lỗi kết nối: " + url);
+        if (!response || !response.ok) {
+            if (response && (response.status === 403 || response.status === 503)) {
+                return Response.error("CLOUDFLARE: Trang Web Truyện Dịch đang bật Cloudflare bảo vệ (HTTP " + response.status + "). Hãy mở WebView trong ứng dụng để vượt qua xác minh.");
+            }
+            return Response.error("Lỗi kết nối: " + url);
+        }
 
         var html = response.text();
 

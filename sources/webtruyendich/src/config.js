@@ -54,17 +54,6 @@ function cleanText(text) {
     return String(text).replace(/\s+/g, " ").trim();
 }
 
-if (typeof Response === 'undefined') {
-    var Response = {
-        success: function(data, data2) {
-            return JSON.stringify({ code: 0, data: data, data2: data2 });
-        },
-        error: function(data) {
-            return JSON.stringify({ code: 1, data: data });
-        }
-    };
-}
-
 function toAbs(url) {
     if (!url) return "";
     url = String(url).trim();
