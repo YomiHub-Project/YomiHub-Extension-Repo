@@ -47,14 +47,6 @@ function execute(url, page) {
                 let desc = cate + " - " + chapter + " - " + updated;
 
                 let cover = "";
-                let responseDetail = fetch(link);
-                if (responseDetail.ok) {
-                    let docDetail = responseDetail.html();
-                    let coverEl = docDetail.select(".book-info-pic img").first();
-                    if (coverEl) {
-                        cover = coverEl.attr("data-src") || coverEl.attr("src") || "";
-                    }
-                }
 
                 novelList.push({
                     name: name,

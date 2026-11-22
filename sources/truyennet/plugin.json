@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Truyện Net",
     "author": "ivanzzz (Kiritokmn repack)",
-    "version": 5,
-    "source": "https://truyennet.vn/",
-    "regexp": "(www.)?truyennet\\.vn/[^/]+$",
+    "version": 6,
+    "source": "https://truyennet.org/",
+    "regexp": "(www.)?truyennet\\.(org|vn)/[^/]+$",
     "description": "Đọc truyện trên trang Truyện Net — gốc: ivanzzz (Ivan1hai/ext)",
     "locale": "vi_VN",
     "language": "javascript",
