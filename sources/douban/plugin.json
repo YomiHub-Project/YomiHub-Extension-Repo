@@ -2,7 +2,7 @@
   "metadata": {
     "name": "douban",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://read.douban.com",
     "description": "douban — Kiritokmn Extension Repo",
     "locale": "zh-CN",
