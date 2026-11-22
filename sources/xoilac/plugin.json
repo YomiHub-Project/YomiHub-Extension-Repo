@@ -2,11 +2,11 @@
   "metadata": {
     "name": "Xôi Lạc",
     "author": "Kiritokmn",
-    "version": 4,
-    "source": "https://xoilacxl.cc",
+    "version": 5,
+    "source": "https://xoilacvbf.tv",
     "description": "Xôi Lạc — Kiritokmn Extension Repo",
     "locale": "vi",
-    "regexp": "xoilac32\\.org|xoilacvb\\.cc|xoilacxl\\.cc|xoilacxxi\\.cc",
+    "regexp": "xoilac.*",
     "type": "video",
     "nsfw": false
   },
@@ -22,15 +22,22 @@
     "DOMAIN": {
       "title": "Tên miền",
       "subtitle": "Đổi khi trang đổi tên miền",
-      "default": "https://xoilacxl.cc",
+      "default": "https://xoilacvbf.tv",
       "values": [
-        "https://xoilacxl.cc",
-        "https://xoilac32.org",
-        "https://xoilacxxi.cc",
-        "https://xoilacvb.cc"
+        "https://xoilacvbf.tv",
+        "https://xoilaczda.tv",
+        "https://xoilac.tv",
+        "https://xoilacxl.cc"
       ],
       "mode": "select",
       "format": "single"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập tên miền đầy đủ nếu các tên miền trên bị chặn (ví dụ https://xoilac...)",
+      "default": "",
+      "mode": "input",
+      "format": "text"
     }
   }
 }

@@ -45,6 +45,7 @@
     "nettruyen": "máy chủ dùng khoá TLS cũ (DH key too small), ứng dụng Android từ chối kết nối"
   },
   "login": {
+    "vfilm": "yêu cầu đăng nhập hoặc sử dụng 3G/GPRS Vinaphone để xem phim",
     "doctruyentranhbl": "chương truyện chỉ mở khi đăng nhập Google (WP Manga Images Protection) — đăng nhập trong WebView",
     "luottruyen": "chương truyện yêu cầu đăng nhập trong WebView",
     "tiemtruyenchu": "toàn trang yêu cầu đăng nhập",
@@ -52,6 +53,7 @@
     "mintteanovel": "chương mới bị khoá (cần đăng nhập/mở khoá trên trang)"
   },
   "protected": {
+    "blvietsub": "trình phát dùng Cloudflare Turnstile token verification (Worker Siteverify), mở trong WebView để xem",
     "luphim": "trình phát dùng dấu vân tay WebGL + chống DevTools, không lấy được luồng phát",
     "moetruyen": "ảnh chương cấp qua token \"page-access\" (bảo vệ ảnh)",
     "8book": "nội dung chương tải bằng JavaScript (read.js)",
@@ -66,7 +68,6 @@
     "iqiyi": "SPA — cần API, để bản sau",
     "mgtv": "SPA — cần API, để bản sau",
     "twitch": "SPA — cần API GraphQL, để bản sau",
-    "vtvgo": "SPA — cần API, để bản sau",
     "freereels": "SPA — cần API, để bản sau",
     "allin1": "Sáng Tác Việt (IP) — danh sách tải bằng JavaScript",
     "stvappvi": "Sáng Tác Việt — danh sách tải bằng JavaScript",
