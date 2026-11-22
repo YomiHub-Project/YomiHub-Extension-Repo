@@ -5,7 +5,7 @@ var G = {
   "Mới cập nhật": "/[?page={p}]"
  },
  "search": "/search?q={q}",
- "ch_list": "ul.sub-menu a",
+ "single": "Xem phim",
  "item": "article.phimitem",
  "link": "a@href",
  "title": "h2 || h3 || a@title || img@alt",

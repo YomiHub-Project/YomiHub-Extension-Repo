@@ -8,7 +8,9 @@ var G = {
  "item": "article.item.tvshows",
  "title": "h3 || .data h3 || img@alt",
  "link": "a@href",
- "ch_list": "#dt_contenedor a",
+ "ch_list": "ul.episodios a.tv-ep-card-link, ul.episodios a",
+ "ch_name": ".eptitle || a@title",
+ "iframe": "iframe#search_iframe, iframe[data-primary-player-url], iframe[src], iframe[data-src]",
  "d_title": "h1 || meta[property=og:title]@content",
  "d_cover": "meta[property=og:image]@content || .thumb img@img || .poster img@img || img@img",
  "d_desc": "meta[name=description]@content"
