@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Hồng Quả",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://hongguoduanju.com",
     "description": "Hồng Quả — Kiritokmn Extension Repo",
     "locale": "zh-CN",
@@ -26,6 +26,13 @@
       "values": [
         "https://hongguoduanju.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://hongguoduanju.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }
