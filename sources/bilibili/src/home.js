@@ -6,6 +6,6 @@ function execute() {
     ['Phổ biến', 'popular']
   ];
   return Response.success(t.map(function (x) {
-    return { title: x[0], input: x[1], script: 'gen.js' };
+    return { title: x[0], input: x[1], script: 'browse.js' };
   }));
 }

@@ -2,7 +2,7 @@
   "metadata": {
     "name": "VTV Go",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://vtvgo.vn",
     "description": "VTV Go — Kênh truyền hình trực tuyến VTV Digital",
     "locale": "vi",
@@ -12,6 +12,7 @@
   },
   "script": {
     "home": "home.js",
+    "browse": "browse.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",

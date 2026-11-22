@@ -10,6 +10,6 @@ function execute() {
     ['Tất cả kênh', 'all']
   ];
   return Response.success(t.map(function (x) {
-    return { title: x[0], input: x[1], script: 'gen.js' };
+    return { title: x[0], input: x[1], script: 'browse.js' };
   }));
 }
