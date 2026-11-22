@@ -2,7 +2,7 @@
   "metadata": {
     "name": "FapReel",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://fapreel.com",
     "description": "FapReel — Kiritokmn Extension Repo",
     "locale": "global",
@@ -26,6 +26,13 @@
       "values": [
         "https://fapreel.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập tên miền đầy đủ nếu tên miền trên bị chặn",
+      "default": "",
       "mode": "input",
       "format": "text"
     }
