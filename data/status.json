@@ -30,9 +30,7 @@
     "nettruyenz": "tên miền chỉ còn trang \"Site is created successfully!\"",
     "duahau": "HTTP 404 toàn trang",
     "julycomic": "Cloudflare 522 (máy chủ gốc ngừng)",
-    "tinhlinh": "Cloudflare 525 (máy chủ gốc lỗi SSL)",
     "langgee": "HTTP 502",
-    "deqixs": "HTTP 500 trên mọi tên miền",
     "quanwenyuedu": "chứng chỉ SSL hết hạn",
     "xsw": "chứng chỉ SSL không hợp lệ",
     "qimao": "không kết nối được",
@@ -50,7 +48,9 @@
     "luottruyen": "chương truyện yêu cầu đăng nhập trong WebView",
     "tiemtruyenchu": "toàn trang yêu cầu đăng nhập",
     "po18": "yêu cầu xác minh 18+/đăng nhập",
-    "mintteanovel": "chương mới bị khoá (cần đăng nhập/mở khoá trên trang)"
+    "mintteanovel": "chương mới bị khoá (cần đăng nhập/mở khoá trên trang)",
+    "lnkuro": "toàn trang yêu cầu đăng nhập tài khoản (kuro-kmssccttan)",
+    "douban": "read.douban.com là kho sách điện tử trả phí, chương truyện yêu cầu mua/đăng nhập qua tài khoản Douban"
   },
   "protected": {
     "blvietsub": "trình phát dùng Cloudflare Turnstile token verification (Worker Siteverify), mở trong WebView để xem",
@@ -59,7 +59,8 @@
     "8book": "nội dung chương tải bằng JavaScript (read.js)",
     "shubenshu": "trang chương chuyển về trang chủ khi không có cookie/Referer hợp lệ",
     "hhpanda": "trình phát (streamfree.vip) mã hoá luồng phát bằng bytecode + nonce, không lấy được link phát",
-    "nextphim": "nextphim.net hiện là trang tin tức/review phim, không có phim để xem"
+    "nextphim": "nextphim.net hiện là trang tin tức/review phim, không có phim để xem",
+    "snapd": "nội dung chương chuyển hướng xác minh chống bot (/userverify)"
   },
   "api": {
     "douyin": "danh sách chủ đề nóng chạy không cần máy chủ; xem video cần máy chủ Douyin_TikTok_Download_API tự dựng (đặt trong cài đặt nguồn)",
@@ -72,6 +73,11 @@
     "allin1": "Sáng Tác Việt (IP) — danh sách tải bằng JavaScript",
     "stvappvi": "Sáng Tác Việt — danh sách tải bằng JavaScript",
     "mimimoe": "trang dựng bằng Next.js; danh sách truyện tải bằng API — bản trước \"đạt\" nhầm vì lấy menu (Danh sách truyện, Thể loại…)",
-    "novelpiaglobal": "danh sách tải bằng JavaScript; bản trước \"đạt\" nhầm vì lấy các nút \"MORE\""
+    "novelpiaglobal": "danh sách tải bằng JavaScript; bản trước \"đạt\" nhầm vì lấy các nút \"MORE\"",
+    "minotruyen": "trang dựng bằng Next.js (SPA) — danh sách truyện tải bằng API",
+    "quykiep": "trang dựng bằng Next.js (SPA) — danh sách truyện tải bằng API",
+    "lohi": "trang dựng bằng Next.js (SPA) — danh sách truyện tải bằng API",
+    "moyuemacduyet": "trang dựng bằng SPA/API di động (Fanqie/番茄) — nội dung tải bằng JavaScript",
+    "taonovel": "máy chủ API di động (tybook.taoyuewenhua.net) yêu cầu app id/token (errcode 202: Empty app id)"
   }
 }

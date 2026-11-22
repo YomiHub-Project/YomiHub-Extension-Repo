@@ -1,6 +1,10 @@
 var BASE_URL = "https://www.po18sm.com";
 try { if (DOMAIN) BASE_URL = String(DOMAIN).replace(/\/+$/, ""); } catch (e) {}
 var G = {
+ "req": {
+  "charset": "gbk"
+ },
+ "content": "div.content-body, div.panel-body, #content",
  "tabs": {
   "Mới cập nhật": "/"
  },

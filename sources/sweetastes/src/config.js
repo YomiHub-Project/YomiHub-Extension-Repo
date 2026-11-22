@@ -11,6 +11,7 @@ var G = {
  "d_title": "h2",
  "d_cover": "meta[property=og:image]@content || .thumb img@img || .poster img@img || img@img",
  "d_desc": "meta[name=description]@content",
+ "content": "#novelcontent, .novelcontent",
  "ch_list": "a[href*=chuong], a[href*=chap], a[href*=tap-], a[href*=episode]",
  "desc": ".infoItem p",
  "s_item": "div.bookItemInfo",
