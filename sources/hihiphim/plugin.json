@@ -2,7 +2,7 @@
   "metadata": {
     "name": "HiHiPhim",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://hihiphim.com",
     "description": "HiHiPhim — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://hihiphim.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://hihiphim.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

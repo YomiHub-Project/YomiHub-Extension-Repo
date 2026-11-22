@@ -2,7 +2,7 @@
   "metadata": {
     "name": "XemPhimGi",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://xemphimgi.com",
     "description": "XemPhimGi — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://xemphimgi.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://xemphimgi.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

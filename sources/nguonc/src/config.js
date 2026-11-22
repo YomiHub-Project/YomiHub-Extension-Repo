@@ -1,4 +1,11 @@
 var BASE_URL = "https://phim.nguonc.com";
+try {
+  if (typeof DOMAIN_CUSTOM !== 'undefined' && DOMAIN_CUSTOM && DOMAIN_CUSTOM.trim()) {
+    BASE_URL = String(DOMAIN_CUSTOM).trim().replace(/\/+$/, "");
+  } else if (typeof DOMAIN !== 'undefined' && DOMAIN) {
+    BASE_URL = String(DOMAIN).replace(/\/+$/, "");
+  }
+} catch (e) {}
 
 function normalizeUrl(url) {
     if (url && typeof url !== "string") {

@@ -2,7 +2,7 @@
   "metadata": {
     "name": "LuPhim",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://luphim.com",
     "description": "LuPhim — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://luphim.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://luphim.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

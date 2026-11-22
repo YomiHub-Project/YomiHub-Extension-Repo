@@ -2,7 +2,7 @@
   "metadata": {
     "name": "AVSub – AnimeVietsub",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://animevsub.co.uk",
     "description": "AVSub – AnimeVietsub — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -35,6 +35,13 @@
         "https://animevietsub.nl"
       ],
       "mode": "select",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://animevsub.co.uk) khi trang đổi tên miền",
+      "default": "",
+      "mode": "input",
       "format": "text"
     }
   }

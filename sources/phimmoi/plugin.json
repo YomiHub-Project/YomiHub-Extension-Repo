@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Phimmoi",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://phimmoii.run",
     "description": "Phimmoi — Kiritokmn Extension Repo (Nguồn hay đổi tên miền/bị chặn mạng, hãy bật VPN/Tor khi cần)",
     "locale": "vi",
@@ -33,6 +33,13 @@
         "https://phimmois.sh"
       ],
       "mode": "select",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://phimmoii.run) khi trang đổi tên miền",
+      "default": "",
+      "mode": "input",
       "format": "text"
     }
   }

@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Twitch",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://www.twitch.tv",
     "description": "Twitch — kênh trực tiếp và video phát lại (VOD) qua API GQL công khai, không cần tài khoản.",
     "locale": "global",
@@ -34,6 +34,13 @@
     "LANG": {
       "title": "Ngôn ngữ kênh ưu tiên",
       "subtitle": "Mã ngôn ngữ cho mục đầu trang chủ: VI, EN, JA, KO… (để trống = mọi ngôn ngữ)",
+      "default": "",
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://www.twitch.tv) khi trang đổi tên miền",
       "default": "",
       "mode": "input",
       "format": "text"

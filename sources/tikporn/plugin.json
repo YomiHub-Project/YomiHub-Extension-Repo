@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Tik.Porn",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://tik.porn",
     "description": "Tik.Porn — Kiritokmn Extension Repo",
     "locale": "global",
@@ -26,6 +26,13 @@
       "values": [
         "https://tik.porn"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://tik.porn) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

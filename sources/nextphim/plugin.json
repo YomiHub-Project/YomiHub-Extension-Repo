@@ -2,7 +2,7 @@
   "metadata": {
     "name": "NextPhim",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://nextphim.net",
     "description": "NextPhim — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://nextphim.net"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://nextphim.net) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

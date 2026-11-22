@@ -2,7 +2,7 @@
   "metadata": {
     "name": "BLVietsub",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.blvietsub.vip",
     "description": "BLVietsub — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://www.blvietsub.vip"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://www.blvietsub.vip) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

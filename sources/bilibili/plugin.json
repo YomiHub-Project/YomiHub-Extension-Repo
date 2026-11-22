@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Bilibili",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://www.bilibili.tv",
     "description": "Bilibili — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -27,6 +27,13 @@
       "values": [
         "https://www.bilibili.tv"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://www.bilibili.tv) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

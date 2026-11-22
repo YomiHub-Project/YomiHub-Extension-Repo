@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Dailymotion",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://www.dailymotion.com",
     "description": "Dailymotion — video qua API công khai (api.dailymotion.com + player metadata), không cần tài khoản.",
     "locale": "vi",
@@ -27,6 +27,13 @@
       "values": [
         "https://www.dailymotion.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://www.dailymotion.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

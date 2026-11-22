@@ -2,7 +2,7 @@
   "metadata": {
     "name": "HentaiVietsub.com",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://hentaivietsub.com",
     "description": "HentaiVietsub.com — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://hentaivietsub.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://hentaivietsub.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

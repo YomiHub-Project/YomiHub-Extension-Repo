@@ -2,7 +2,7 @@
   "metadata": {
     "name": "GuPhim",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://guphimz.com",
     "description": "GuPhim — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://guphimz.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://guphimz.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

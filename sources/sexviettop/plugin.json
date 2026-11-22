@@ -2,7 +2,7 @@
   "metadata": {
     "name": "SexVietTop",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://sexviettuyenchon.com",
     "description": "SexVietTop — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -30,6 +30,13 @@
         "https://top1sexvn.com",
         "https://sexviettop.net"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://sexviettuyenchon.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

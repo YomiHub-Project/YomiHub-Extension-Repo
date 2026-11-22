@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Vfilm",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "http://vfilm.vn",
     "description": "Vfilm — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "http://vfilm.vn"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: http://vfilm.vn) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

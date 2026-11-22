@@ -2,7 +2,7 @@
   "metadata": {
     "name": "MotPhim",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://motphimc.my",
     "description": "MotPhim — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -33,6 +33,13 @@
       ],
       "mode": "select",
       "format": "single"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://motphimc.my) khi trang đổi tên miền",
+      "default": "",
+      "mode": "input",
+      "format": "text"
     }
   }
 }

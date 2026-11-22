@@ -2,7 +2,7 @@
   "metadata": {
     "name": "HHPanda",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://hhpanda.st",
     "description": "HHPanda — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -27,6 +27,13 @@
       "values": [
         "https://hhpanda.st"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://hhpanda.st) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

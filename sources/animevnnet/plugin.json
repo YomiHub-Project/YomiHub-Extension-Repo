@@ -2,7 +2,7 @@
   "metadata": {
     "name": "AnimeVn.Net",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://animevn.net",
     "description": "AnimeVn.Net — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://animevn.net"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://animevn.net) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

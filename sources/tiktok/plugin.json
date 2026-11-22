@@ -2,7 +2,7 @@
   "metadata": {
     "name": "TikTok",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://www.tiktok.com",
     "description": "TikTok — video ngắn (Shorts). Không cần máy chủ: dùng tikwm.com; có máy chủ Douyin_TikTok_Download_API thì dùng máy chủ đó.",
     "locale": "global",
@@ -47,6 +47,13 @@
     "DTK_KEY": {
       "title": "Khoá API của máy chủ (X-API-Key)",
       "subtitle": "Để trống nếu máy chủ không yêu cầu",
+      "default": "",
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://www.tiktok.com) khi trang đổi tên miền",
       "default": "",
       "mode": "input",
       "format": "text"

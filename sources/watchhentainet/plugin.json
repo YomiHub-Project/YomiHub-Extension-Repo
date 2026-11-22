@@ -2,7 +2,7 @@
   "metadata": {
     "name": "WatchHentai.net",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://watchhentai.net",
     "description": "WatchHentai.net — Kiritokmn Extension Repo",
     "locale": "en",
@@ -26,6 +26,13 @@
       "values": [
         "https://watchhentai.net"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://watchhentai.net) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

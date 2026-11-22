@@ -2,7 +2,7 @@
   "metadata": {
     "name": "PhimTV",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://phimtv2.com",
     "description": "PhimTV — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -29,6 +29,13 @@
       ],
       "mode": "select",
       "format": "single"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://phimtv2.com) khi trang đổi tên miền",
+      "default": "",
+      "mode": "input",
+      "format": "text"
     }
   }
 }

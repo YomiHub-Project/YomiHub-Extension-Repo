@@ -2,7 +2,7 @@
   "metadata": {
     "name": "xFree",
     "author": "Kiritokmn",
-    "version": 5,
+    "version": 6,
     "source": "https://www.xfree.com",
     "description": "xFree — Kiritokmn Extension Repo",
     "locale": "global",
@@ -26,6 +26,13 @@
       "values": [
         "https://www.xfree.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://www.xfree.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

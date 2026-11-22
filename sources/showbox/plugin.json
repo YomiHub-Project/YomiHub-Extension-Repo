@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Showbox",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://pixnet.cc",
     "description": "Showbox — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://pixnet.cc"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://pixnet.cc) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

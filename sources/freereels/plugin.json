@@ -2,7 +2,7 @@
   "metadata": {
     "name": "FreeReels",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://free-reels.com",
     "description": "FreeReels — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://free-reels.com"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://free-reels.com) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

@@ -9,6 +9,13 @@ var BACKUP_DOMAINS = [
 ];
 var BASE_URL = BACKUP_DOMAINS[0];
 try {
+  if (typeof DOMAIN_CUSTOM !== 'undefined' && DOMAIN_CUSTOM && DOMAIN_CUSTOM.trim()) {
+    BASE_URL = String(DOMAIN_CUSTOM).trim().replace(/\/+$/, "");
+  } else if (typeof DOMAIN !== 'undefined' && DOMAIN) {
+    BASE_URL = String(DOMAIN).replace(/\/+$/, "");
+  }
+} catch (e) {}
+try {
   if (typeof DOMAIN !== 'undefined' && DOMAIN) {
     var d = String(DOMAIN).replace(/\/+$/, "");
     if (d && /^https?:\/\//i.test(d)) {

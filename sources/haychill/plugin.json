@@ -2,7 +2,7 @@
   "metadata": {
     "name": "HayChill",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://phimhaychill.org",
     "description": "HayChill — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://phimhaychill.org"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://phimhaychill.org) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

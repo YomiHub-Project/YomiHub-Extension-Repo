@@ -2,7 +2,7 @@
   "metadata": {
     "name": "MGTV",
     "author": "Kiritokmn",
-    "version": 4,
+    "version": 5,
     "source": "https://glb.m.mgtv.com",
     "description": "MGTV — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -29,6 +29,13 @@
       ],
       "mode": "select",
       "format": "single"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://glb.m.mgtv.com) khi trang đổi tên miền",
+      "default": "",
+      "mode": "input",
+      "format": "text"
     }
   }
 }

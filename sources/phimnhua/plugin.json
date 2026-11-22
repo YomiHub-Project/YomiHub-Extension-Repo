@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Phim Nhựa",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://phimnhua.online",
     "description": "Phim Nhựa — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -26,6 +26,13 @@
       "values": [
         "https://phimnhua.online"
       ],
+      "mode": "input",
+      "format": "text"
+    },
+    "DOMAIN_CUSTOM": {
+      "title": "Tên miền tuỳ chỉnh",
+      "subtitle": "Nhập URL đầy đủ (ví dụ: https://phimnhua.online) khi trang đổi tên miền",
+      "default": "",
       "mode": "input",
       "format": "text"
     }

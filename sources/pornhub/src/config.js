@@ -1,5 +1,11 @@
 var BASE_URL = "https://www.pornhub.com";
-try { if (DOMAIN) BASE_URL = String(DOMAIN).replace(/\/+$/, ""); } catch (e) {}
+try {
+  if (typeof DOMAIN_CUSTOM !== 'undefined' && DOMAIN_CUSTOM && DOMAIN_CUSTOM.trim()) {
+    BASE_URL = String(DOMAIN_CUSTOM).trim().replace(/\/+$/, "");
+  } else if (typeof DOMAIN !== 'undefined' && DOMAIN) {
+    BASE_URL = String(DOMAIN).replace(/\/+$/, "");
+  }
+} catch (e) {}
 
 var UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
