@@ -2,7 +2,7 @@ plugins { id("com.android.library"); id("org.jetbrains.kotlin.android") }
 android {
     namespace = "eu.kanade.tachiyomi.stub.manga"
     compileSdk = (project.findProperty("compileSdkOverride") as String?)?.toInt() ?: 35
-    (project.findProperty("buildToolsOverride") as String?)?.let { buildToolsVersion = it }
+    buildToolsVersion = (project.findProperty("buildToolsOverride") as String?) ?: "36.0.0"
     defaultConfig { minSdk = 21 }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_1_8; targetCompatibility = JavaVersion.VERSION_1_8 }
     

@@ -1,5 +1,137 @@
 [
  {
+  "id": "07br",
+  "name": "07br",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.bqg603.cc",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 916851617,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiri07br",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "101kks",
+  "name": "101kks",
+  "lang": "zh-CN",
+  "baseUrl": "https://101kks.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 254463604,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiri101kks",
+  "version": "1.4.2008"
+ },
+ {
+  "id": "101minc",
+  "name": "101Minc",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.101minc.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 197308706,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiri101minc",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "52shukubyquocbao",
+  "name": "52shuku",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.52shuku.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 660537547,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiri52shukubyquocbao",
+  "version": "1.4.2016"
+ },
+ {
+  "id": "69shuba",
+  "name": "69shuba",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.69shuba.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1914433466,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiri69shuba",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "69shurepoduongden",
+  "name": "69shuba",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.69shuba.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1254324395,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiri69shurepoduongden",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "75zwcom",
+  "name": "75zwcom",
+  "lang": "zh-CN",
+  "baseUrl": "https://m.75biquge.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 112576342,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiri75zwcom",
+  "version": "1.4.2008"
+ },
+ {
+  "id": "8book",
+  "name": "8book",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.8book.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1657321652,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiri8book",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "abcbiquge",
+  "name": "笔趣阁-abcbiquge",
+  "lang": "zh-CN",
+  "baseUrl": "https://m.bqg6.xyz",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1436546895,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriabcbiquge",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "alicesw",
+  "name": "AliceSW",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.alicesw.com/",
+  "type": "novel",
+  "nsfw": true,
+  "sourceId": 486621557,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirialicesw",
+  "version": "1.4.2010"
+ },
+ {
+  "id": "allin1",
+  "name": "allin1",
+  "lang": "vi",
+  "baseUrl": "http://14.225.254.182",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 806232062,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriallin1",
+  "version": "1.4.2006"
+ },
+ {
   "id": "anime47",
   "name": "Anime47",
   "lang": "vi",
@@ -9,7 +141,7 @@
   "sourceId": 780775032,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirianime47",
-  "version": "14.1006"
+  "version": "14.2007"
  },
  {
   "id": "animevnnet",
@@ -21,7 +153,19 @@
   "sourceId": 1527072694,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirianimevnnet",
-  "version": "14.1007"
+  "version": "14.2008"
+ },
+ {
+  "id": "apptruyenchu",
+  "name": "App Truyện Chữ",
+  "lang": "vi",
+  "baseUrl": "https://apptruyenchu.pro",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1752287074,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriapptruyenchu",
+  "version": "1.4.2008"
  },
  {
   "id": "avsubanimevietsub",
@@ -33,7 +177,19 @@
   "sourceId": 513314104,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriavsubanimevietsub",
-  "version": "14.1008"
+  "version": "14.2009"
+ },
+ {
+  "id": "banlong",
+  "name": "Bàn Long",
+  "lang": "vi",
+  "baseUrl": "https://blhvip.vn",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 115977977,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiribanlong",
+  "version": "1.4.2012"
  },
  {
   "id": "bilibili",
@@ -45,7 +201,7 @@
   "sourceId": 948389851,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiribilibili",
-  "version": "14.1006"
+  "version": "14.2007"
  },
  {
   "id": "blbattu",
@@ -57,7 +213,7 @@
   "sourceId": 1487368103,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiriblbattu",
-  "version": "1.4.1007"
+  "version": "1.4.2008"
  },
  {
   "id": "blvietsub",
@@ -69,7 +225,19 @@
   "sourceId": 490751682,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriblvietsub",
-  "version": "14.1007"
+  "version": "14.2008"
+ },
+ {
+  "id": "boylovebattu",
+  "name": "Boylove Bất Tử",
+  "lang": "vi",
+  "baseUrl": "https://boylovebattu.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 2046212514,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriboylovebattu",
+  "version": "1.4.2006"
  },
  {
   "id": "cbhentai",
@@ -81,7 +249,7 @@
   "sourceId": 1580482674,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiricbhentai",
-  "version": "1.4.1019"
+  "version": "1.4.2020"
  },
  {
   "id": "cbunucomic",
@@ -93,7 +261,19 @@
   "sourceId": 123796528,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiricbunucomic",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "ciyuanji",
+  "name": "ciyuanji (Ngừng hoạt động)",
+  "lang": "zh-CN",
+  "baseUrl": "https://m.ciyuanji.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1111295559,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriciyuanji",
+  "version": "1.4.2009"
  },
  {
   "id": "cosplaytele",
@@ -105,7 +285,19 @@
   "sourceId": 780546796,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.en.kiricosplaytele",
-  "version": "1.4.1008"
+  "version": "1.4.2009"
+ },
+ {
+  "id": "czbooksrepoduongden",
+  "name": "czbooks - repo Đường đen",
+  "lang": "zh-CN",
+  "baseUrl": "https://czbooks.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1311374349,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriczbooksrepoduongden",
+  "version": "1.4.2011"
  },
  {
   "id": "dailymotion",
@@ -117,7 +309,7 @@
   "sourceId": 440543255,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiridailymotion",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "damconuong",
@@ -129,7 +321,19 @@
   "sourceId": 178663909,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiridamconuong",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "deqixs",
+  "name": "Deqixs",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.deqixs.org",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 2096658391,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirideqixs",
+  "version": "1.4.2007"
  },
  {
   "id": "destinteam",
@@ -141,7 +345,7 @@
   "sourceId": 764595440,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiridestinteam",
-  "version": "1.4.1007"
+  "version": "1.4.2008"
  },
  {
   "id": "doctruyentranhbl",
@@ -153,7 +357,19 @@
   "sourceId": 1323373370,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiridoctruyentranhbl",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "douban",
+  "name": "douban",
+  "lang": "zh-CN",
+  "baseUrl": "https://read.douban.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 811446287,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiridouban",
+  "version": "1.4.2006"
  },
  {
   "id": "douyin",
@@ -165,7 +381,19 @@
   "sourceId": 200694529,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.zh.kiridouyin",
-  "version": "14.1005"
+  "version": "14.2006"
+ },
+ {
+  "id": "duahau",
+  "name": "Dưa Hấu (Ngừng hoạt động)",
+  "lang": "zh-CN",
+  "baseUrl": "https://xgmf.zuanqianyi.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 898941649,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriduahau",
+  "version": "1.4.2006"
  },
  {
   "id": "dualeotruyen",
@@ -177,7 +405,7 @@
   "sourceId": 1548181525,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiridualeotruyen",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
  },
  {
   "id": "ehentai",
@@ -189,7 +417,31 @@
   "sourceId": 1567453988,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.all.kiriehentai",
-  "version": "1.4.1006"
+  "version": "1.4.2007"
+ },
+ {
+  "id": "faloo",
+  "name": "bFaloo (飞卢小说)",
+  "lang": "zh-CN",
+  "baseUrl": "https://b.faloo.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1943113918,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirifaloo",
+  "version": "1.4.2009"
+ },
+ {
+  "id": "fanmtl",
+  "name": "Fan MTL",
+  "lang": "en",
+  "baseUrl": "https://www.fanmtl.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 152974735,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.en.kirifanmtl",
+  "version": "1.4.2006"
  },
  {
   "id": "fapreel",
@@ -201,7 +453,7 @@
   "sourceId": 1629049543,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kirifapreel",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "fikfap",
@@ -213,7 +465,7 @@
   "sourceId": 1189313281,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kirifikfap",
-  "version": "14.1007"
+  "version": "14.2008"
  },
  {
   "id": "freereels",
@@ -225,7 +477,31 @@
   "sourceId": 2073926051,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirifreereels",
-  "version": "14.1005"
+  "version": "14.2006"
+ },
+ {
+  "id": "gaumeoteam",
+  "name": "Gấu Mèo Team",
+  "lang": "vi",
+  "baseUrl": "https://gaumeoteam.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1120225674,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirigaumeoteam",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "gioitruyen",
+  "name": "Giới Truyện",
+  "lang": "vi",
+  "baseUrl": "https://gioitruyen.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 563104616,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirigioitruyen",
+  "version": "1.4.2006"
  },
  {
   "id": "goctruyentranh",
@@ -237,7 +513,19 @@
   "sourceId": 433674138,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirigoctruyentranh",
-  "version": "1.4.1006"
+  "version": "1.4.2007"
+ },
+ {
+  "id": "gongzicp",
+  "name": "gongzicp",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.gongzicp.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1489292680,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirigongzicp",
+  "version": "1.4.2006"
  },
  {
   "id": "guphim",
@@ -249,7 +537,7 @@
   "sourceId": 598979130,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriguphim",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "hacamchicac",
@@ -261,7 +549,31 @@
   "sourceId": 144909108,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirihacamchicac",
-  "version": "1.4.1006"
+  "version": "1.4.2007"
+ },
+ {
+  "id": "hamelnsyosetuorg",
+  "name": "Hameln (Syosetu.org)",
+  "lang": "ja",
+  "baseUrl": "https://syosetu.org",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 2087844102,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.ja.kirihamelnsyosetuorg",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "hangtruyenchu",
+  "name": "Hang Truyện Chữ",
+  "lang": "vi",
+  "baseUrl": "https://hangtruyenchu.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 697544735,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirihangtruyenchu",
+  "version": "1.4.2008"
  },
  {
   "id": "haychill",
@@ -273,7 +585,7 @@
   "sourceId": 272962811,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirihaychill",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "hentaivietsubcom",
@@ -285,7 +597,7 @@
   "sourceId": 2088721693,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirihentaivietsubcom",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "hentaivn",
@@ -297,7 +609,7 @@
   "sourceId": 1484689734,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirihentaivn",
-  "version": "1.4.1032"
+  "version": "1.4.2033"
  },
  {
   "id": "hhpanda",
@@ -309,7 +621,7 @@
   "sourceId": 1350604402,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirihhpanda",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "hhtqhayvip",
@@ -321,7 +633,7 @@
   "sourceId": 369387596,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirihhtqhayvip",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "hihiphim",
@@ -333,7 +645,7 @@
   "sourceId": 1937000442,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirihihiphim",
-  "version": "14.1006"
+  "version": "14.2007"
  },
  {
   "id": "hongqua",
@@ -345,7 +657,7 @@
   "sourceId": 1801338919,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.zh.kirihongqua",
-  "version": "14.1006"
+  "version": "14.2007"
  },
  {
   "id": "hotphim",
@@ -357,7 +669,43 @@
   "sourceId": 814750280,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirihotphim",
-  "version": "14.1006"
+  "version": "14.2007"
+ },
+ {
+  "id": "html5qqcom",
+  "name": "html5.qq.com",
+  "lang": "zh-CN",
+  "baseUrl": "https://bookshelf.html5.qq.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1586917894,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirihtml5qqcom",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "idejian",
+  "name": "idejian",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.idejian.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 510126037,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriidejian",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "ijjjxsxzw",
+  "name": "ijjjxsxzw",
+  "lang": "zh-CN",
+  "baseUrl": "https://m.ijjjxsxzw.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 797361704,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriijjjxsxzw",
+  "version": "1.4.2007"
  },
  {
   "id": "iqiyi",
@@ -369,7 +717,19 @@
   "sourceId": 151140179,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.zh.kiriiqiyi",
-  "version": "14.1005"
+  "version": "14.2006"
+ },
+ {
+  "id": "ixdzs8",
+  "name": "ixdzs8",
+  "lang": "zh-CN",
+  "baseUrl": "https://ixdzs8.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 2084809375,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriixdzs8",
+  "version": "1.4.2006"
  },
  {
   "id": "jellycomics",
@@ -381,7 +741,31 @@
   "sourceId": 694480705,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirijellycomics",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "jjwxcrepoduongden",
+  "name": "Jjwxc-repo duongden💰✅",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.jjwxc.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 399664871,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirijjwxcrepoduongden",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "jjwxctangiang",
+  "name": "JJWXC · Tấn Giang",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.jjwxc.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 599082400,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirijjwxctangiang",
+  "version": "1.4.2007"
  },
  {
   "id": "julycomic",
@@ -393,7 +777,31 @@
   "sourceId": 1334296365,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirijulycomic",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "kakuyomu",
+  "name": "Kakuyomu",
+  "lang": "ja",
+  "baseUrl": "https://kakuyomu.jp",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 233888630,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.ja.kirikakuyomu",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "khotruyenchu",
+  "name": "Kho Truyện Chữ (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://khotruyenchu.me/",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 2068451858,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirikhotruyenchu",
+  "version": "1.4.2005"
  },
  {
   "id": "kwiky",
@@ -405,7 +813,91 @@
   "sourceId": 957373704,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kirikwiky",
-  "version": "14.1005"
+  "version": "14.2006"
+ },
+ {
+  "id": "lacatruyen",
+  "name": "La Cà Truyện (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://lacatruyen.homes",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1757833439,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirilacatruyen",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "langgee",
+  "name": "Langgee (Ngừng hoạt động)",
+  "lang": "zh-CN",
+  "baseUrl": "https://v5.langge.uk",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 731258307,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirilanggee",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "lnhakovnhako",
+  "name": "Hako Novel",
+  "lang": "vi",
+  "baseUrl": "https://docln.sbs",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 979692254,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirilnhakovnhako",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "lnkuro",
+  "name": "LN Kuro",
+  "lang": "vi",
+  "baseUrl": "https://lnkuro.top",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1574550475,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirilnkuro",
+  "version": "1.4.2020"
+ },
+ {
+  "id": "lofter",
+  "name": "LOFTER",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.suduguu.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1886699119,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirilofter",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "lohi",
+  "name": "LoHi",
+  "lang": "vi",
+  "baseUrl": "https://lohi2.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 974944730,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirilohi",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "loppytoon",
+  "name": "LoppyToon (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://loppytoon.com",
+  "type": "novel",
+  "nsfw": true,
+  "sourceId": 208956188,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriloppytoon",
+  "version": "1.4.2006"
  },
  {
   "id": "luottruyen",
@@ -417,7 +909,7 @@
   "sourceId": 857592572,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiriluottruyen",
-  "version": "1.4.1011"
+  "version": "1.4.2012"
  },
  {
   "id": "luphim",
@@ -429,7 +921,19 @@
   "sourceId": 675400803,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriluphim",
-  "version": "14.1007"
+  "version": "14.2008"
+ },
+ {
+  "id": "luvevaland",
+  "name": "Luvevaland",
+  "lang": "vi",
+  "baseUrl": "https://luvevalandn2.co",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1777760344,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriluvevaland",
+  "version": "1.4.2008"
  },
  {
   "id": "mangadex",
@@ -441,7 +945,19 @@
   "sourceId": 881304093,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.all.kirimangadex",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "mangadm",
+  "name": "MangaDM",
+  "lang": "vi",
+  "baseUrl": "https://mangadm.me",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 573409279,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirimangadm",
+  "version": "1.4.2007"
  },
  {
   "id": "manhwabuddy",
@@ -453,7 +969,55 @@
   "sourceId": 1056832606,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirimanhwabuddy",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "mattreadingtranslations",
+  "name": "Matt Reading Translations",
+  "lang": "en",
+  "baseUrl": "https://mattreadingtranslations.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1246262109,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.en.kirimattreadingtranslations",
+  "version": "1.4.2008"
+ },
+ {
+  "id": "medoctruyen",
+  "name": "Mê Đọc Truyện",
+  "lang": "vi",
+  "baseUrl": "https://medoctruyen.vn",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1451621369,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirimedoctruyen",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "metruyenchu",
+  "name": "MeTruyenChu",
+  "lang": "vi",
+  "baseUrl": "https://metruyenchu.com.vn",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 949415122,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirimetruyenchu",
+  "version": "1.4.2021"
+ },
+ {
+  "id": "metruyencv",
+  "name": "Mê Truyện CV (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://metruyencv.xyz",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 798221715,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirimetruyencv",
+  "version": "1.4.2006"
  },
  {
   "id": "mgtv",
@@ -465,7 +1029,7 @@
   "sourceId": 1641455956,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirimgtv",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "mimimoe",
@@ -477,7 +1041,31 @@
   "sourceId": 512017899,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirimimimoe",
-  "version": "1.4.1006"
+  "version": "1.4.2007"
+ },
+ {
+  "id": "minotruyen",
+  "name": "Mino Truyện",
+  "lang": "vi",
+  "baseUrl": "https://minotruyenv6.xyz",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1372213448,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriminotruyen",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "mintteanovel",
+  "name": "Minttea Novel",
+  "lang": "vi",
+  "baseUrl": "https://mintteanovel.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 223691695,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirimintteanovel",
+  "version": "1.4.2007"
  },
  {
   "id": "misskon",
@@ -489,7 +1077,7 @@
   "sourceId": 937496508,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirimisskon",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
  },
  {
   "id": "moetruyen",
@@ -501,7 +1089,19 @@
   "sourceId": 1908677364,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirimoetruyen",
-  "version": "1.4.1006"
+  "version": "1.4.2007"
+ },
+ {
+  "id": "monkeyd",
+  "name": "MonkeyD",
+  "lang": "vi",
+  "baseUrl": "https://monkeydd.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1699321139,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirimonkeyd",
+  "version": "1.4.2006"
  },
  {
   "id": "motphim",
@@ -513,7 +1113,43 @@
   "sourceId": 1123614177,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirimotphim",
-  "version": "14.1005"
+  "version": "14.2006"
+ },
+ {
+  "id": "mottruyen",
+  "name": "Mọt Truyện",
+  "lang": "vi",
+  "baseUrl": "https://mottruyen.app",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1458434151,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirimottruyen",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "moyuemacduyet",
+  "name": "Moyue · Mặc Duyệt",
+  "lang": "vi",
+  "baseUrl": "https://moyue.app",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1282082819,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirimoyuemacduyet",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "mtc",
+  "name": "Mê Truyện CV (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://metruyencv.xyz",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 347306615,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirimtc",
+  "version": "1.4.2006"
  },
  {
   "id": "myreadingmanga",
@@ -525,7 +1161,7 @@
   "sourceId": 1068463358,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.all.kirimyreadingmanga",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
  },
  {
   "id": "navyteamcomic",
@@ -537,7 +1173,31 @@
   "sourceId": 167984159,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirinavyteamcomic",
-  "version": "1.4.1006"
+  "version": "1.4.2007"
+ },
+ {
+  "id": "navyteamnovel",
+  "name": "Navy Team Novel",
+  "lang": "vi",
+  "baseUrl": "https://navyteams.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1707804522,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirinavyteamnovel",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "nettruyen",
+  "name": "NetTruyen",
+  "lang": "vi",
+  "baseUrl": "https://nettruyen.com.vn",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 181611968,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirinettruyen",
+  "version": "1.4.2006"
  },
  {
   "id": "nettruyen18",
@@ -549,7 +1209,7 @@
   "sourceId": 822700156,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirinettruyen18",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
  },
  {
   "id": "nettruyenviet",
@@ -561,7 +1221,7 @@
   "sourceId": 806710346,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirinettruyenviet",
-  "version": "1.4.1007"
+  "version": "1.4.2008"
  },
  {
   "id": "nettruyenz",
@@ -573,7 +1233,7 @@
   "sourceId": 735450128,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirinettruyenz",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
  },
  {
   "id": "nextphim",
@@ -585,7 +1245,7 @@
   "sourceId": 867552912,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirinextphim",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "nguonc",
@@ -597,7 +1257,55 @@
   "sourceId": 1557924559,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiringuonc",
-  "version": "14.1010"
+  "version": "14.2011"
+ },
+ {
+  "id": "novelfullnet",
+  "name": "NovelFull.Net",
+  "lang": "en",
+  "baseUrl": "https://novelfull.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1922675894,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.en.kirinovelfullnet",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "novelnext",
+  "name": "Novel Next",
+  "lang": "en",
+  "baseUrl": "https://novelnext.me",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1237883895,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.en.kirinovelnext",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "novelphoenix",
+  "name": "NovelPhoenix",
+  "lang": "en",
+  "baseUrl": "https://novelphoenix.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1395001409,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.en.kirinovelphoenix",
+  "version": "1.4.2008"
+ },
+ {
+  "id": "novelpiaglobal",
+  "name": "Novelpia Global",
+  "lang": "en",
+  "baseUrl": "https://global.novelpia.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 437660710,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.en.kirinovelpiaglobal",
+  "version": "1.4.2007"
  },
  {
   "id": "phim4k",
@@ -609,7 +1317,7 @@
   "sourceId": 1390062832,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriphim4k",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "phimmoi",
@@ -621,7 +1329,7 @@
   "sourceId": 1001551078,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriphimmoi",
-  "version": "14.1008"
+  "version": "14.2009"
  },
  {
   "id": "phimmoihd",
@@ -633,7 +1341,7 @@
   "sourceId": 1348774956,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriphimmoihd",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "phimnhua",
@@ -645,7 +1353,7 @@
   "sourceId": 1938158196,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriphimnhua",
-  "version": "14.1007"
+  "version": "14.2008"
  },
  {
   "id": "phimtv",
@@ -657,7 +1365,55 @@
   "sourceId": 1628167011,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kiriphimtv",
-  "version": "14.1006"
+  "version": "14.2007"
+ },
+ {
+  "id": "piaotia",
+  "name": "飘天文学",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.piaotia.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1369195481,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiripiaotia",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "piaotianapp",
+  "name": "piaotian-app",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.piaotianapp.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 401079491,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiripiaotianapp",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "po18",
+  "name": "po18",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.po18.tw",
+  "type": "novel",
+  "nsfw": true,
+  "sourceId": 570156683,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiripo18",
+  "version": "1.4.2005"
+ },
+ {
+  "id": "po18sm",
+  "name": "po18sm",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.po18sm.com",
+  "type": "novel",
+  "nsfw": true,
+  "sourceId": 621328073,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiripo18sm",
+  "version": "1.4.2006"
  },
  {
   "id": "pornhub",
@@ -669,7 +1425,67 @@
   "sourceId": 1255718966,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kiripornhub",
-  "version": "14.1006"
+  "version": "14.2007"
+ },
+ {
+  "id": "qimao",
+  "name": "Qimao (七猫文化) (Ngừng hoạt động)",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.qimao.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 151194068,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriqimao",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "qmbook",
+  "name": "qmbook",
+  "lang": "zh-CN",
+  "baseUrl": "https://m.bqg349.xyz",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1639775732,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriqmbook",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "quanben",
+  "name": "quanben",
+  "lang": "zh-CN",
+  "baseUrl": "https://quanben.io",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1366092419,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriquanben",
+  "version": "1.4.2008"
+ },
+ {
+  "id": "quanwenyuedu",
+  "name": "quanwenyuedu (Ngừng hoạt động)",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.quanwenyuedu.io",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 103312479,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriquanwenyuedu",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "quykiep",
+  "name": "LightNovel VN",
+  "lang": "vi",
+  "baseUrl": "https://quykiep.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 147220860,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriquykiep",
+  "version": "1.4.2009"
  },
  {
   "id": "roadsteam",
@@ -681,7 +1497,7 @@
   "sourceId": 343353709,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiriroadsteam",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
  },
  {
   "id": "rophim",
@@ -693,7 +1509,7 @@
   "sourceId": 583423809,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirirophim",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "sayhentai",
@@ -705,7 +1521,7 @@
   "sourceId": 492867322,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirisayhentai",
-  "version": "1.4.1006"
+  "version": "1.4.2007"
  },
  {
   "id": "sexviettop",
@@ -717,7 +1533,19 @@
   "sourceId": 2025759030,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirisexviettop",
-  "version": "14.1007"
+  "version": "14.2008"
+ },
+ {
+  "id": "shinigamilnteam",
+  "name": "Shinigami LN Team",
+  "lang": "vi",
+  "baseUrl": "https://shinigamilnteam.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 440801039,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirishinigamilnteam",
+  "version": "1.4.2007"
  },
  {
   "id": "showbox",
@@ -729,7 +1557,163 @@
   "sourceId": 660522367,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirishowbox",
-  "version": "14.1005"
+  "version": "14.2006"
+ },
+ {
+  "id": "shubenshu",
+  "name": "书本书 Shubenshu",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.shubenshu.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1503531059,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirishubenshu",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "sitruyencv",
+  "name": "Si Truyện CV (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://sitruyencv.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1133365518,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirisitruyencv",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "snapd",
+  "name": "Snapd",
+  "lang": "zh-CN",
+  "baseUrl": "https://m.bqgsn.cc",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1151937908,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirisnapd",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "sobqg",
+  "name": "搜笔趣阁",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.sobqg.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1115280726,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirisobqg",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "sohu",
+  "name": "sohu",
+  "lang": "zh-CN",
+  "baseUrl": "https://m.sohu.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 134174461,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirisohu",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "soixamfanqie",
+  "name": "Sói Xám (Fanqie) (Ngừng hoạt động)",
+  "lang": "zh-CN",
+  "baseUrl": "https://api.langge.cf",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 928866324,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirisoixamfanqie",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "sonako",
+  "name": "Sonako",
+  "lang": "vi",
+  "baseUrl": "https://sonako.fandom.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 202999843,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirisonako",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "stvappvi",
+  "name": "STV App Vi",
+  "lang": "vi",
+  "baseUrl": "https://sangtacviet.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1299891418,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiristvappvi",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "sudugu",
+  "name": "sudugu",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.suduguu.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 831485400,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirisudugu",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "sweetastes",
+  "name": "sweetastes",
+  "lang": "zh-CN",
+  "baseUrl": "https://baby0world.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 154347677,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirisweetastes",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "syosetu",
+  "name": "Syosetu",
+  "lang": "ja",
+  "baseUrl": "https://ncode.syosetu.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1769261027,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.ja.kirisyosetu",
+  "version": "1.4.2008"
+ },
+ {
+  "id": "syosetur18",
+  "name": "Syosetu R18",
+  "lang": "ja",
+  "baseUrl": "https://novel18.syosetu.com",
+  "type": "novel",
+  "nsfw": true,
+  "sourceId": 1539837427,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.ja.kirisyosetur18",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "taonovel",
+  "name": "TaoNovel",
+  "lang": "zh-CN",
+  "baseUrl": "https://tybook.taoyuewenhua.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1932769378,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiritaonovel",
+  "version": "1.4.2006"
  },
  {
   "id": "thegioitruyen",
@@ -741,7 +1725,19 @@
   "sourceId": 493894600,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirithegioitruyen",
-  "version": "1.4.1007"
+  "version": "1.4.2008"
+ },
+ {
+  "id": "tiemtruyenchu",
+  "name": "Tiệm Truyện Chữ (Demo)",
+  "lang": "vi",
+  "baseUrl": "https://tiemtruyenchu.cloud",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1875017300,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritiemtruyenchu",
+  "version": "1.4.2005"
  },
  {
   "id": "tikporn",
@@ -753,7 +1749,7 @@
   "sourceId": 855719270,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kiritikporn",
-  "version": "14.1007"
+  "version": "14.2008"
  },
  {
   "id": "tiktok",
@@ -765,7 +1761,115 @@
   "sourceId": 389058404,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kiritiktok",
-  "version": "14.1005"
+  "version": "14.2006"
+ },
+ {
+  "id": "tinhlinh",
+  "name": "Tinh Linh",
+  "lang": "vi",
+  "baseUrl": "https://tinhlinh.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1687026913,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritinhlinh",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "truyenc",
+  "name": "TruyenC",
+  "lang": "vi",
+  "baseUrl": "https://truyenc.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 151815816,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyenc",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "truyenchu",
+  "name": "TruyenChu",
+  "lang": "vi",
+  "baseUrl": "https://truyenchu.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 985009797,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyenchu",
+  "version": "1.4.2013"
+ },
+ {
+  "id": "truyencv",
+  "name": "Mê Truyện CV (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://metruyencv.xyz",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1064613522,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyencv",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "truyencvio",
+  "name": "TruyenCV.io",
+  "lang": "vi",
+  "baseUrl": "https://truyencv.io",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1872280776,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyencvio",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "truyendichai",
+  "name": "TruyenDich.AI",
+  "lang": "vi",
+  "baseUrl": "https://truyendich.store",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 395371077,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyendichai",
+  "version": "1.4.2009"
+ },
+ {
+  "id": "truyendichain",
+  "name": "Truyện Dịch AI",
+  "lang": "vi",
+  "baseUrl": "https://truyendichai.top/",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 788080502,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyendichain",
+  "version": "1.4.2005"
+ },
+ {
+  "id": "truyenfull",
+  "name": "Truyện Full",
+  "lang": "vi",
+  "baseUrl": "https://truyenfull.live",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1989044822,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyenfull",
+  "version": "1.4.2018"
+ },
+ {
+  "id": "truyenfulln",
+  "name": "Truyện Full",
+  "lang": "vi",
+  "baseUrl": "https://truyenfull.live",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 664151420,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyenfulln",
+  "version": "1.4.2018"
  },
  {
   "id": "truyengg",
@@ -777,7 +1881,55 @@
   "sourceId": 1324960807,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiritruyengg",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "truyenh",
+  "name": "Truyen H",
+  "lang": "vi",
+  "baseUrl": "https://truyenh.top",
+  "type": "novel",
+  "nsfw": true,
+  "sourceId": 2059538912,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyenh",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "truyenmoi",
+  "name": "Truyện Mới (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://truyenmoiqq.com/",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1944434845,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyenmoi",
+  "version": "1.4.2011"
+ },
+ {
+  "id": "truyenmoikk",
+  "name": "Truyện Mới KK (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://truyenmoikk.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1592467968,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyenmoikk",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "truyennet",
+  "name": "Truyện Net",
+  "lang": "vi",
+  "baseUrl": "https://truyennet.org/",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 547505161,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyennet",
+  "version": "1.4.2007"
  },
  {
   "id": "truyenqq",
@@ -789,7 +1941,7 @@
   "sourceId": 1174800879,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiritruyenqq",
-  "version": "1.4.1028"
+  "version": "1.4.2029"
  },
  {
   "id": "truyenqqc",
@@ -801,7 +1953,7 @@
   "sourceId": 1038497603,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiritruyenqqc",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
  },
  {
   "id": "truyentranhdammyy",
@@ -813,7 +1965,31 @@
   "sourceId": 894955118,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiritruyentranhdammyy",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "truyenzhihutonghop",
+  "name": "Truyện Zhihu Tổng Hợp",
+  "lang": "vi",
+  "baseUrl": "https://truyendexuat.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 277291705,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritruyenzhihutonghop",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "tutienpro",
+  "name": "Tu Tiên (.pro)",
+  "lang": "vi",
+  "baseUrl": "https://tutien.pro",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 793717207,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiritutienpro",
+  "version": "1.4.2006"
  },
  {
   "id": "tvkh",
@@ -825,7 +2001,7 @@
   "sourceId": 1578784027,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiritvkh",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
  },
  {
   "id": "twitch",
@@ -837,7 +2013,7 @@
   "sourceId": 860964554,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kiritwitch",
-  "version": "14.1005"
+  "version": "14.2006"
  },
  {
   "id": "ungtycomics",
@@ -849,7 +2025,31 @@
   "sourceId": 377587904,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kiriungtycomics",
-  "version": "1.4.1004"
+  "version": "1.4.2005"
+ },
+ {
+  "id": "uukanshu",
+  "name": "uukanshu",
+  "lang": "zh-CN",
+  "baseUrl": "https://uukanshu.cc",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1607921786,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriuukanshu",
+  "version": "1.4.2008"
+ },
+ {
+  "id": "valvrareteam",
+  "name": "Valvrareteam",
+  "lang": "vi",
+  "baseUrl": "https://valvrareteam.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 280368932,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirivalvrareteam",
+  "version": "1.4.2014"
  },
  {
   "id": "vfilm",
@@ -861,7 +2061,31 @@
   "sourceId": 1856540070,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirivfilm",
-  "version": "14.1006"
+  "version": "14.2007"
+ },
+ {
+  "id": "viblo",
+  "name": "Viblo",
+  "lang": "vi",
+  "baseUrl": "https://viblo.asia",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1724325702,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriviblo",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "vietnamthuquan",
+  "name": "Việt Nam Thư Quán",
+  "lang": "vi",
+  "baseUrl": "https://vnthuquan.org",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 654184318,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirivietnamthuquan",
+  "version": "1.4.2006"
  },
  {
   "id": "vinahentai",
@@ -873,7 +2097,31 @@
   "sourceId": 923234510,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.vi.kirivinahentai",
-  "version": "1.4.1007"
+  "version": "1.4.2008"
+ },
+ {
+  "id": "vipbachngocsach",
+  "name": "【VIP】Bạch Ngọc Sách (Ngừng hoạt động)",
+  "lang": "vi",
+  "baseUrl": "https://bnsvip.net",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1489977851,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirivipbachngocsach",
+  "version": "1.4.2005"
+ },
+ {
+  "id": "vivutruyencom",
+  "name": "Vivu Truyện",
+  "lang": "vi",
+  "baseUrl": "https://vivutruyen.net/",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 438779210,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirivivutruyencom",
+  "version": "1.4.2005"
  },
  {
   "id": "vtvgo",
@@ -885,7 +2133,7 @@
   "sourceId": 318684011,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirivtvgo",
-  "version": "14.1007"
+  "version": "14.2008"
  },
  {
   "id": "watchhentainet",
@@ -897,7 +2145,19 @@
   "sourceId": 113933994,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.en.kiriwatchhentainet",
-  "version": "14.1006"
+  "version": "14.2007"
+ },
+ {
+  "id": "wattpad",
+  "name": "Wattpad - Tiếng Việt",
+  "lang": "vi",
+  "baseUrl": "https://www.wattpad.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1378381534,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriwattpad",
+  "version": "1.4.2025"
  },
  {
   "id": "webtoonscan",
@@ -909,7 +2169,31 @@
   "sourceId": 269387873,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.en.kiriwebtoonscan",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "webtruyenchu",
+  "name": "Web Truyện Chữ",
+  "lang": "vi",
+  "baseUrl": "https://webtruyenchu.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 320290821,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriwebtruyenchu",
+  "version": "1.4.2007"
+ },
+ {
+  "id": "webtruyendich",
+  "name": "Web Truyện Dịch",
+  "lang": "vi",
+  "baseUrl": "https://webtruyendich.com/",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1809618654,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriwebtruyendich",
+  "version": "1.4.2006"
  },
  {
   "id": "weebcentral",
@@ -921,7 +2205,55 @@
   "sourceId": 1706827870,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.extension.en.kiriweebcentral",
-  "version": "1.4.1005"
+  "version": "1.4.2006"
+ },
+ {
+  "id": "weibo",
+  "name": "Weibo",
+  "lang": "zh-CN",
+  "baseUrl": "https://m.weibo.cn",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 479607906,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriweibo",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "wikidich",
+  "name": "Wiki Dịch",
+  "lang": "vi",
+  "baseUrl": "https://wikicv.org",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 457124419,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kiriwikidich",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "wodeshucheng5",
+  "name": "wodeshucheng5",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.wodeshucheng5.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1787019200,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriwodeshucheng5",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "xbanxiarepoduongden",
+  "name": "Xbanxia - repo Đường đen",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.xbanxia.cc",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 182755799,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirixbanxiarepoduongden",
+  "version": "1.4.2008"
  },
  {
   "id": "xemphimgi",
@@ -933,7 +2265,7 @@
   "sourceId": 794722254,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirixemphimgi",
-  "version": "14.1006"
+  "version": "14.2007"
  },
  {
   "id": "xfree",
@@ -945,7 +2277,19 @@
   "sourceId": 841357653,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kirixfree",
-  "version": "14.1006"
+  "version": "14.2007"
+ },
+ {
+  "id": "xianqihaotiamiapp",
+  "name": "言情小说阁 (APP)",
+  "lang": "zh-CN",
+  "baseUrl": "http://www.xianqihaotianmi.org",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 416465136,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirixianqihaotiamiapp",
+  "version": "1.4.2005"
  },
  {
   "id": "xoilac",
@@ -957,7 +2301,31 @@
   "sourceId": 767844963,
   "short": false,
   "pkg": "eu.kanade.tachiyomi.animeextension.vi.kirixoilac",
-  "version": "14.1005"
+  "version": "14.2006"
+ },
+ {
+  "id": "xsw",
+  "name": "xsw (Ngừng hoạt động)",
+  "lang": "zh-CN",
+  "baseUrl": "https://m.xsw.tw",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 181571759,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kirixsw",
+  "version": "1.4.2006"
+ },
+ {
+  "id": "xtruyen",
+  "name": "XTruyen",
+  "lang": "vi",
+  "baseUrl": "https://xtruyen.vn",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 597909819,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.vi.kirixtruyen",
+  "version": "1.4.2006"
  },
  {
   "id": "youtube",
@@ -969,6 +2337,18 @@
   "sourceId": 1215186726,
   "short": true,
   "pkg": "eu.kanade.tachiyomi.animeextension.all.kiriyoutube",
-  "version": "14.1005"
+  "version": "14.2006"
+ },
+ {
+  "id": "ypshuobinhluansach",
+  "name": "YPShuo - Bình luận sách",
+  "lang": "zh-CN",
+  "baseUrl": "https://www.ypshuo.com",
+  "type": "novel",
+  "nsfw": false,
+  "sourceId": 1478864876,
+  "short": false,
+  "pkg": "eu.kanade.tachiyomi.novelextension.zh.kiriypshuobinhluansach",
+  "version": "1.4.2006"
  }
 ]

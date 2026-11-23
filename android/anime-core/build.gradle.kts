@@ -5,7 +5,7 @@ plugins { id("com.android.library"); id("org.jetbrains.kotlin.android") }
 android {
     namespace = "kiritokmn.vbook.anime.core"
     compileSdk = (project.findProperty("compileSdkOverride") as String?)?.toInt() ?: 35
-    (project.findProperty("buildToolsOverride") as String?)?.let { buildToolsVersion = it }
+    buildToolsVersion = (project.findProperty("buildToolsOverride") as String?) ?: "36.0.0"
     defaultConfig { minSdk = 21 }
     sourceSets["main"].java.srcDirs("../anime/src/main/kotlin", "../shared/kotlin")
     sourceSets["main"].assets.srcDirs("../shared/assets")

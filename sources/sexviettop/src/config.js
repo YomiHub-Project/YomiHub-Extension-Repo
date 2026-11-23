@@ -24,11 +24,12 @@ var G = {
     }
   },
   "tabs": {
-    "Mới nhất": "/[trang-{p}.html]",
-    "Phim sex Việt Nam": "/phim-sex-viet-nam/[trang-{p}.html]",
-    "Phim sex Loạn Luân": "/phim-sex-loan-luan/[trang-{p}.html]",
-    "Phim sex Châu Á": "/phim-sex-chau-a/[trang-{p}.html]",
-    "Phim sex Châu Âu": "/phim-sex-chau-au/[trang-{p}.html]"
+    "Phim sex Nhật Bản": "/phim-sex-nhat-ban/[trang/{p}/]",
+    "Phim sex Vietsub": "/phim-sex-vietsub/[trang/{p}/]",
+    "Phim sex Trung Quốc": "/phim-sex-trung-quoc/[trang/{p}/]",
+    "Phim sex Châu Âu": "/phim-sex-chau-au/[trang/{p}/]",
+    "Phim sex Việt Nam": "/phim-sex-viet-nam/[trang/{p}/]",
+    "Mới nhất": "/[trang/{p}/]"
   },
   "search": "/?s={q}[&page={p}]",
   "item": "li.item-movie, .item-movie",

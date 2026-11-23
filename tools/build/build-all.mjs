@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 //   repo/plugins.min.json         LNReader / IReader       (novel sources)
 //   repo/lnreader/<id>.js
 //   repo/aniyomi/sources.json     list of Aniyomi / Nekoyomi sources (one extension APK per source since 0.0.5)
-//   android/{anime,manga}/flavors.json + gen/<flavor>/{assets,res}   input of the Gradle build (android/build_apks.ps1)
+//   android/{anime,manga,novel}/flavors.json + gen/<flavor>/{assets,res}   input of the Gradle build (android/build_apks.ps1)
 // Usage: node tools/build/build-all.mjs [--only id1,id2] [--base https://raw.githubusercontent.com/<user>/<repo>/main]
 import fs from 'node:fs';
 import path from 'node:path';
@@ -19,7 +19,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const args = process.argv.slice(2);
 const opt = k => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
 const ONLY = opt('--only') ? new Set(opt('--only').split(',')) : null;
-const BASE = (opt('--base') || 'https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main').replace(/\/+$/, '');
+const BASE = (opt('--base') || 'https://raw.githubusercontent.com/YomiHub-Project/Kiritokmn---Extension-Repo/main').replace(/\/+$/, '');
 const VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
 
 function loadEsbuild() {
@@ -248,14 +248,18 @@ const ANDROID = path.join(ROOT, 'android');
 // 0.0.5: one extension APK per source (own package / label / icon) so Aniyomi / Nekoyomi / Mihon can tell them apart.
 // versionCode = 1000 * APK_REV + plugin version. Bump APK_REV whenever the shared Android runtime changes
 // (android/shared, android/*/src/main/kotlin, runtime/engine.js, runtime/rhino-prelude.js, lib/*) so every APK gets an update.
-const APK_REV = 1;
+const APK_REV = 2;
 const APK_LANG = { vi: 'vi', 'zh-CN': 'zh', zh: 'zh', en: 'en', ja: 'ja', all: 'all', global: 'all' };
-const APK_MODS = { anime: { pkg: 'eu.kanade.tachiyomi.animeextension', label: 'Aniyomi: ', ver: c => '14.' + c }, manga: { pkg: 'eu.kanade.tachiyomi.extension', label: 'Tachiyomi: ', ver: c => '1.4.' + c } };
+const APK_MODS = {
+  anime: { pkg: 'eu.kanade.tachiyomi.animeextension', label: 'Aniyomi: ', ver: c => '14.' + c },
+  manga: { pkg: 'eu.kanade.tachiyomi.extension', label: 'Tachiyomi: ', ver: c => '1.4.' + c },
+  novel: { pkg: 'eu.kanade.tachiyomi.novelextension', label: 'Tachiyomi: ', ver: c => '1.4.' + c },
+};
 // Java-identifier-safe package segment / Gradle flavor name. Always prefixed: ids may start with a digit, and the
 // prefix keeps our packages from colliding with other repos' extensions for the same site (different signing key).
 const apkName = id => 'kiri' + id.toLowerCase().replace(/[^a-z0-9]/g, '');
-const androidFlavors = { anime: [], manga: [] };
-if (!ONLY) for (const mod of ['anime', 'manga']) {
+const androidFlavors = { anime: [], manga: [], novel: [] };
+if (!ONLY) for (const mod of ['anime', 'manga', 'novel']) {
   fs.rmSync(path.join(ANDROID, mod, 'gen'), { recursive: true, force: true });
   for (const old of ['sfw', 'nsfw']) fs.rmSync(path.join(ANDROID, mod, 'src', old), { recursive: true, force: true }); // pre-0.0.5 bundle flavors
 }
@@ -334,9 +338,9 @@ for (const id of ids) {
       fs.writeFileSync(path.join(OUT, 'lnreader', id + '.js'), ln); lnSize = ln.length;
       lnIndex.push({ id: 'kiritokmn.' + id, name: md.name, site: md.source, lang: LN_LANG[md.locale] || 'Multi', version: '1.4.' + md.version, url: `${BASE}/repo/lnreader/${id}.js`, iconUrl: icon, short: !!reg.short });
     }
-    // ---- Aniyomi / Nekoyomi (video + comic, built into multi-source APKs)
-    if (md.type === 'video' || md.type === 'comic') {
-      const mod = md.type === 'video' ? 'anime' : 'manga', M = APK_MODS[mod];
+    // ---- Aniyomi / Nekoyomi (video + comic + novel, built into per-source APKs)
+    if (md.type === 'video' || md.type === 'comic' || md.type === 'novel') {
+      const mod = md.type === 'video' ? 'anime' : md.type === 'comic' ? 'manga' : 'novel', M = APK_MODS[mod];
       const flavor = apkName(id), lang = md.locale === 'global' ? 'all' : md.locale, sourceId = hash31('aniyomi:' + id);
       const code = 1000 * APK_REV + (+md.version || 0);
       const gdir = path.join(ANDROID, mod, 'gen', flavor);
@@ -387,6 +391,13 @@ if (!ONLY) {
   fs.writeFileSync(path.join(OUT, 'index.json'), JSON.stringify(mgIndex));
   // YomiHub 0.5.3: website extensions moved out of the YomiHub app
   { const { buildYomihubSources } = await import('./yomihub-sources.mjs'); const r = buildYomihubSources(ROOT, BASE); console.log(`yomihub: ${r.added} sources, replaced ${r.dropped.length} vBook-converted entries`); }
+  // 0.0.9: separate Mangayomi/YomiHub indexes by itemType (0=manga, 1=anime, 2=novel)
+  {
+    const fullMg = JSON.parse(fs.readFileSync(path.join(OUT, 'index.json'), 'utf8'));
+    fs.writeFileSync(path.join(OUT, 'mangayomi', 'manga.json'), JSON.stringify(fullMg.filter(e => e.itemType === 0)));
+    fs.writeFileSync(path.join(OUT, 'mangayomi', 'anime.json'), JSON.stringify(fullMg.filter(e => e.itemType === 1)));
+    fs.writeFileSync(path.join(OUT, 'mangayomi', 'novel.json'), JSON.stringify(fullMg.filter(e => e.itemType === 2)));
+  }
   fs.writeFileSync(path.join(OUT, 'plugins.min.json'), JSON.stringify(lnIndex));
   fs.writeFileSync(path.join(OUT, 'aniyomi', 'sources.json'), JSON.stringify(aniSources, null, 1));
 }

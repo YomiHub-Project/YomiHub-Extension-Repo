@@ -25,6 +25,17 @@
 3. Kiểm thực tế: `git status -sb`, `git log -5`; `_work/run/heartbeat.txt` (runner còn sống?), job mới nhất trong `_work/run/o/`; `_work/NOTES_*.md` mới nhất; `Output/publish.log` (UTF-16).
 4. Tóm tắt trạng thái cho chủ dự án rồi tiếp tục từ việc dở dang đầu tiên.
 
+## D00. Trạng thái 0.0.9 (23–24/11/2026) — HOÀN THÀNH TOÀN DIỆN, ĐÃ PHÁT HÀNH
+- **Đặc điểm nổi bật bản 0.0.9:**
+  - **Filter Extension 10 mục tiêu chuẩn**: Đầy đủ Sort, Status, Genre, Content Rating, Media Type, Language, Release Year, Chapter Count, Update Frequency, Audio/Sub (test suite `test/filter-extension.test.mjs` đạt 9/9 PASS).
+  - **Tách riêng 3 kho APK độc lập**: 44 Anime (`repo/anime/`), 37 Manga (`repo/manga/`), 115 Novel (`repo/novel/`). Mở rộng kiến trúc Gradle lên 196 APKs với module `android/novel/` và `NovelSource.kt`.
+  - **Phát video trực tiếp trong app**: Cơ chế trích xuất link sâu depth 3 (`C.sniffStreamUrl`), làm sạch quảng cáo DOM-clean `C.cleanAds`, bypass anti-debugger `C.cleanDevTools`, gỡ bỏ phụ thuộc WebView/trình duyệt ngoài.
+  - **Đo mạng thật 196 nguồn**: Đạt **100/196 PASS** (51.0%, +6 so với 0.0.8, +23 so với 0.0.7), Aidoku mô phỏng đạt 81/152 PASS (+7).
+  - **Dựng & Ký số 196/196 APKs**: Biên dịch sạch sẽ 196 APKs (125.95 MB), ký số bằng chứng chỉ `kiritokmn.jks`.
+  - **Kiểm thử thực tế Galaxy Note9 (SM-N960N)**: Cài đặt thành công 196/196 APKs, kiểm tra tương tác 9 ứng dụng, ghi hình 6 video MP4 và 50+ ảnh chụp màn hình tại `_work/shots/v009/`.
+  - **Đóng gói phát hành Output/**: 7 tệp zip + 4 tệp json index (tổng 150 MB).
+  - **Phát hành GitHub**: Đẩy commit lên `YomiHub-Project/Kiritokmn---Extension-Repo`, tạo GitHub Release `v0.0.9` kèm 11 assets trùng khớp 100%.
+
 ## D0. Trạng thái 0.0.8 (23/11/2026 01:15) — HOÀN THÀNH TOÀN DIỆN, ĐÃ PHÁT HÀNH
 - **Tiếp nhận bàn giao từ Claude (22/11 22:47):** Antigravity tiếp nhận toàn bộ công việc B→H theo `_work/agents/handover_claude_to_antigravity_0.0.8.md`.
 - **Thực thi và hoàn tất xuất sắc:**

@@ -15,7 +15,7 @@ function execute(data) {
   if (m) { try { ep = JSON.parse(m[1]); } catch (e) { ep = null; } }
   var u = ep && ep.encrypted_url ? hhUrl(String(ep.encrypted_url)) : '';
   if (!/^https?:\/\//.test(u)) u = ep && /^https?:\/\//.test(ep.link || '') ? ep.link : '';
-  if (!u) return Response.success({ type: 'webview', data: data });
-  if (!/\.(m3u8|mp4)(\?|$)/i.test(u)) return Response.success({ type: 'webview', data: u });
+  if (!u && typeof C !== 'undefined' && C.sniff) u = C.sniff(body);
+  if (!u || !/\.(m3u8|mp4)(\?|$)/i.test(u)) return Response.error('Không tìm thấy luồng phát trực tiếp (.m3u8/.mp4)');
   return Response.success({ type: 'native', data: u, mimeType: /\.m3u8/i.test(u) ? 'application/x-mpegURL' : 'video/mp4', headers: { Referer: 'https://api.hihiphim.com/' } });
 }

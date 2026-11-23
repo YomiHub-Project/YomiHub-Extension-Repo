@@ -89,13 +89,17 @@ var __A = (function () {
   function num(name, i) { var m = /(?:chương|chuong|chapter|ch\.?|tập|tap|episode|ep\.?|第)\s*(\d+(?:\.\d+)?)/i.exec(str(name)); return m ? parseFloat(m[1]) : i + 1; }
   function entries(r) { return { e: r.items.map(function (i) { return { k: i.link, t: i.name, c: i.cover || null }; }), n: !!r.hasNext }; }
   var OPS = {
+    filters: async function () {
+      return await E().getFilters();
+    },
     listings: async function () {
       var tabs = await E().tabs();
       return tabs.map(function (t, i) { return { id: 'tab' + i, name: str(t.title || t.name || ('Tab ' + (i + 1))) }; });
     },
     list: async function (a) {
       var e = E(), p = a.page || 1;
-      if (a.q != null && a.q !== '') return entries(await e.search(a.q, p));
+      var hasF = a.filters && (Array.isArray(a.filters) ? a.filters.length > 0 : Object.keys(a.filters).length > 0);
+      if ((a.q != null && a.q !== '') || hasF) return entries(await e.search(a.q || '', p, a.filters));
       var id = str(a.id);
       if (/^tab\d+$/.test(id)) {
         var tabs = await e.tabs(), t = tabs[+id.slice(3)];

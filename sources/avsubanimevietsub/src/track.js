@@ -33,7 +33,7 @@ function nativeTrack(streamUrl, referer) {
 function resolveTrack(url, depth) {
   depth = depth || 0;
   url = String(url || '').trim();
-  if (!url) return Response.success({ type: 'webview', data: BASE_URL });
+  if (!url) return Response.error('Không tìm thấy đường dẫn phát');
 
   // 1. Unwrap embedded player query parameter FIRST (e.g. player.phimapi.com/player/?url=https://.../index.m3u8)
   var unwrapped = unwrapParam(url);
@@ -106,10 +106,7 @@ function resolveTrack(url, depth) {
     }
   }
 
-  return Response.success({
-    type: 'webview',
-    data: url
-  });
+  return Response.error('Không tìm thấy luồng phát trực tiếp (.m3u8/.mp4) tại ' + url);
 }
 
 function execute(url) {

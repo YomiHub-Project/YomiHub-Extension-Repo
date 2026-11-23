@@ -1,4 +1,6 @@
 load('config.js');
-load('lib_common.js');
-load('lib_generic.js');
-function execute(input, page) { return X.browse(input, page); }
+function execute(input) {
+  var sort = input || "index";
+  var j = api("/api/sort?sort=" + encodeURIComponent(sort));
+  return Response.success((j.data || []).map(book), null);
+}

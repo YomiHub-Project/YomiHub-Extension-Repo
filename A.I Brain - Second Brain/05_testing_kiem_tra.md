@@ -16,10 +16,11 @@
 | `node tools/test/streamcheck.mjs <id…>` / `streamprobe.mjs` | Tải thử link phát kèm header |
 | `node tools/test/aidoku-sim.mjs --all --conc 6` | Mô phỏng adapter Aidoku (cùng JS chạy trong JavaScriptCore) |
 | `node test/domain-switch.test.mjs` | Kiểm đổi tên miền (12/12 từ 0.0.6) |
+| `node test/filter-extension.test.mjs` | Kiểm tra 10 bộ lọc chuẩn Filter Extension, Rhino ES5, Mangayomi, LNReader, Aidoku, cleanAds, cleanDevTools, sniff, videos depth 3 (từ 0.0.9, 9/9 test suites PASS) |
 | `node .build/test/<id>.mjs` | Kiểm nhanh một nguồn đã dựng (Antigravity dùng, 18/11) |
 | `tools/test/Http2BridgeTest.kt` | Test JVM cầu nối HTTP/2 (18/18; cách chạy ở đầu tệp) |
 
-Kết quả qua các bản (mạng thật): 0.0.4: 60 · 0.0.5: 66 · 0.0.6: 69 · 0.0.7: 77/196 · **0.0.8: 94/196 (+ AVSub v14.1008 PASS 100%)**. Aidoku-sim: 0.0.6: 63/152 · **0.0.8: 74/152**.
+Kết quả qua các bản (mạng thật): 0.0.4: 60 · 0.0.5: 66 · 0.0.6: 69 · 0.0.7: 77/196 · 0.0.8: 94/196 · **0.0.9: 100/196 PASS** (59 Novel, 20 Anime, 21 Manga). Aidoku-sim: 0.0.6: 63/152 · 0.0.8: 74/152 · **0.0.9: 81/152 PASS**. Unit tests: 12/12 domain-switch, 9/9 filter-extension PASS 100%.
 
 ## 2. Điều khiển thiết bị từ máy ảo Linux
 - `_work/phone4.ps1` (máy ảo Android) / `_work/phone5.ps1` (Galaxy Note9): chạy qua runner bằng job một dòng `& '...\_work\phone5.ps1'` (**không** dùng Start-Process lồng trong job vì tiến trình con bị mất). Đọc lệnh từ `_work/phone_cmd.txt`; sau mỗi lô lệnh chụp `shots/phone_now.png` + `ui_now.xml`. Tắt bằng lệnh `quit`.
@@ -68,3 +69,13 @@ Kết quả qua các bản (mạng thật): 0.0.4: 60 · 0.0.5: 66 · 0.0.6: 69 
     - `05_lnreader_rec.mp4` (14.1 MB, 02:51) + `05a..05e`: LNReader duyệt `Bàn Long`, mở chi tiết & đọc chương *Ô Long Sơn tu hành bút ký* mượt.
     - `06_vbook_leechtext_rec.mp4` (1.8 MB, 00:41) + `06a..06c`: vBook `v1.1.57` hiển thị Thư viện 25 nguồn; LeechText `2.0.0` tự dừng khi mở trên Android 10 (lỗi app).
   - Kết quả kiểm thử mạng thật: **94/196 PASS** (+17 nguồn so với 0.0.7) + `avsubanimevietsub` v14.1008 PASS 100% (`--stream`). Aidoku đạt 74/152 PASS.
+- 0.0.9 (kiểm thử thực tế toàn diện trên Galaxy Note9 SM-N960N, Android 10, xác minh trực quan 100%):
+  - Cài đặt thành công toàn bộ **196/196 APKs** (44 Anime + 37 Manga + 115 Novel) qua lệnh tuần tự `adb install -r`.
+  - **6 video screenrecord (.mp4)** + **50+ ảnh chụp màn hình (.png)** lưu tại `_work/shots/v009/`, đã kiểm tra trực quan từng ảnh:
+    - `01_aniyomi_rec.mp4` (9.6 MB) + ảnh `01a..01k`, `01_filter_extension_*.png`: Aniyomi tách kho Anime, cài đặt `DOMAIN_CUSTOM`, hiển thị đầy đủ 10 bộ lọc Filter Extension, phát video trực tiếp qua `PlayerActivity` nội bộ (không webview), OSD tua và Resume.
+    - `02_nekoyomi_rec.mp4` (6.6 MB) + ảnh `02a..02h`: Nekoyomi tách riêng 3 kho (Anime, Manga, Novel sources), đọc Manga TruyenQQ vuốt mượt mà, duyệt Novel.
+    - `03_mangayomi_rec.mp4` (171 KB) + ảnh `03a..03e`: Mangayomi duyệt Manga/Anime/Novel, duyệt nguồn Twitch/TruyenQQ, bộ lọc.
+    - `04_yomihub_rec.mp4` (1.7 MB) + ảnh `04a..04d`: YomiHub giao diện Dark Violet, 6 tab đáy, Shorts video dọc.
+    - `05_lnreader_rec.mp4` (1.8 MB) + ảnh `05a..05e`: LNReader duyệt Bàn Long, đọc chữ tiếng Việt *Ô Long Sơn tu hành bút ký* (1094 chương).
+    - `06_vbook_leechtext_rec.mp4` (2.6 MB) + ảnh `06a..06c`: vBook v1.1.57 mở mượt mà hiển thị 25 nguồn thư viện; LeechText 2.0.0 crash do lỗi ComposeEnvironment của app.
+  - Kết quả kiểm thử: **100/196 PASS** mạng thật (tăng +6 PASS so với 0.0.8); Aidoku-sim: **81/152 PASS** (tăng +7); Unit tests: 12/12 domain-switch và 9/9 filter-extension PASS 100%. Đã khôi phục cài đặt gốc Note9 theo `phone_settings_before.txt`.

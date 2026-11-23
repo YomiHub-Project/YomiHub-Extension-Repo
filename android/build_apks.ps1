@@ -1,5 +1,5 @@
-# Builds one extension APK per source (Aniyomi/Nekoyomi anime + Tachiyomi/Mihon manga), signs them,
-# and writes repo/index.min.json + repo/repo.json. Run from Windows (Android Studio JBR + Android SDK).
+# Builds one extension APK per source (Aniyomi anime + Nekoyomi/Tachiyomi manga + Nekoyomi novel), signs them,
+# and writes repo/{anime,manga,novel}/ and repo/index.min.json + repo.json. Run from Windows (Android Studio JBR + Android SDK).
 $ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'
 $Here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Root = Split-Path -Parent $Here
@@ -33,11 +33,11 @@ $bt = Get-ChildItem (Join-Path $env:ANDROID_HOME 'build-tools') -Directory -Erro
 L "installed platforms: $((Get-ChildItem (Join-Path $env:ANDROID_HOME 'platforms') -Directory).Name -join ',') build-tools: $((Get-ChildItem (Join-Path $env:ANDROID_HOME 'build-tools') -Directory).Name -join ',') -> using android-$plat / $bt"
 Push-Location $Here
 $t0 = Get-Date
-# one release APK per source: flavors come from android\{anime,manga}\flavors.json (written by tools\build\build-all.mjs)
-& .\gradlew.bat --no-daemon --stacktrace "-PcompileSdkOverride=$plat" "-PbuildToolsOverride=$bt" :anime:assembleRelease :manga:assembleRelease 2>&1 | Out-File -FilePath (Join-Path $Here 'gradle.log') -Encoding utf8
+# one release APK per source: flavors come from android\{anime,manga,novel}\flavors.json (written by tools\build\build-all.mjs)
+& .\gradlew.bat --no-daemon --stacktrace "-PcompileSdkOverride=$plat" "-PbuildToolsOverride=$bt" :anime:assembleRelease :manga:assembleRelease :novel:assembleRelease 2>&1 | Out-File -FilePath (Join-Path $Here 'gradle.log') -Encoding utf8
 L "gradle exit $LASTEXITCODE in $([int]((Get-Date) - $t0).TotalSeconds)s"
 Pop-Location
-foreach ($m in 'anime', 'manga') {
+foreach ($m in 'anime', 'manga', 'novel') {
   $apks = @(Get-ChildItem (Join-Path $Here "$m\build\outputs\apk") -Recurse -Filter *.apk -ErrorAction SilentlyContinue)
   $want = (Get-Content (Join-Path $Here "$m\flavors.json") -Raw -Encoding UTF8 | ConvertFrom-Json).Count
   L "apk $m`: $($apks.Count)/$want built, $([math]::Round((($apks | Measure-Object Length -Sum).Sum) / 1MB, 1)) MB"

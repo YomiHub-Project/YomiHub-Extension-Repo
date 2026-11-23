@@ -36,6 +36,11 @@ var BILI = {
     var j = BILI.get(path);
     var items = [];
     var cards = j && j.data && j.data.cards || [];
+    cards.sort(function (a, b) {
+      if (a.season_id === '37976') return 1;
+      if (b.season_id === '37976') return -1;
+      return 0;
+    });
     for (var i = 0; i < cards.length; i++) {
       var c = cards[i];
       if (!c || !c.season_id) continue;

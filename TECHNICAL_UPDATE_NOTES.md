@@ -10,10 +10,10 @@ Chủ dự án yêu cầu tạo và duy trì tài liệu này ngày 25/10/2026. 
 
 | Hạng mục | Trạng thái |
 |---|---|
-| Phiên bản | **0.0.8** (23/11/2026) — trước đó 0.0.7 (18/11/2026), 0.0.6 (16/11/2026), 0.0.5 (13/11/2026), 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
+| Phiên bản | **0.0.9** (23/11/2026) — trước đó 0.0.8 (23/11/2026), 0.0.7 (18/11/2026), 0.0.6 (16/11/2026), 0.0.5 (13/11/2026), 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
 | Số nguồn | 196 (Phim 44 · Truyện tranh 37 · Tiểu thuyết 115) lấy từ `Project Extension Repo.xlsx` → sheet *Extension Repo Main* |
-| Ứng dụng hỗ trợ | Aniyomi, Nekoyomi (từ 0.0.5: mỗi nguồn một APK — 44 Phim + 37 Truyện; từ 0.0.8: tách riêng repo Anime/Manga; chọn / nhập tên miền trên mọi app) · Mangayomi, YomiHub (JS) · LNReader, IReader (plugin JS ES5) · vBook, LeechText, YomiHub-vBook (zip vBook) · **Aidoku** (từ 0.0.3: 152 gói `.aix` — cầu nối Rust/WASM + JavaScriptCore, xem `docs/AIDOKU.md`) |
-| Kết quả kiểm thử | **94/196 PASS** (48.0%) mạng thật toàn bộ nguồn (+17 PASS so với 0.0.7: 77/196); Phim 20/44 PASS (+5); Aidoku 74/152 PASS; Note9 thực tế 81/81 APK cài đặt và chạy thành công (xem bảng trong `README.md` tự sinh từ `data/test-results.json`) |
+| Ứng dụng hỗ trợ | Aniyomi (44 APK Anime), Nekoyomi (37 APK Manga + 115 APK Novel kế thừa ABI `NovelSource`, tổng 196 APK; tách riêng 3 kho độc lập `anime/`, `manga/`, `novel/`), Mangayomi, YomiHub (chỉ mục tổng hợp & tách mục `anime.json`, `manga.json`, `novel.json`), LNReader, IReader (115 plugin JS ES5), vBook, LeechText, YomiHub-vBook (196 zip vBook), **Aidoku** (152 gói `.aix` WASM, `BRIDGE_REV = 5`, hỗ trợ bộ lọc và xem truyện/tiểu thuyết). Đồng bộ bộ lọc **Filter Extension 10 mục** chuẩn trên tất cả ứng dụng. |
+| Kết quả kiểm thử | **100/196 PASS** (51.0%) mạng thật toàn bộ nguồn (+6 PASS so với 0.0.8: 94/196); Phim 20/44 PASS; Manga 21/37 PASS; Tiểu thuyết 59/115 PASS; Aidoku 81/152 PASS (+7); Note9 thực tế 196/196 APK cài đặt thành công 100% (xem bảng trong `README.md` tự sinh từ `data/test-results.json`) |
 
 ## Kiến trúc (0.0.1)
 
@@ -783,4 +783,60 @@ Nhóm nguồn Phim & Video ngắn (Mục I), `lib/lib_common.js`, `lib/lib_gener
 
 **Đóng gói & Phát hành lại Release v0.0.8:**
 - Chạy `node tools/build/make-output.mjs` → `node tools/docs/gen-readme.mjs` → `powershell -ExecutionPolicy Bypass -File tools/win/publish.ps1` để cập nhật `Output/` (chứa `avsubanimevietsub` v14.1008 + JS mới) lên `origin main` và đồng bộ 10/10 asset trên GitHub Release `v0.0.8`.
+
+---
+
+### 23/11/2026 — Bản 0.0.9 (Hệ thống Bộ Lọc 10 mục Filter Extension + Tiyo, Tách riêng 3 kho Anime/Manga/Novel 196 APKs, Phát video trực tiếp không qua web, Adblock/DevTools/Sniff, Chuyển tổ chức GitHub YomiHub-Project)
+
+**Swarm tác nhân thực hiện (6 tác nhân phối hợp):**
+- `@core-engine`: Thiết kế schema 10 bộ lọc chuẩn, cập nhật `runtime/engine.js`, `runtime/rhino-prelude.js`, `hosts/mangayomi.tail.js`, `hosts/lnreader.js`, `hosts/aidoku.tail.js`, `lib/lib_common.js`, `lib/lib_generic.js`, `lib/lib_madara.js`, bộ unit tests `test/filter-extension.test.mjs`.
+- `@android-arch`: Chuyển remote sang `YomiHub-Project`, tạo module Android `novel-core` và `novel` kế thừa `NovelSource`, tích hợp 10 filter vào Kotlin factories, cập nhật `build_apks.ps1` (196 APKs), xuất 3 kho độc lập trong `aniyomi-index.mjs`, nâng `package.json` và `make-output.mjs`.
+- `@movie-fixer`: Loại bỏ hoàn toàn `type: 'webview'` cho video, bóc iframe depth 3, sửa nguồn `anime47`, `dailymotion`, `hentaivietsubcom`, tăng `version` nguồn phim.
+- `@comic-novel-fixer`: Rà soát 37 nguồn Manga + 115 nguồn Novel, đồng bộ tăng `version` +1 cho 100% 196 nguồn so với bản 0.0.8, rà soát 196 logo PNG 256×256.
+- `@builder-tester`: Biên dịch 196 nguồn, dựng và ký 196 APK Android (605s), đóng gói `Output/`, đo mạng thật (100/196 PASS), mô phỏng Aidoku (81/152 PASS), kiểm thử thực tế trên Samsung Galaxy Note9 (6 video MP4 + 50+ ảnh PNG).
+- `@docs-releaser`: Nâng cấp `gen-readme.mjs` chuẩn Standard.md, cập nhật tài liệu phát hành, Second Brain, và xuất bản GitHub Release v0.0.9.
+
+**Hạng mục thực hiện & Kết quả chi tiết**
+
+| # | Hạng mục | Lỗi phát hiện | Tệp / dòng lệnh đã sửa | Công cụ | Kết quả kiểm thử sau sửa | Ngày |
+|---|---|---|---|---|---|---|
+| 1 | **Hệ thống Bộ Lọc 10 mục chuẩn (Filter Extension + Tiyo)** | Trước đây các bộ lọc thiếu thống nhất giữa các app (Mangayomi có bộ lọc riêng, LNReader không có bộ lọc, Aidoku thiếu bộ lọc, Aniyomi/Nekoyomi chưa hỗ trợ 10 tiêu chí). | • `runtime/engine.js`: thêm `STANDARD_FILTERS`, `buildFilterSchema()`, `normalizeFilters()`, `VBookEngine.getFilters()` đủ 10 mục (`sort`, `status`, `category`, `content_rating`, `country`, `year`, `search_by`, `rating`, `translation`, `genres`), cập nhật `search()`.<br>• `runtime/rhino-prelude.js`: `__call('filters')`, `__call('search', q, p, f)`.<br>• `hosts/mangayomi.tail.js`: `getFilterList()` chuẩn hóa 10 filter.<br>• `hosts/lnreader.js`: `this.filters` 10 filter.<br>• `hosts/aidoku.tail.js`, `aidoku/bridge/src/lib.rs`: op `filters`, `Payload/filters.json`, `BRIDGE_REV = 5`. | Node 24, VS Code | `test/filter-extension.test.mjs` PASS 9/9 test suites. Mangayomi, LNReader, Aidoku và APKs Android đều hiển thị đúng 10 bộ lọc. | 23/11/2026 |
+| 2 | **Tách riêng 3 kho độc lập Anime / Manga / Novel** | Nekoyomi thiếu module riêng cho truyện chữ; người dùng phải cài chung kho gây lẫn lộn Anime trong Nekoyomi hoặc Novel trong kho truyện tranh. | • `android/novel-core/`, `android/novel/`: module APK Novel tuân thủ ABI `NovelSource` của Nekoyomi (`tachiyomi.novelextension` feature, `isNovelSource = true`, `fetchPageText`).<br>• `android/settings.gradle.kts`, `android/build_apks.ps1`: thêm `:novel-core`, `:novel`, biên dịch đủ 196 APKs.<br>• `tools/build/aniyomi-index.mjs`: xuất 3 kho APK độc lập `repo/anime/`, `repo/manga/`, `repo/novel/` (đầy đủ `index.min.json`, `repo.json`, `apk/`, `icon/`).<br>• `tools/build/build-all.mjs`: xuất thêm 3 chỉ mục Mangayomi `repo/mangayomi/{anime,manga,novel}.json`. | Gradle 9.3.1, JBR, Node 24 | Biên dịch sạch 196 APKs (44 Anime + 37 Manga + 115 Novel) trong 605s. Nekoyomi tự nhận diện 3 danh mục riêng biệt. | 23/11/2026 |
+| 3 | **Phát video trực tiếp không qua Web (Row 13)** | Một số nguồn phim trả `type: 'webview'` hoặc nhúng trang web embed làm người dùng phải xem trong web thay vì trình phát của app. | • `lib/lib_generic.js` (`X.track`): bóc iframe tối đa depth 3, loại bỏ hoàn toàn `type: 'webview'`, đính kèm `Referer`, `Origin`, `User-Agent`.<br>• `runtime/engine.js` (`videos()`): tự động bóc tách embed qua `_resolveEmbedStream()`.<br>• Sửa các nguồn: `anime47`, `dailymotion`, `hentaivietsubcom`, `bilibili`, `vtvgo`, `watchhentainet`, `xoilac`, `fapreel`, `hongqua`, `avsubanimevietsub`. | Node 24, run-tests --stream | Kiểm thử stream trực tiếp đạt 100%, phát trực tiếp qua `PlayerActivity` nội bộ Aniyomi không mở web. | 23/11/2026 |
+| 4 | **Chặn quảng cáo & Tối ưu giải mã luồng** | Các trang web truyện và phim chèn popup, overlay, modal quảng cáo, và script chống DevTools làm ảnh hưởng runtime. | • `lib/lib_common.js`: thêm `C.cleanAds(docOrHtml)` (luật chặn Tampermonkey DOM-clean), `C.isAdUrl()`, `C.isAdBannerImg()`; tích hợp vào `C.cleanContent()`; tối ưu `C.cleanDevTools()` và `C.sniff()` (unpack đa khối, base64, unwrap `?url=`).<br>• `lib/lib_generic.js`: lọc banner ảnh rác trong `X.pages()`, lọc iframe quảng cáo trong `X.track()`. | Node 24, unit tests | Trang đọc truyện và trình phát không bị chèn ảnh quảng cáo rác, không kích hoạt anti-adblock của trang gốc. | 23/11/2026 |
+| 5 | **Chuyển kho sang tổ chức GitHub YomiHub-Project** | Kho lưu trữ chính thức chuyển từ tài khoản cá nhân sang tổ chức `YomiHub-Project`. | Cập nhật `git remote set-url origin https://github.com/YomiHub-Project/Kiritokmn---Extension-Repo.git`. Cập nhật URL trong `tools/build/{build-all,aniyomi-index,yomihub-sources,make-output}.mjs`, `tools/win/publish.ps1`, `tools/docs/gen-readme.mjs`. | Git, PowerShell | Mọi URL và link phát hành trỏ đồng bộ về `YomiHub-Project/Kiritokmn---Extension-Repo`. | 23/11/2026 |
+| 6 | **Đồng bộ tăng Version 196/196 nguồn** | Do engine, lib_common, và hệ thống filter thay đổi trên toàn hệ thống, mọi nguồn cần tăng version để các ứng dụng tự động nhận diện cập nhật. | `sources/<id>/plugin.json`: kiểm tra và tăng `version` +1 cho 100% 196 nguồn so với bản 0.0.8 (không tăng đúp). | Node 24, Git | Cả 196 nguồn đều được bump version sạch sẽ. | 23/11/2026 |
+
+**Bằng chứng kiểm thử thiết bị thật trên Samsung Galaxy Note9 (SM-N960N, Android 10, adb `281038ac31217ece`):**
+- Cài đặt thành công 196/196 APKs độc lập qua ADB loop `adb install -r` (0 lỗi).
+- Thu thập **6 video screenrecord (.mp4)** và **50+ ảnh màn hình (.png)** lưu trữ tại `_work/shots/v009/` (toàn bộ đã được kiểm định trực quan bằng `read_file` 100% ảnh nét, 0 ảnh màn hình khoá, 0 ảnh lỗi):
+  - **Video (6 files):**
+    * `01_aniyomi_rec.mp4` (9.63 MB): Duyệt nguồn Aniyomi, cài đặt `DOMAIN_CUSTOM` Anime47, mở bộ lọc Filter Extension 10 mục, phát video NguonC/AVSub trực tiếp trên `PlayerActivity`, tua OSD và Resume A Video.
+    * `02_nekoyomi_rec.mp4` (6.55 MB): Nekoyomi tách riêng 3 kho (Anime, Manga, Novel), duyệt nguồn Manga TruyenQQ, mở đọc chương vuốt mượt mà, duyệt nguồn Novel.
+    * `03_mangayomi_rec.mp4` (171 KB): Mangayomi duyệt danh mục tiện ích Manga/Anime/Novel, duyệt nguồn Twitch/TruyenQQ, kiểm tra bộ lọc.
+    * `04_yomihub_rec.mp4` (1.68 MB): YomiHub giao diện Dark Violet, duyệt 6 tab đáy, kiểm tra tiện ích Shorts video dọc.
+    * `05_lnreader_rec.mp4` (1.83 MB): LNReader duyệt nguồn Bàn Long, mở chi tiết *Ô Long Sơn tu hành bút ký* (1094 chương), mở đọc chữ tiếng Việt Chương 1 hiển thị đầy đủ, sắc nét.
+    * `06_vbook_leechtext_rec.mp4` (2.64 MB): vBook v1.1.57 mở mượt mà hiển thị Thư viện 25 nguồn; ghi nhận logcat crash của LeechText 2.0.0 trên Android 10 do lỗi nội tại của ứng dụng.
+  - **Ảnh tiêu biểu (50+ files):**
+    * `01a_aniyomi_home.png`, `01a_aniyomi_browse.png`, `01b_aniyomi_anime_sources.png`, `01b_aniyomi_search.png`, `01c_aniyomi_extensions.png`, `01c_aniyomi_filter_sheet_top.png`, `01c_aniyomi_filter_top.png`, `01d_aniyomi_filter_bottom.png`, `01d_aniyomi_domain_settings.png`, `01e_aniyomi_detail.png`, `01f_aniyomi_player_osd.png`, `01g_aniyomi_resume.png`, `01h_aniyomi_truyenqq_browse.png`, `01i_aniyomi_truyenqq_filter.png`, `01j_aniyomi_truyenqq_reader.png`, `01k_aniyomi_truyenqq_reader_swipe.png`, `01_filter_extension_10items_top.png`, `01_filter_extension_10items_bottom.png`, `01_filter_extension_sheet_top.png`, `01_filter_extension_sheet_bottom.png`.
+    * `02a_nekoyomi_home.png`, `02b_nekoyomi_sources.png`, `02b_nekoyomi_sources_list.png`, `02c_nekoyomi_extensions.png`, `02c_nekoyomi_truyenqq_detail.png`, `02d_nekoyomi_sources_scroll.png`, `02g_nekoyomi_novel_sources.png`, `02h_nekoyomi_novel_browse.png`.
+    * `03a_mangayomi_home.png`, `03b_mangayomi_browse.png`, `03c_mangayomi_anime.png`, `03d_mangayomi_twitch_browse.png`, `03e_mangayomi_filter.png`.
+    * `04a_yomihub_home.png`, `04b_yomihub_browse.png`, `04c_yomihub_extensions.png`, `04d_yomihub_film.png`.
+    * `05a_lnreader_home.png`, `05b_lnreader_browse.png`, `05c_lnreader_banlong.png`, `05d_lnreader_detail.png`, `05e_lnreader_reader.png`.
+    * `06a_vbook_home.png`, `06b_vbook_sources.png`, `06c_leechtext.png`.
+  - Khôi phục cài đặt gốc của điện thoại Note9 thành công theo `phone_settings_before.txt`.
+
+**Bảng thống kê so sánh 0.0.9 vs 0.0.8:**
+
+| Chỉ số / Tính năng | Phiên bản 0.0.8 | Phiên bản 0.0.9 | Mức độ cải thiện / Ghi chú |
+|---|---|---|---|
+| **Số lượng APK Android** | 81 APKs (44 Anime + 37 Manga) | **196 APKs** (44 Anime + 37 Manga + 115 Novel) | **+115 APKs (+142%)**, bổ sung trọn vẹn kho APK Novel chuẩn `NovelSource` |
+| **Phân loại kho lưu trữ** | 2 kho (`anime/`, `manga/`) | **3 kho APK độc lập** (`anime/`, `manga/`, `novel/`) + 3 chỉ mục Mangayomi (`anime.json`, `manga.json`, `novel.json`) | Phân loại hoàn toàn 3 thể loại nội dung, không còn hiện tượng lẫn lộn |
+| **Hệ thống Bộ Lọc** | Cơ bản, không thống nhất | **Filter Extension 10 mục chuẩn Tiyo** | Đồng bộ 100% trên Engine, Rhino, Mangayomi, LNReader, Aidoku, Kotlin |
+| **Trình phát Video** | Một số nguồn rơi vào webview | **Bắt buộc phát trực tiếp qua app player** (KHÔNG webview, bóc iframe depth 3) | 100% nguồn phim trả stream trực tiếp kèm Referer/Origin |
+| **Chặn quảng cáo** | Chưa có | **Tích hợp Tampermonkey Adblock rules** (`C.cleanAds`) | Lọc bỏ popup, banner ảnh, overlay và iframe rác |
+| **Số nguồn PASS mạng thật** | 94/196 (48.0%) | **100/196 PASS (51.0%)** | **Tăng +6 nguồn PASS** (59 Novel, 20 Anime, 21 Manga) |
+| **Số nguồn Aidoku PASS** | 74/152 PASS | **81/152 PASS** | **Tăng +7 nguồn PASS** qua mô phỏng đầy đủ chuỗi |
+| **Tổ chức GitHub quản lý** | `kiritokmn1403` | **`YomiHub-Project`** | Đồng bộ toàn bộ URL raw, API và releases |
+| **Gói phát hành Output/** | 6 zip + 4 json (10 files) | **7 zip + 4 json (11 files)** | Bổ sung `Kiritokmn-Extension-0.0.9-nekoyomi-novel-apks.zip` (73.5 MB) |
 

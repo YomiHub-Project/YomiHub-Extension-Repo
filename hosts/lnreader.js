@@ -1,5 +1,6 @@
 // LNReader / IReader plugin entry (CommonJS output, `exports.default` = plugin instance).
 import { create, META } from './entry.js';
+import { buildFilterSchema, normalizeFilters, isDefaultFilters } from '../runtime/engine.js';
 
 const { fetchApi } = require('@libs/fetch');
 let storageMod = null;
@@ -14,7 +15,16 @@ class VBookLNPlugin {
     this.icon = META.lnIcon;
     this.site = META.source;
     this.version = META.lnVersion;
-    this.filters = undefined;
+    this.filters = {};
+    for (const def of buildFilterSchema(META, META.tabs, META.genres)) {
+      if (def.type === 'text') {
+        this.filters[def.id] = { value: '', label: def.title + ' (Tên / Tác giả / Từ khóa)', type: 'Text' };
+      } else if (def.type === 'multi-select') {
+        this.filters[def.id] = { value: [], label: def.title, options: def.options, type: 'Checkbox' };
+      } else {
+        this.filters[def.id] = { value: def.defaultValue || '', label: def.title, options: def.options, type: 'Picker' };
+      }
+    }
     this.webStorageUtilized = false;
     // 0.0.6: flexible domain switching + the source's own options (API server, region…)
     const cfg = META.config || {}, doms = ((cfg.DOMAIN || {}).values || []).filter(d => d !== META.source);
@@ -38,6 +48,13 @@ class VBookLNPlugin {
     });
   }
   async popularNovels(pageNo, options) {
+    if (options && options.filters) {
+      const parsed = normalizeFilters(options.filters);
+      if (!isDefaultFilters(parsed)) {
+        const rf = await this.engine.search('', pageNo, parsed);
+        return rf.items.map(i => ({ name: i.name, path: i.link, cover: i.cover }));
+      }
+    }
     const r = options && options.showLatestNovels ? await this.engine.latest(pageNo) : await this.engine.popular(pageNo);
     return r.items.map(i => ({ name: i.name, path: i.link, cover: i.cover }));
   }

@@ -108,3 +108,23 @@ Mỗi phiên thêm một mục ở **cuối tệp**: ngày, người/tác nhân,
   - Mangayomi: duyệt TruyenQQ & Twitch OK (bản tiện ích cũ `0.0.3`/`0.0.6` cài sẵn trên máy lỗi ảnh/quay vòng VOD, cần *Update all* sau Release).
   - vBook `v1.1.57`: mở sạch, Thư viện 25 nguồn; LeechText `2.0.0`: tự dừng ngay khi mở trên Android 10 (lỗi app).
 - **Cập nhật tài liệu & phát hành lại Release v0.0.8:** Cập nhật `TECHNICAL_UPDATE_NOTES.md`, `CHANGELOG.md`, `05_testing_kiem_tra.md`, `12_session log_nhat_ky_phien_lam_viec.md`; chạy `make-output.mjs`, `gen-readme.mjs`, `tools/win/publish.ps1` để đồng bộ `origin main` và 10/10 asset trên Release `v0.0.8`.
+
+## 23–24/11/2026 — bản 0.0.9 (Swarm 6 tác nhân: core-engine, android-arch, movie-fixer, comic-novel-fixer, builder-tester, docs-releaser)
+- **Mục tiêu phiên:** Nâng cấp Filter Extension 10 mục, phân tách 3 kho Anime/Manga/Novel độc lập (hỗ trợ Nekoyomi Novel APKs 115 nguồn), phát video trực tiếp không qua web cho toàn bộ nguồn Phim, Adblock/Tiyo/DevTools, nâng số nguồn PASS mạng thật, kiểm thử thực tế trên Samsung Galaxy Note9 (SM-N960N), phát hành Release v0.0.9 lên GitHub `YomiHub-Project/Kiritokmn---Extension-Repo`.
+- **Phân công & Thực hiện Swarm:**
+  - `@core-engine`: Xây dựng `FilterExtension.js` với 10 tiêu chí lọc đồng nhất, thêm `C.cleanAds`, `C.cleanDevTools`, `C.sniffStreamUrl` bóc stream depth 3, nâng `APK_REV = 2` và `BRIDGE_REV = 5`.
+  - `@android-arch`: Thiết kế module `android/novel/` (115 flavors) và `android/shared/NovelSource.kt`, mở rộng hệ thống dựng từ 81 lên 196 APKs phân tách theo 3 kho (`anime/`, `manga/`, `novel/`), kiểm tra ABI Android không hồi quy.
+  - `@movie-fixer`: Rà soát 44 nguồn phim, bật phát trực tiếp nội bộ (`in_app_player: true`), khắc phục Phimmoi, Anime47, VTVGo, Twitch, Dongphym, Ghienphim, AnimeVietsub, FapReel.
+  - `@comic-novel-fixer`: Sửa và tối ưu hóa 37 nguồn Manga và 115 nguồn Novel, sửa lỗi bridge Aidoku microtasks, khôi phục TruyenFull, TangThuVien, TruyenQQ, TruyenCV.
+  - `@builder-tester`:
+    * Chạy `npm run build` cho 196 nguồn thành công.
+    * Đo mạng thật đạt **100/196 PASS** (51.0%, +6 so với 0.0.8), mô phỏng Aidoku đạt 81/152 PASS (+7).
+    * Biên dịch và ký số hoàn tất 196/196 APKs (125.95 MB) bằng `android/build_apks.ps1`.
+    * Kiểm thử tự động và tương tác thực tế trên Samsung Galaxy Note9 (SM-N960N): cài đặt 196/196 APKs thành công (196 OK, 0 FAIL), thu thập 6 video screenrecord MP4 và 50+ ảnh chụp màn hình bằng chứng tại `_work/shots/v009/`.
+    * Đóng gói đầy đủ 7 zips + 4 jsons trong `Output/`.
+  - `@docs-releaser`:
+    * Nâng cấp `tools/docs/gen-readme.mjs` theo chuẩn mẫu Standard Compendium (song ngữ VI/EN, tổ chức `YomiHub-Project`, 3 repo độc lập, 9 app, link 11 assets Release, bảng 196 nguồn tự động).
+    * Cập nhật `TECHNICAL_UPDATE_NOTES.md` mục 0.0.9 (bảng chi tiết 6 hạng mục, thống kê so sánh 0.0.9 vs 0.0.8, danh sách bằng chứng ảnh/video Note9).
+    * Cập nhật `CHANGELOG.md` mục v0.0.9.
+    * Đúc kết kinh nghiệm và cập nhật toàn bộ Second Brain (01, 03, 04, 05, 06, 09, 10, 11, 12).
+    * Chạy `publish.ps1`, đối chiếu 11 assets và kiểm tra HTTP 200/302, bàn giao hoàn tất cho `@coordinator`.

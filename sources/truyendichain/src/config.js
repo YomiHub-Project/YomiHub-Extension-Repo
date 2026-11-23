@@ -8,17 +8,6 @@ try {
 
 var BASE_ORIGIN = String(BASE_URL || "").replace(/\/+$/, "");
 
-if (typeof Response === "undefined") {
-    var Response = {
-        success: function(data, data2) {
-            return JSON.stringify({ code: 0, data: data, data2: data2 });
-        },
-        error: function(data) {
-            return JSON.stringify({ code: 1, data: data });
-        }
-    };
-}
-
 function fetchPage(url, options) {
     if (!options) options = {};
 

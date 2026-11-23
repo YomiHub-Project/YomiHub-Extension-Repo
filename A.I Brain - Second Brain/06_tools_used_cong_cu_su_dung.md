@@ -1,11 +1,11 @@
 # 06 – Công cụ sử dụng
 
 ## Máy của chủ dự án (Windows, `kiritokmn-lap`)
-- Thư mục: `D:\A.I Project\A.I Project - Extension Repo\Kiritokmn - Extension Repo\` (git, remote `kiritokmn1403/Kiritokmn---Extension-Repo`, nhánh `main`). `_work\` và `.vscode\` nằm trong dự án nhưng git-ignore (từ 0.0.4).
+- Thư mục: `D:\A.I Project\A.I Project - Extension Repo\Kiritokmn - Extension Repo\` (git, remote `YomiHub-Project/Kiritokmn---Extension-Repo`, nhánh `main`). `_work\` và `.vscode\` nằm trong dự án nhưng git-ignore (từ 0.0.4).
 - Node 24 (+ esbuild, acorn, escodegen, htmlparser2, css-select, crypto-js, typescript trong `_work/deps`, `node_modules` là junction).
 - Git, đăng nhập sẵn qua Git Credential Manager; **không có `gh`**. GitHub Desktop có sẵn.
-- Android SDK + Android Studio (`D:\Programs\ads`), JBR (`D:\Programs\ads\jbr`), SDK 35 / build-tools 36, Gradle 9.3.1, Kotlin 2.2.20.
-- adb (máy ảo + Note9). **Không có Rust/cargo** → gói Aidoku dựng trên máy đám mây.
+- Android SDK + Android Studio (`D:\Programs\ads`), JBR (`D:\Programs\ads\jbr`), SDK 35 / build-tools 36, Gradle 9.3.1, Kotlin 2.2.20. Dựng 196 APK qua 3 module độc lập (`:anime`, `:manga`, `:novel`) và shared library (`NovelSource.kt`, `Http2Bridge.kt`).
+- adb (máy ảo + Note9 SM-N960N). **Không có Rust/cargo** → gói Aidoku dựng trên máy đám mây hoặc mô phỏng `aidoku-sim.mjs`.
 - VS Code (xem log/NOTES), File Explorer (bật runner), Google Antigravity (bản app, `/swarm`, xem 09).
 
 ## Trình chạy lệnh nền (từ 0.0.4) — quan trọng nhất
@@ -24,9 +24,9 @@
 - Kotlin biên dịch thử được trên đám mây (`-jvm-target 1.8 -Werror`), dùng cho `Http2BridgeTest.kt`.
 
 ## Script trong dự án
-- Dựng: `tools/build/{build-all, asyncify, aniyomi-index, aidoku-build, yomihub-sources, make-output, zip}.mjs`, `android/build_apks.ps1`, `tools/win/build_all.ps1`.
-- Phát hành: `tools/win/publish.ps1`, `tools/docs/gen-readme.mjs`, `_work/purge.bat` (xoá cache jsDelivr).
-- Kiểm thử: `tools/test/{run-tests, one, aidoku-sim, host-sim, offline, streamcheck, streamprobe}.mjs`, `test/domain-switch.test.mjs`, `tools/win/snap.mjs`.
+- Dựng: `tools/build/{build-all, asyncify, aniyomi-index, aidoku-build, yomihub-sources, make-output, zip}.mjs`, `android/build_apks.ps1` (196 APKs: 44 anime + 37 manga + 115 novel), `tools/win/build_all.ps1`.
+- Phát hành: `tools/win/publish.ps1`, `tools/docs/gen-readme.mjs` (theo chuẩn Standard Compendium song ngữ VI/EN), `_work/purge.bat` (xoá cache jsDelivr).
+- Kiểm thử: `tools/test/{run-tests, one, aidoku-sim, host-sim, offline, streamcheck, streamprobe}.mjs`, `test/domain-switch.test.mjs`, `test/filter-extension.test.mjs` (kiểm thử 10 bộ lọc), `tools/win/snap.mjs`.
 - Sinh/tự động: `tools/gen/{gen_sources, make_icons, aidoku_icons}.py`, `tools/analyze/{analyze, autospec, chapters}.py`, `tools/test/{auto-improve, search-improve, spec-wizard}.mjs`.
 
 ## Script viết trong phiên (nằm ở `_work/x/` hoặc thư mục tạm của máy đám mây)

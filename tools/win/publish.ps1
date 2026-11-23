@@ -6,7 +6,7 @@ $Log = Join-Path $Root 'Output\publish.log'
 function L($m) { $t = (Get-Date).ToString('HH:mm:ss'); Add-Content -Path $Log -Value "$t $m" -Encoding UTF8; Write-Host "$t $m" }
 Set-Content -Path $Log -Value "=== publish $(Get-Date)" -Encoding UTF8
 Set-Location $Root
-$Owner = 'kiritokmn1403'; $Repo = 'Kiritokmn---Extension-Repo'
+$Owner = 'YomiHub-Project'; $Repo = 'Kiritokmn---Extension-Repo'
 $Ver = (Get-Content package.json -Raw | ConvertFrom-Json).version; $Tag = "v$Ver"
 $git = (Get-Command git -ErrorAction SilentlyContinue).Source
 if (-not $git) { $git = Get-ChildItem "$env:LOCALAPPDATA\GitHubDesktop" -Recurse -Filter git.exe -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName }

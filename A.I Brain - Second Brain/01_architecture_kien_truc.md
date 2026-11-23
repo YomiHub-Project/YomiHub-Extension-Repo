@@ -8,33 +8,37 @@
 | vBook, LeechText, YomiHub-vBook | zip vBook gốc | Rhino của app | `plugin.json` + `vbook/*.zip` |
 | Mangayomi, YomiHub | JS (`MProvider`) | engine + `hosts/mangayomi.tail.js` | `index.json` + `mangayomi/*.js` |
 | LNReader, IReader | plugin CommonJS ES5 (hạ cấp bằng TypeScript) | `hosts/lnreader.js` | `plugins.min.json` + `lnreader/*.js` |
-| Aniyomi (Phim), Nekoyomi (Truyện) | APK, **mỗi nguồn một APK** (từ 0.0.5) | Mozilla Rhino 1.7.15 trong APK + jsoup của app | `index.min.json` + `repo.json` + `apk/` |
-| Aidoku (iOS) | gói `.aix` (từ 0.0.3) | WebAssembly Rust chạy engine JS trong `JsContext` của Aidoku | `aidoku/index.min.json` |
+| Aniyomi (Phim), Nekoyomi (Truyện & Novel) | APK, **mỗi nguồn một APK** (từ 0.0.5: 81 APK; từ 0.0.9: 196 APK kế thừa `NovelSource`) | Mozilla Rhino 1.7.15 trong APK + jsoup của app | `index.min.json` + `repo.json` + `apk/` + tách riêng `anime/`, `manga/`, `novel/` |
+| Aidoku (iOS) | gói `.aix` (từ 0.0.3; từ 0.0.9: `BRIDGE_REV = 5` có bộ lọc) | WebAssembly Rust chạy engine JS trong `JsContext` của Aidoku | `aidoku/index.min.json` |
 
-Số nguồn: **196** (Phim 44 · Truyện tranh 36 · Tiểu thuyết 116), lấy từ `Project Extension Repo.xlsx` → sheet *Extension Repo Main* → `data/sources.json`. Aidoku có 152 gói (chỉ truyện). APK: 44 Phim + 37 Truyện = 81.
+Số nguồn: **196** (Phim 44 · Truyện tranh 37 · Tiểu thuyết 115), lấy từ `Project Extension Repo.xlsx` → sheet *Extension Repo Main* → `data/sources.json`. Aidoku có 152 gói (chỉ truyện/tiểu thuyết). APK: 44 Phim + 37 Truyện + 115 Tiểu thuyết = 196.
 
 ## Các lớp
 - `runtime/vbook.js`: API vBook (`fetch` + `Response` có `html()/json()/text(charset)/base64()`, `Html`, `localStorage`, `cacheStorage`, `localConfig`, `localCookie`, `Http.get().html()`…).
 - `runtime/dom.js`: DOM tương thích **jsoup** trên htmlparser2 + cheerio-select (`select`, `selectFirst`, `text`, `ownText`, `attr("abs:…")`, `:contains`, `:containsOwn`, `:matches`, `:eq`, `:has`…).
-- `runtime/engine.js`: điều phối chung (popular/latest/search/detail/chapters/pages/content/videos, phân trang bằng token vBook), đổi tên miền, định danh ổn định.
+- `runtime/engine.js`: điều phối chung (popular/latest/search/detail/chapters/pages/content/videos, phân trang bằng token vBook), đổi tên miền, định danh ổn định, hệ thống **Filter Extension 10 mục** chuẩn (`STANDARD_FILTERS`), và bóc iframe video depth 3 không trả webview.
 - `tools/build/asyncify.mjs`: chuyển script vBook đồng bộ sang async (acorn + escodegen; tự thêm `async`/`await` cho `fetch`, `sleep`, `Http.*`; callback `.map/.forEach` có await đổi sang `__amap/__aforEach`).
-- `lib/`: thư viện dùng chung cho nguồn — `lib_generic.js` (mẫu nguồn generic theo `config.js` khối `var G = {...}`), `lib_madara.js`, `lib_common.js`, `lib_shortvideo.js`.
+- `lib/`: thư viện dùng chung cho nguồn — `lib_generic.js` (mẫu nguồn generic theo `config.js` khối `var G = {...}`, bóc iframe depth 3 cho `track()`, lọc ảnh rác trong `pages()`), `lib_madara.js`, `lib_common.js` (Adblock `C.cleanAds`, DevTools `C.cleanDevTools`, Sniff luồng trực tiếp `C.sniff`), `lib_shortvideo.js`.
 - `hosts/`: lớp ghép cho từng app (`mangayomi.tail.js`, `lnreader.js`, `aidoku.tail.js`, `node.js`/`node-runtime.js` cho kiểm thử, `entry.js`).
-- `android/`: `anime-core`, `manga-core` (module thư viện Kotlin + Rhino, biên dịch một lần); `anime`, `manga` (product flavor động từ `flavors.json` do `build-all.mjs` sinh, logo nguồn → `mipmap-xxxhdpi/ic_launcher.png`); `shared/kotlin/kiritokmn/vbook/` (gồm `Http2Bridge.kt`); `stub-anime`, `stub-manga` (stub API từ `aniyomiorg/extensions-lib@14`, `mihonapp/extensions-lib@1.4.2`, compileOnly). Script vBook chạy nguyên bản bằng Rhino chế độ thông dịch (`runtime/rhino-prelude.js` + engine hạ cấp ES5).
-- `aidoku/bridge` (Rust, giao thức start/poll/resume) + `hosts/aidoku.tail.js`; `tools/build/aidoku-build.mjs` dựng `repo/aidoku/`.
+- `android/`: `anime-core`, `manga-core`, `novel-core` (từ 0.0.9: module thư viện Kotlin kế thừa ABI `NovelSource` của Nekoyomi); `anime`, `manga`, `novel` (product flavor động từ `flavors.json` do `build-all.mjs` sinh); `shared/kotlin/kiritokmn/vbook/` (gồm `Http2Bridge.kt`); `stub-anime`, `stub-manga`. Script vBook chạy nguyên bản bằng Rhino chế độ thông dịch (`runtime/rhino-prelude.js` + engine hạ cấp ES5).
+- `aidoku/bridge` (Rust, giao thức start/poll/resume, `filters.json`, `BRIDGE_REV = 5` từ 0.0.9) + `hosts/aidoku.tail.js`; `tools/build/aidoku-build.mjs` dựng `repo/aidoku/`.
 
 ## Định danh & phiên bản
-- APK: gói `eu.kanade.tachiyomi.{animeextension|extension}.<lang>.kiri<id>`. versionCode = 1000·APK_REV + phiên bản nguồn; versionName `14.<code>` / `1.4.<code>`. ID nguồn `hash31('aniyomi:'+id)` giữ nguyên qua mọi bản. **Đổi `locale` của nguồn = đổi tên gói = APK trùng** (xem 04).
-- Aidoku: phiên bản gói = `BRIDGE_REV·100 + version nguồn` (`BRIDGE_REV = 4` từ 0.0.6).
+- APK: gói `eu.kanade.tachiyomi.{animeextension|extension|novelextension}.<lang>.kiri<id>`. versionCode = 1000·APK_REV + phiên bản nguồn (`APK_REV = 2` từ 0.0.9); versionName `14.<code>` / `1.4.<code>`. ID nguồn `hash31('aniyomi:'+id)` giữ nguyên qua mọi bản. **Đổi `locale` của nguồn = đổi tên gói = APK trùng** (xem 04).
+- Aidoku: phiên bản gói = `BRIDGE_REV·100 + version nguồn` (`BRIDGE_REV = 5` từ 0.0.9).
 - Mangayomi/LNReader: theo `version` trong `plugin.json` của nguồn.
 
 ## Tính năng xuyên suốt
+- **Hệ thống Bộ Lọc 10 mục chuẩn (Filter Extension + Tiyo)** (0.0.9): (1) Sắp Xếp, (2) Tình Trạng, (3) Danh Mục, (4) Phân Loại Nội Dung, (5) Quốc Gia Phát Hành, (6) Năm Phát Hành, (7) Tìm Theo, (8) Đánh Giá, (9) Bản Dịch, (10) Thể Loại. Đồng bộ trên Engine, Rhino prelude, Mangayomi, LNReader, Aidoku và Android Kotlin.
+- **Tách riêng 3 kho độc lập** (0.0.9): `repo/anime/`, `repo/manga/`, `repo/novel/` (đầy đủ APK và chỉ mục) + `repo/mangayomi/{anime,manga,novel}.json`.
+- **Phát video trực tiếp không qua web** (0.0.9): không trả `type: 'webview'`, bóc iframe depth 3, đính kèm `Referer`/`Origin`/`User-Agent`.
+- **Chặn quảng cáo Tampermonkey Adblock & DevTools bypass** (0.0.9): `C.cleanAds`, `C.cleanDevTools`, `C.sniff`.
 - **Định danh ổn định** (0.0.3): `engine.js` `canon()/decanon()` — URL trả cho app luôn theo tên miền mặc định, nên thư viện, lịch sử và vị trí xem tiếp (Resume) không mất khi đổi tên miền.
 - **Đổi tên miền trên cả 9 app** (0.0.6): mỗi nguồn có `config.DOMAIN` (danh sách: mặc định + `metadata.source` + gương + URL trong Excel) và ô `DOMAIN_CUSTOM`. Thứ tự ưu tiên: `DOMAIN_CUSTOM` > `DOMAIN` > `configDefaults.DOMAIN` > `metadata.source`. Hàm `live(u)` bọc `env.fetch`, chuyển request tới tên miền cũ/gương sang tên miền đang chọn (kể cả địa chỉ viết cứng trong mã).
-- **HTTP/2** (0.0.5): `track.js` trả `http2: true` → APK phát qua `Http2Bridge.kt` (cầu nối loopback HTTP/1.1 → HTTP/2 qua OkHttp của app). Mangayomi/YomiHub chưa có cầu nối.
-- **Rãnh tiếng rời** (0.0.5): `track.js` trả `audios: [{data, label}]` (YouTube ghép hình `avc1` + tiếng `audio/mp4`).
-- **Short Video**: kho Mangayomi/YomiHub khai báo `additionalParams = {"shorts":true,"short_video":true}` cho nguồn có cờ Short (YomiHub 0.5.7 đọc bằng `ShortsDetect`).
-- **Trạng thái nguồn**: `data/status.json` — `dead` (build tự gắn "(Ngừng hoạt động)" vào tên ở mọi định dạng), `blocked`, `login`, `protected`, `api` (README hiện ký hiệu). Hiện có: dead 36, api 12, protected 6, login 5, blocked 4.
+- **HTTP/2** (0.0.5): `track.js` trả `http2: true` → APK phát qua `Http2Bridge.kt`.
+- **Rãnh tiếng rời** (0.0.5): `track.js` trả `audios: [{data, label}]`.
+- **Short Video**: kho Mangayomi/YomiHub khai báo `additionalParams = {"shorts":true,"short_video":true}` cho nguồn có cờ Short.
+- **Trạng thái nguồn**: `data/status.json` — `dead` (build tự gắn "(Ngừng hoạt động)" vào tên ở mọi định dạng), `blocked`, `login`, `protected`, `api`. Hiện có: dead 36, api 12, protected 6, login 5, blocked 4.
 
 ## Luồng dữ liệu
 Excel (`Project Extension Repo.xlsx`) → `data/sources.json`, `data/specs*.json` → `sources/<id>/` → `npm run build` (`tools/build/build-all.mjs`) → `repo/*` (GitHub, app đọc trực tiếp; YomiHub dự phòng qua jsDelivr) → `android/build_apks.ps1` (APK) → `tools/build/make-output.mjs` → `Output/` (6 zip + 4 json) → GitHub Release `v<version>`.

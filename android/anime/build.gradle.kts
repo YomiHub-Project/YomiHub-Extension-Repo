@@ -14,7 +14,7 @@ if (flavorDefs.isEmpty()) logger.warn(":anime has no flavors.json - run node too
 android {
     namespace = "eu.kanade.tachiyomi.animeextension.kiritokmn"
     compileSdk = (project.findProperty("compileSdkOverride") as String?)?.toInt() ?: 35
-    (project.findProperty("buildToolsOverride") as String?)?.let { buildToolsVersion = it }
+    buildToolsVersion = (project.findProperty("buildToolsOverride") as String?) ?: "36.0.0"
     defaultConfig {
         applicationId = "eu.kanade.tachiyomi.animeextension.kiritokmn"
         minSdk = 21

@@ -1,6 +1,4 @@
-function execute() {
-    return Response.success([
-        {title: "玄幻", input: "lejRej", script: "gen.js"},
-        {title: "武侠", input: "nel5aK", script: "gen.js"},
-    ]);
-}
+load('config.js');
+load('lib_common.js');
+load('lib_generic.js');
+function execute() { var t = []; for (var k in G.tabs) t.push({ title: k, input: k, script: "browse.js" }); return Response.success(t); }

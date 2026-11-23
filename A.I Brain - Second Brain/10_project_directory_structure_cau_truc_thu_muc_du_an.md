@@ -1,20 +1,20 @@
 # 10 – Cấu trúc thư mục dự án
 
-## Gốc: `D:\A.I Project\A.I Project - Extension Repo\Kiritokmn - Extension Repo` (Git: `kiritokmn1403/Kiritokmn---Extension-Repo`, nhánh `main`)
+## Gốc: `D:\A.I Project\A.I Project - Extension Repo\Kiritokmn - Extension Repo` (Git: `YomiHub-Project/Kiritokmn---Extension-Repo`, nhánh `main`)
 | Đường dẫn | Nội dung |
 |---|---|
 | `A.I Brain - Second Brain/` | Kiến thức bắt buộc đọc (00–12) |
 | `AGENTS.md` | Quy định cho người/tác nhân (trỏ tới Second Brain) |
 | `TECHNICAL_UPDATE_NOTES.md` | Trạng thái hiện tại, kiến trúc, nhật ký chi tiết mọi phiên bản (bắt buộc đọc) |
 | `CHANGELOG.md` | Thay đổi theo phiên bản, viết cho người dùng |
-| `README.md` | Tự sinh bởi `tools/docs/gen-readme.mjs`: cách thêm kho, link Release, bảng trạng thái nguồn |
-| `package.json` | Phiên bản dự án (hiện 0.0.7), `npm run build`, `npm test` |
+| `README.md` | Tự sinh bởi `tools/docs/gen-readme.mjs` theo chuẩn Standard Compendium (song ngữ VI/EN): cách thêm kho, link Release, bảng trạng thái nguồn |
+| `package.json` | Phiên bản dự án (hiện 0.0.9), `npm run build`, `npm test` |
 | `sources/<id>/` | **196 nguồn** dạng gói vBook: `plugin.json` + `src/*.js` (`config.js`, `home.js`, `browse.js`, `search.js`, `detail.js`, `toc.js`, `chap.js`, `track.js`…) |
 | `sources-yomihub/` | Tiện ích tích hợp sẵn của YomiHub (`meta.json` + `<asset>.js` + `_common.js`, chép từ overlay YomiHub), dựng bằng `tools/build/yomihub-sources.mjs` |
-| `lib/` | Thư viện dùng chung: `lib_generic.js`, `lib_madara.js`, `lib_common.js`, `lib_shortvideo.js`, `extra/` |
+| `lib/` | Thư viện dùng chung: `lib_generic.js`, `lib_madara.js`, `lib_common.js`, `lib_shortvideo.js`, `FilterExtension.js` (Filter 10 mục), `extra/` |
 | `runtime/` | `engine.js`, `vbook.js`, `dom.js`, `url.js`, `rhino-prelude.js`, `gbk-table.txt` |
 | `hosts/` | Lớp ghép từng app: `mangayomi.tail.js`, `lnreader.js`, `aidoku.tail.js`, `entry.js`, `node.js`, `node-runtime.js` |
-| `android/` | Gradle: `anime/`, `manga/` (flavor từng nguồn; `gen/` + `flavors.json` là đầu ra, git-ignore), `anime-core/`, `manga-core/`, `shared/` (Kotlin chung, `Http2Bridge.kt`), `stub-anime/`, `stub-manga/`, `build_apks.ps1`. Khoá ký `kiritokmn.jks`, `keystore.properties`, `kiritokmn.cer`, `local.properties` — **không commit, không in ra** |
+| `android/` | Gradle: `anime/` (44 APK), `manga/` (37 APK), `novel/` (115 APK); `anime-core/`, `manga-core/`, `novel-core/`, `shared/` (`Http2Bridge.kt`, `NovelSource.kt`), `stub-*/`, `build_apks.ps1` (196 APKs). Khoá ký `kiritokmn.jks`, `keystore.properties`, `kiritokmn.cer`, `local.properties` — **không commit, không in ra** |
 | `aidoku/` | `bridge/` (Rust/WASM), `icons/`, `test-runner-jsc-microtasks.patch` |
 | `tools/build/` | `build-all`, `asyncify`, `aniyomi-index`, `aidoku-build`, `yomihub-sources`, `make-output`, `zip` (.mjs) |
 | `tools/test/` | `run-tests`, `one`, `aidoku-sim`, `host-sim`, `offline`, `streamcheck`, `streamprobe`, `auto-improve`, `search-improve`, `spec-wizard`, `Http2BridgeTest.kt` |
@@ -23,9 +23,9 @@
 | `tools/docs/` | `gen-readme.mjs` |
 | `data/` | `sources.json` (từ Excel), `specs.json`, `specs.manual.json`, `status.json` (trạng thái nguồn), `test-results.json`, `aidoku-test-results.json`, `icons.json`, `cloudflare.json`, `plugin_catalog.json`, `reference_vbook.json`… |
 | `docs/` | `SOURCE_SPEC.md`, `AIDOKU.md`, `YOMIHUB_SHORTS_GUIDE.md` |
-| `test/` | `domain-switch.test.mjs`, `fixtures/` |
-| `repo/` | **Đầu ra build, app đọc trực tiếp**: `index.min.json`, `repo.json`, `apk/` (Aniyomi/Nekoyomi), `index.json` + `mangayomi/` (Mangayomi/YomiHub), `plugins.min.json` + `lnreader/`, `plugin.json` + `vbook/`, `aidoku/`, `yomihub/`, `aniyomi/`, `icon/`, `icons/` |
-| `Output/` | Gói tải lên Release (6 zip + 4 json) + `build_all.log`, `publish.log` |
+| `test/` | `domain-switch.test.mjs`, `filter-extension.test.mjs`, `fixtures/` |
+| `repo/` | **Đầu ra build, app đọc trực tiếp**: `index.min.json`, `repo.json`, `repo/anime/index.min.json` (44 Anime), `repo/manga/index.min.json` (37 Manga), `repo/novel/index.min.json` (115 Novel), `apk/` (196 APKs Aniyomi/Nekoyomi), `index.json` + `mangayomi/{anime,manga,novel}.json` (Mangayomi/YomiHub), `plugins.min.json` + `lnreader/`, `plugin.json` + `vbook/`, `aidoku/`, `yomihub/`, `aniyomi/`, `icon/`, `icons/` |
+| `Output/` | Gói tải lên Release (7 zip + 4 json: aidoku, aniyomi-apks, nekoyomi-novel-apks, tachiyomi-apks, mangayomi-yomihub, lnreader-ireader, vbook-leechtext) + `build_all.log`, `publish.log` |
 | `.build/` | Tạm khi dựng; `.build/test/<id>.mjs` kiểm nhanh từng nguồn (git-ignore) |
 | `test-results.json` | Kết quả `run-tests` lần gần nhất (git-ignore) |
 | `.vscode/`, `_work/` | Trên máy chủ dự án, git-ignore |

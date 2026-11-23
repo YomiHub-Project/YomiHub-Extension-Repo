@@ -59,6 +59,6 @@ export function buildYomihubSources(root, base) {
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-  const BASE = 'https://raw.githubusercontent.com/kiritokmn1403/Kiritokmn---Extension-Repo/main';
+  const BASE = 'https://raw.githubusercontent.com/YomiHub-Project/Kiritokmn---Extension-Repo/main';
   console.log(JSON.stringify(buildYomihubSources(ROOT, BASE), null, 1));
 }

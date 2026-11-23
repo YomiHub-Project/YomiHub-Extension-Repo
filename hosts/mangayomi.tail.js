@@ -29,7 +29,36 @@ class DefaultExtension extends MProvider {
   __list(r) { return { list: r.items.map(i => ({ name: i.name, imageUrl: i.cover, link: i.link })), hasNextPage: r.hasNext }; }
   async getPopular(page) { return this.__list(await this.__eng().popular(page)); }
   async getLatestUpdates(page) { return this.__list(await this.__eng().latest(page)); }
-  async search(query, page, filters) { return this.__list(await this.__eng().search(query, page)); }
+  async search(query, page, filters) {
+    const parsed = this.__parseFilters(filters);
+    return this.__list(await this.__eng().search(query, page, parsed));
+  }
+  __parseFilters(filters) {
+    if (!filters) return {};
+    if (typeof filters === 'string') { try { filters = JSON.parse(filters); } catch (e) { return {}; } }
+    if (!Array.isArray(filters)) return filters;
+    const out = { sort: '', sortAscending: false, status: '', category: '', content_rating: '', country: '', year: '', search_by: '', rating: '', translation: '', genres: [], feed: '' };
+    const sortKeys = ['', 'latest', 'popular', 'views', 'rating', 'az'];
+    for (const f of filters) {
+      if (!f || typeof f !== 'object') continue;
+      const key = f.type || '';
+      if (f.type_name === 'SortFilter') {
+        const idx = f.state && typeof f.state === 'object' ? (f.state.index | 0) : (f.state | 0);
+        const opt = Array.isArray(f.values) ? f.values[idx] : null;
+        out.sort = opt && opt.value != null ? String(opt.value) : (sortKeys[idx] || '');
+        out.sortAscending = !!(f.state && f.state.ascending);
+      } else if (f.type_name === 'SelectFilter') {
+        const opt = Array.isArray(f.values) ? f.values[f.state | 0] : null;
+        if (key in out) out[key] = opt && opt.value != null ? String(opt.value) : '';
+      } else if (f.type_name === 'TextFilter') {
+        if (key in out) out[key] = String(f.state || '').trim();
+      } else if (f.type_name === 'GroupFilter' && Array.isArray(f.state)) {
+        const sel = f.state.filter(c => c && c.state === true).map(c => String(c.value || c.name || '').trim()).filter(Boolean);
+        if (key === 'genres') out.genres = sel;
+      }
+    }
+    return out;
+  }
   async getDetail(url) {
     const e = this.__eng();
     const d = await e.detail(url);
@@ -50,19 +79,55 @@ class DefaultExtension extends MProvider {
   async cleanHtmlContent(html) { return html; }
   getFilterList() {
     const m = __VB.META;
+    const sel = (type, name, opts) => ({
+      type_name: 'SelectFilter', type, name, state: 0,
+      values: opts.map(o => ({ type_name: 'SelectOption', name: o[0], value: o[1] })),
+    });
+    const out = [];
     if (m.itemType === 1 && (m.short || m.shorts)) {
-      return [{
-        type_name: "SelectFilter",
-        type: "feed",
-        name: "Chế độ xem",
-        state: 0,
-        values: [
-          { type_name: "SelectOption", name: "Shorts (Video ngắn)", value: "shorts" },
-          { type_name: "SelectOption", name: "Mặc định", value: "" }
-        ]
-      }];
+      out.push(sel('feed', 'Chế độ xem', [['Shorts (Video ngắn)', 'shorts'], ['Mặc định', '']]));
     }
-    return [];
+    out.push({
+      type_name: 'SortFilter',
+      type: 'sort',
+      name: 'Sắp Xếp',
+      state: { type_name: 'SortState', index: 0, ascending: false },
+      values: [
+        ['Mặc định', ''], ['Mới cập nhật', 'latest'], ['Phổ biến nhất', 'popular'],
+        ['Xem nhiều nhất', 'views'], ['Đánh giá cao', 'rating'], ['Tên A-Z', 'az'],
+      ].map(o => ({ type_name: 'SelectOption', name: o[0], value: o[1] })),
+    });
+    out.push(sel('status', 'Tình Trạng', [['Tất Cả', ''], ['Đang Tiến Hành', 'ongoing'], ['Tạm Ngưng', 'hiatus'], ['Hoàn Thành', 'completed']]));
+    const catOpts = [['Tất Cả', '']];
+    if (Array.isArray(m.tabs) && m.tabs.length) {
+      m.tabs.forEach((t, i) => catOpts.push([String(t.title || t.name || ('Danh mục ' + (i + 1))), 'tab:' + i]));
+    } else {
+      catOpts.push(['Phổ biến', 'popular'], ['Mới cập nhật', 'latest'], ['Hoàn thành', 'completed']);
+    }
+    out.push(sel('category', 'Danh Mục', catOpts));
+    out.push(sel('content_rating', 'Phân Loại Nội Dung', [['Tất Cả', ''], ['An toàn (SFW)', 'sfw'], ['18+ (NSFW)', 'nsfw']]));
+    out.push(sel('country', 'Quốc Gia Phát Hành', [['Tất Cả', ''], ['Việt Nam', 'vn'], ['Trung Quốc', 'cn'], ['Nhật Bản', 'jp'], ['Hàn Quốc', 'kr'], ['Âu Mỹ', 'us'], ['Khác', 'other']]));
+    out.push(sel('year', 'Năm Phát Hành', [['Tất Cả', ''], ['2026', '2026'], ['2025', '2025'], ['2024', '2024'], ['2023', '2023'], ['2022', '2022'], ['2021', '2021'], ['2020', '2020'], ['Trước 2020', 'before_2020']]));
+    out.push({ type_name: 'TextFilter', type: 'search_by', name: 'Tìm Theo (Tên / Tác giả / Từ khóa)', state: '' });
+    out.push(sel('rating', 'Đánh Giá', [['Tất Cả', ''], ['Từ 9+ sao', '9'], ['Từ 8+ sao', '8'], ['Từ 7+ sao', '7'], ['Từ 5+ sao', '5']]));
+    out.push(sel('translation', 'Bản Dịch', [['Tất Cả', ''], ['Vietsub / Dịch', 'sub'], ['Thuyết minh / Lồng tiếng', 'dub'], ['Convert', 'convert'], ['Raw / Gốc', 'raw']]));
+    const gMap = {
+      1: ['Hành động', 'Tình cảm', 'Hài hước', 'Cổ trang', 'Hoạt hình', 'Kinh dị', 'Viễn tưởng', 'Tâm lý', 'Võ thuật', 'Phiêu lưu', 'Anime', '18+'],
+      0: ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Manhwa', 'Manhua', 'Manga', 'Romance', 'School Life', 'Shounen', 'Slice of Life', 'Tiên Hiệp', 'Xuyên Không'],
+      2: ['Tiên Hiệp', 'Kiếm Hiệp', 'Ngôn Tình', 'Đô Thị', 'Huyền Huyễn', 'Xuyên Không', 'Trọng Sinh', 'Hệ Thống', 'Đam Mỹ', 'Bách Hợp', 'Light Novel', 'Mạt Thế'],
+    };
+    const genres = Array.isArray(m.genres) && m.genres.length ? m.genres : (gMap[m.itemType] || gMap[2]);
+    out.push({
+      type_name: 'GroupFilter',
+      type: 'genres',
+      name: 'Thể Loại',
+      state: genres.map(g => {
+        const label = typeof g === 'string' ? g : String(g.title || g.name || g.label || '');
+        const val = typeof g === 'string' ? g : String(g.input || g.value || label);
+        return { type_name: 'CheckBox', type: 'genres', name: label, value: val, state: false };
+      }).filter(c => c.name),
+    });
+    return out;
   }
   getSourcePreferences() {
     const m = __VB.META, c = (m.config || {}).DOMAIN;

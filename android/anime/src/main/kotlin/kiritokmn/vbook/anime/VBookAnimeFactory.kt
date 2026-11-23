@@ -7,6 +7,7 @@ import androidx.preference.PreferenceScreen
 import eu.kanade.tachiyomi.animesource.AnimeSource
 import eu.kanade.tachiyomi.animesource.AnimeSourceFactory
 import eu.kanade.tachiyomi.animesource.ConfigurableAnimeSource
+import eu.kanade.tachiyomi.animesource.model.AnimeFilter
 import eu.kanade.tachiyomi.animesource.model.AnimeFilterList
 import eu.kanade.tachiyomi.animesource.model.AnimesPage
 import eu.kanade.tachiyomi.animesource.model.SAnime
@@ -22,6 +23,7 @@ import okhttp3.Headers
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.Request
 import okhttp3.Response
+import org.json.JSONArray
 import org.json.JSONObject
 import rx.Observable
 
@@ -34,6 +36,14 @@ class VBookAnimeFactory : AnimeSourceFactory {
     override fun createSources(): List<AnimeSource> =
         loadSourceDefs(Assets.read("vb/sources.json")).filter { it.type == "video" }.map { VBookAnimeSource(it) }
 }
+
+open class AnimeSortFilter(name: String, values: Array<String>, val rawValues: Array<String>) :
+    AnimeFilter.Sort(name, values)
+open class AnimeSelectFilter(val id: String, name: String, values: Array<String>, val rawValues: Array<String>, state: Int = 0) :
+    AnimeFilter.Select<String>(name, values, state)
+open class AnimeTextFilter(val id: String, name: String) : AnimeFilter.Text(name)
+open class AnimeGenreCheckBox(name: String, val value: String) : AnimeFilter.CheckBox(name, false)
+open class AnimeGenreGroup(name: String, genres: List<AnimeGenreCheckBox>) : AnimeFilter.Group<AnimeGenreCheckBox>(name, genres)
 
 class VBookAnimeSource(private val def: SourceDef) : AnimeHttpSource(), ConfigurableAnimeSource {
     override val name = def.name
@@ -48,6 +58,7 @@ class VBookAnimeSource(private val def: SourceDef) : AnimeHttpSource(), Configur
     override val baseUrl: String get() = listOf("DOMAIN_CUSTOM", "DOMAIN").firstNotNullOfOrNull { k -> preferences.getString(k, null)?.trim()?.takeIf { it.startsWith("http://") || it.startsWith("https://") } }?.trimEnd('/') ?: def.baseUrl
 
     private val rt by lazy { VBookRuntime(Assets::read, def, client, preferences) }
+    private var filterDefs: List<JSONObject>? = null
 
     override fun headersBuilder(): Headers.Builder = super.headersBuilder().add("Referer", "$baseUrl/")
 
@@ -63,7 +74,89 @@ class VBookAnimeSource(private val def: SourceDef) : AnimeHttpSource(), Configur
     override fun fetchPopularAnime(page: Int): Observable<AnimesPage> = Observable.fromCallable { page(rt.callObject("popular", page)) }
     override fun fetchLatestUpdates(page: Int): Observable<AnimesPage> = Observable.fromCallable { page(rt.callObject("latest", page)) }
     override fun fetchSearchAnime(page: Int, query: String, filters: AnimeFilterList): Observable<AnimesPage> =
-        Observable.fromCallable { page(rt.callObject("search", query, page)) }
+        Observable.fromCallable { page(rt.callObject("search", query, page, serializeFilters(filters))) }
+
+    private fun loadFilterDefs(): List<JSONObject> {
+        filterDefs?.let { return it }
+        return try {
+            val res = rt.callObject("filters").getJSONArray("result")
+            (0 until res.length()).map { res.getJSONObject(it) }.also { filterDefs = it }
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    override fun getFilterList(): AnimeFilterList {
+        val defs = loadFilterDefs()
+        if (defs.isEmpty()) return AnimeFilterList(emptyList())
+        val list = mutableListOf<AnimeFilter<*>>()
+        for (d in defs) {
+            val id = d.getString("id")
+            val title = d.getString("title")
+            val type = d.getString("type")
+            when {
+                id == "sort" || type == "sort" -> {
+                    val opts = d.getJSONArray("options")
+                    val labels = Array(opts.length()) { opts.getJSONObject(it).getString("label") }
+                    val values = Array(opts.length()) { opts.getJSONObject(it).getString("value") }
+                    list.add(AnimeSortFilter(title, labels, values))
+                }
+                type == "select" -> {
+                    val opts = d.getJSONArray("options")
+                    val labels = Array(opts.length()) { opts.getJSONObject(it).getString("label") }
+                    val values = Array(opts.length()) { opts.getJSONObject(it).getString("value") }
+                    list.add(AnimeSelectFilter(id, title, labels, values))
+                }
+                type == "text" -> {
+                    list.add(AnimeTextFilter(id, title))
+                }
+                type == "multi-select" || id == "genres" -> {
+                    val opts = d.getJSONArray("options")
+                    val cbs = (0 until opts.length()).map {
+                        val o = opts.getJSONObject(it)
+                        AnimeGenreCheckBox(o.getString("label"), o.getString("value"))
+                    }
+                    list.add(AnimeGenreGroup(title, cbs))
+                }
+            }
+        }
+        return AnimeFilterList(list)
+    }
+
+    private fun serializeFilters(filters: AnimeFilterList): String {
+        if (filters.isEmpty()) return ""
+        val json = JSONObject()
+        val genresArr = JSONArray()
+        for (f in filters) {
+            when (f) {
+                is AnimeSortFilter -> {
+                    f.state?.let { sel ->
+                        json.put("sort", f.rawValues.getOrNull(sel.index) ?: "")
+                        json.put("sortAscending", sel.ascending)
+                    }
+                }
+                is AnimeSelectFilter -> {
+                    val v = f.rawValues.getOrNull(f.state) ?: ""
+                    json.put(f.id, v)
+                }
+                is AnimeTextFilter -> {
+                    if (f.state.isNotBlank()) {
+                        json.put(f.id, f.state.trim())
+                    }
+                }
+                is AnimeGenreGroup -> {
+                    for (cb in f.state) {
+                        if (cb.state) genresArr.put(cb.value)
+                    }
+                }
+                else -> {}
+            }
+        }
+        if (genresArr.length() > 0) {
+            json.put("genres", genresArr)
+        }
+        return json.toString()
+    }
 
     override fun fetchAnimeDetails(anime: SAnime): Observable<SAnime> = Observable.fromCallable {
         val d = rt.callObject("detail", anime.url).getJSONObject("result")

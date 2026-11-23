@@ -153,9 +153,27 @@ function __call(method) {
     if (!__ENG) {
       __ENG = new VBookEngine({ meta: __SRC.META, scripts: __SRC.SCRIPTS, env: __env, host: { config: function (k) { var v = __host.config(k); return v == null ? null : __s(v); }, log: function (m) { __host.log(String(m)); } } });
     }
+    if (method === 'filters') {
+      return JSON.stringify({ ok: true, result: __ENG.getFilters() });
+    }
     if (method === 'popular' || method === 'latest') args[0] = parseInt(args[0], 10) || 1;
-    if (method === 'search') args[1] = parseInt(args[1], 10) || 1;
-    var r = __ENG[method].apply(__ENG, args.map(function (a) { return typeof a === 'number' ? a : __s(a); }));
+    if (method === 'search') {
+      args[0] = __s(args[0]);
+      args[1] = parseInt(args[1], 10) || 1;
+      if (args.length > 2 && args[2] != null && args[2] !== '') {
+        if (typeof args[2] === 'string') {
+          try { args[2] = JSON.parse(args[2]); } catch (pe) { args[2] = {}; }
+        }
+      } else if (args.length > 2) {
+        args[2] = {};
+      }
+    }
+    var mapped = [];
+    for (var i = 0; i < args.length; i++) {
+      var a = args[i];
+      mapped.push((typeof a === 'number' || (a && typeof a === 'object')) ? a : __s(a));
+    }
+    var r = __ENG[method].apply(__ENG, mapped);
     return JSON.stringify({ ok: true, result: r });
   } catch (e) {
     return JSON.stringify({ error: true, message: __s(e && (e.message || e)) });
@@ -181,6 +199,464 @@ function abs(base, u) {
 }
 var str = function (v) { return (v == null ? '' : String(v)); };
 var uniq = function (a) { return a.filter(function (x, i) { return x && a.indexOf(x) === i; }); };
+var DEFAULT_VIDEO_UA = 'Mozilla/5.0 (Linux; Android 14; SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36';
+function originOf(u, fallback) {
+    var m = /^https?:\/\/[^/?#]+/i.exec(str(u));
+    return m ? m[0] : str(fallback || '').replace(/\/+$/, '');
+}
+function isAdIframeUrl(u) {
+    u = str(u).trim();
+    if (!u || /^(?:about:blank|javascript:|data:text\/html)/i.test(u))
+        return true;
+    return /(?:googlesyndication\.com|doubleclick\.net|googleadservices\.com|adservice\.google|adnxs\.com|popads\.net|popcash\.net|exoclick\.com|juicyads\.com|trafficjunky|mgid\.com|adsterra|propellerads|clickadu|hilltopads|adskeeper|a-ads\.com|monetag|onclickads|tsyndicate|realsrv|betteradsystem|\/popunder|\/ads\.(?:js|html|php))/i.test(u);
+}
+function unwrapPlayerUrl(u) {
+    var cur = str(u).trim();
+    for (var i = 0; i < 2; i++) {
+        var m = /[?&](?:url|file|src|link|stream|v)=([^&#]+)/i.exec(cur);
+        if (!m)
+            break;
+        try {
+            var dec = decodeURIComponent(m[1]).trim();
+            if (/^https?:\/\//i.test(dec) && dec !== cur)
+                cur = dec;
+            else
+                break;
+        }
+        catch (e) {
+            break;
+        }
+    }
+    return cur;
+}
+function b64decEs5(s) {
+    if (!s)
+        return '';
+    try {
+        if (typeof atob === 'function')
+            return atob(s);
+        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+        var out = '', buf = 0, bits = 0;
+        for (var i = 0; i < s.length; i++) {
+            var idx = chars.indexOf(s.charAt(i));
+            if (idx < 0 || s.charAt(i) === '=')
+                break;
+            buf = (buf << 6) | idx;
+            bits += 6;
+            if (bits >= 8) {
+                bits -= 8;
+                out += String.fromCharCode((buf >> bits) & 0xff);
+            }
+        }
+        return out;
+    }
+    catch (e) {
+        return '';
+    }
+}
+function unpackDeanEdwards(p) {
+    if (!p || p.indexOf('eval(function(p,a,c,k,e,') < 0)
+        return p;
+    try {
+        var re = /eval\(function\(p,a,c,k,e,[dr]\)\{[\s\S]*?\}\s*\('((?:\\.|[^'\\])*)',\s*(\d+),\s*(\d+),\s*'([^']*)'\.split\('\|'\)/g;
+        var out = [];
+        var m = void 0, blocks = 0;
+        var _loop_1 = function () {
+            blocks++;
+            var payload = m[1].replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+            var radix = parseInt(m[2], 10), count = parseInt(m[3], 10), keywords = m[4].split('|');
+            var decode = function (c) { return (c < radix ? '' : decode(Math.floor(c / radix))) + ((c = c % radix) > 35 ? String.fromCharCode(c + 29) : c.toString(36)); };
+            var dict = {};
+            for (var i = 0; i < count; i++)
+                dict[decode(i)] = keywords[i] || decode(i);
+            out.push(payload.replace(/\b\w+\b/g, function (w) { return dict[w] || w; }));
+        };
+        while ((m = re.exec(p)) && blocks < 5) {
+            _loop_1();
+        }
+        return out.length ? out.join('\n') : p;
+    }
+    catch (e) {
+        return p;
+    }
+}
+function sniffDirectStream(text) {
+    if (!text)
+        return '';
+    var raw = str(text).replace(/\\\//g, '/').replace(/\\u002[fF]/g, '/').replace(/\\x2[fF]/g, '/').replace(/&amp;/g, '&');
+    if (raw.indexOf('eval(function(p,a,c,k,e,') >= 0)
+        raw += '\n' + unpackDeanEdwards(raw);
+    var pick = function (c) { c = unwrapPlayerUrl(c); return c && !isAdIframeUrl(c) ? c : ''; };
+    var m3u8 = raw.match(/https?:[^"'\s<>\\]+?\.m3u8[^"'\s<>\\]*/gi) || [];
+    for (var i = 0; i < m3u8.length; i++) {
+        var c = pick(m3u8[i]);
+        if (c)
+            return c;
+    }
+    var us = raw.match(/(?:var\s+urlStream|hlsUrl|streamUrl|videoUrl|play_url|m3u8Url)\s*[:=]\s*["'](https?:[^"']+)["']/i);
+    if (us) {
+        var c = pick(us[1]);
+        if (c && /\.(?:m3u8|mp4)/i.test(c))
+            return c;
+    }
+    var mp4 = raw.match(/https?:[^"'\s<>\\]+?\.mp4[^"'\s<>\\]*/gi) || [];
+    for (var i = 0; i < mp4.length; i++) {
+        var c = pick(mp4[i]);
+        if (c)
+            return c;
+    }
+    var b64re = /["'](aHR0c[A-Za-z0-9+/=]{16,})["']/g;
+    var bm;
+    while ((bm = b64re.exec(raw))) {
+        var dec = pick(b64decEs5(bm[1]));
+        if (dec && /\.(?:m3u8|mp4)/i.test(dec))
+            return dec;
+    }
+    return '';
+}
+var STANDARD_FILTERS = {
+    sort: [
+        { label: 'Mặc định', value: '' },
+        { label: 'Mới cập nhật', value: 'latest' },
+        { label: 'Phổ biến nhất', value: 'popular' },
+        { label: 'Xem nhiều nhất', value: 'views' },
+        { label: 'Đánh giá cao', value: 'rating' },
+        { label: 'Tên A-Z', value: 'az' },
+    ],
+    status: [
+        { label: 'Tất Cả', value: '' },
+        { label: 'Đang Tiến Hành', value: 'ongoing' },
+        { label: 'Tạm Ngưng', value: 'hiatus' },
+        { label: 'Hoàn Thành', value: 'completed' },
+    ],
+    content_rating: [
+        { label: 'Tất Cả', value: '' },
+        { label: 'An toàn (SFW)', value: 'sfw' },
+        { label: '18+ (NSFW)', value: 'nsfw' },
+    ],
+    country: [
+        { label: 'Tất Cả', value: '' },
+        { label: 'Việt Nam', value: 'vn' },
+        { label: 'Trung Quốc', value: 'cn' },
+        { label: 'Nhật Bản', value: 'jp' },
+        { label: 'Hàn Quốc', value: 'kr' },
+        { label: 'Âu Mỹ', value: 'us' },
+        { label: 'Khác', value: 'other' },
+    ],
+    year: [
+        { label: 'Tất Cả', value: '' },
+        { label: '2026', value: '2026' },
+        { label: '2025', value: '2025' },
+        { label: '2024', value: '2024' },
+        { label: '2023', value: '2023' },
+        { label: '2022', value: '2022' },
+        { label: '2021', value: '2021' },
+        { label: '2020', value: '2020' },
+        { label: 'Trước 2020', value: 'before_2020' },
+    ],
+    search_by: [
+        { label: 'Tên', value: 'title' },
+        { label: 'Tác giả', value: 'author' },
+        { label: 'Từ khóa', value: 'keyword' },
+    ],
+    rating: [
+        { label: 'Tất Cả', value: '' },
+        { label: 'Từ 9+ sao', value: '9' },
+        { label: 'Từ 8+ sao', value: '8' },
+        { label: 'Từ 7+ sao', value: '7' },
+        { label: 'Từ 5+ sao', value: '5' },
+    ],
+    translation: [
+        { label: 'Tất Cả', value: '' },
+        { label: 'Vietsub / Dịch', value: 'sub' },
+        { label: 'Thuyết minh / Lồng tiếng', value: 'dub' },
+        { label: 'Convert', value: 'convert' },
+        { label: 'Raw / Gốc', value: 'raw' },
+    ],
+    genresByType: {
+        video: ['Hành động', 'Tình cảm', 'Hài hước', 'Cổ trang', 'Hoạt hình', 'Kinh dị', 'Viễn tưởng', 'Tâm lý', 'Võ thuật', 'Phiêu lưu', 'Anime', '18+'],
+        comic: ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Manhwa', 'Manhua', 'Manga', 'Romance', 'School Life', 'Shounen', 'Slice of Life', 'Tiên Hiệp', 'Xuyên Không'],
+        novel: ['Tiên Hiệp', 'Kiếm Hiệp', 'Ngôn Tình', 'Đô Thị', 'Huyền Huyễn', 'Xuyên Không', 'Trọng Sinh', 'Hệ Thống', 'Đam Mỹ', 'Bách Hợp', 'Light Novel', 'Mạt Thế'],
+    },
+};
+function dedupeOptions(arr) {
+    var out = [], seenLabel = {}, seenVal = {};
+    for (var i = 0; i < arr.length; i++) {
+        var o = arr[i];
+        if (!o)
+            continue;
+        var label = str(o.label != null ? o.label : o.title || o.name).trim();
+        var value = str(o.value != null ? o.value : o.input || label).trim();
+        if (!label || seenLabel[label] || (value !== '' && seenVal[value]))
+            continue;
+        seenLabel[label] = 1;
+        if (value !== '')
+            seenVal[value] = 1;
+        out.push({ label: label, value: value });
+    }
+    return out;
+}
+function buildFilterSchema(meta, tabs, genres) {
+    meta = meta || {};
+    var catOpts = [{ label: 'Tất Cả', value: '' }];
+    if (Array.isArray(tabs) && tabs.length) {
+        for (var i = 0; i < tabs.length; i++) {
+            var t = tabs[i];
+            if (!t)
+                continue;
+            var title = str(t.title || t.name || ('Danh mục ' + (i + 1))).trim();
+            if (title)
+                catOpts.push({ label: title, value: 'tab:' + i });
+        }
+    }
+    else {
+        catOpts.push({ label: 'Phổ biến', value: 'popular' }, { label: 'Mới cập nhật', value: 'latest' }, { label: 'Hoàn thành', value: 'completed' });
+    }
+    var typeKey = meta.type === 'video' ? 'video' : meta.type === 'comic' ? 'comic' : 'novel';
+    var rawGenres = (Array.isArray(genres) && genres.length)
+        ? genres.map(function (g) { return (typeof g === 'string' ? { label: g, value: g } : { label: str(g.title || g.name || g.label), value: str(g.input || g.value || g.title || g.name) }); })
+        : (STANDARD_FILTERS.genresByType[typeKey] || STANDARD_FILTERS.genresByType.novel).map(function (g) { return ({ label: g, value: g }); });
+    return [
+        { id: 'sort', title: 'Sắp Xếp', type: 'sort', options: STANDARD_FILTERS.sort.slice(), defaultValue: '' },
+        { id: 'status', title: 'Tình Trạng', type: 'select', options: STANDARD_FILTERS.status.slice(), defaultValue: '' },
+        { id: 'category', title: 'Danh Mục', type: 'select', options: dedupeOptions(catOpts), defaultValue: '' },
+        { id: 'content_rating', title: 'Phân Loại Nội Dung', type: 'select', options: STANDARD_FILTERS.content_rating.slice(), defaultValue: '' },
+        { id: 'country', title: 'Quốc Gia Phát Hành', type: 'select', options: STANDARD_FILTERS.country.slice(), defaultValue: '' },
+        { id: 'year', title: 'Năm Phát Hành', type: 'select', options: STANDARD_FILTERS.year.slice(), defaultValue: '' },
+        { id: 'search_by', title: 'Tìm Theo', type: 'text', placeholder: 'Tên, Tác giả hoặc Từ khóa', options: STANDARD_FILTERS.search_by.slice(), defaultValue: '' },
+        { id: 'rating', title: 'Đánh Giá', type: 'select', options: STANDARD_FILTERS.rating.slice(), defaultValue: '' },
+        { id: 'translation', title: 'Bản Dịch', type: 'select', options: STANDARD_FILTERS.translation.slice(), defaultValue: '' },
+        { id: 'genres', title: 'Thể Loại', type: 'multi-select', options: dedupeOptions(rawGenres), defaultValue: [] },
+    ];
+}
+function normalizeFilters(raw) {
+    var out = {
+        sort: '', sortAscending: false, status: '', category: '', content_rating: '',
+        country: '', year: '', search_by: '', rating: '', translation: '', genres: [], feed: '',
+    };
+    if (!raw)
+        return out;
+    var f = raw;
+    if (typeof f === 'string') {
+        var s = f.trim();
+        if (!s)
+            return out;
+        try {
+            f = JSON.parse(s);
+        }
+        catch (e) {
+            return out;
+        }
+    }
+    if (!f || typeof f !== 'object')
+        return out;
+    if (Array.isArray(f)) {
+        for (var i = 0; i < f.length; i++) {
+            var item = f[i];
+            if (!item || typeof item !== 'object')
+                continue;
+            if (item.Text && item.Text.id) {
+                out[item.Text.id] = str(item.Text.value).trim();
+                continue;
+            }
+            if (item.Select && item.Select.id) {
+                out[item.Select.id] = str(item.Select.value).trim();
+                continue;
+            }
+            if (item.Sort && item.Sort.id) {
+                var opt = STANDARD_FILTERS.sort[item.Sort.index | 0];
+                out.sort = opt ? opt.value : '';
+                out.sortAscending = !!item.Sort.ascending;
+                continue;
+            }
+            if (item.MultiSelect && item.MultiSelect.id) {
+                out[item.MultiSelect.id] = Array.isArray(item.MultiSelect.included) ? item.MultiSelect.included.map(str).filter(Boolean) : [];
+                continue;
+            }
+            var key = str(item.type || item.id).trim();
+            if (!key)
+                continue;
+            if (item.type_name === 'SortFilter') {
+                var idx = item.state && typeof item.state === 'object' ? (item.state.index | 0) : (item.state | 0);
+                var vals = Array.isArray(item.values) ? item.values : STANDARD_FILTERS.sort;
+                var chosen = vals[idx];
+                out.sort = chosen ? str(chosen.value != null ? chosen.value : (STANDARD_FILTERS.sort[idx] ? STANDARD_FILTERS.sort[idx].value : '')) : '';
+                out.sortAscending = !!(item.state && item.state.ascending);
+            }
+            else if (item.type_name === 'SelectFilter') {
+                var v = Array.isArray(item.values) && item.values[item.state | 0];
+                if (key in out)
+                    out[key] = v ? str(v.value) : '';
+            }
+            else if (item.type_name === 'TextFilter') {
+                if (key in out)
+                    out[key] = str(item.state).trim();
+            }
+            else if (item.type_name === 'GroupFilter' && Array.isArray(item.state)) {
+                var sel = [];
+                for (var j = 0; j < item.state.length; j++) {
+                    var cb = item.state[j];
+                    if (cb && cb.state === true)
+                        sel.push(str(cb.value || cb.name).trim());
+                }
+                if (key === 'genres' || key === 'genre')
+                    out.genres = sel.filter(Boolean);
+            }
+        }
+        return out;
+    }
+    var pickVal = function (v) { return (v && typeof v === 'object' && !Array.isArray(v) && 'value' in v) ? v.value : v; };
+    var sVal = pickVal(f.sort);
+    if (sVal && typeof sVal === 'object') {
+        if ('index' in sVal) {
+            var opt = STANDARD_FILTERS.sort[sVal.index | 0];
+            out.sort = opt ? opt.value : '';
+            out.sortAscending = !!sVal.ascending;
+        }
+        else if ('key' in sVal) {
+            out.sort = str(sVal.key);
+            out.sortAscending = sVal.direction === 'asc' || sVal.direction === 0 || !!sVal.ascending;
+        }
+    }
+    else {
+        out.sort = str(sVal).trim();
+        if ('sortAscending' in f)
+            out.sortAscending = !!f.sortAscending;
+    }
+    var strKeys = ['status', 'category', 'content_rating', 'country', 'year', 'search_by', 'rating', 'translation', 'feed'];
+    for (var i = 0; i < strKeys.length; i++) {
+        var k = strKeys[i];
+        if (f[k] != null)
+            out[k] = str(pickVal(f[k])).trim();
+    }
+    var gRaw = pickVal(f.genres != null ? f.genres : f.genre);
+    if (Array.isArray(gRaw))
+        out.genres = gRaw.map(str).filter(Boolean);
+    else if (gRaw && typeof gRaw === 'object' && Array.isArray(gRaw.include))
+        out.genres = gRaw.include.map(str).filter(Boolean);
+    else if (typeof gRaw === 'string' && gRaw.trim())
+        out.genres = gRaw.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    return out;
+}
+function isDefaultFilters(f) {
+    if (!f)
+        return true;
+    return !f.sort && !f.status && !f.category && !f.content_rating && !f.country && !f.year &&
+        !f.search_by && !f.rating && !f.translation && (!f.genres || !f.genres.length) && !f.feed;
+}
+function parseScore(txt) {
+    var m = /(?:(\d+(?:\.\d+)?)\s*(?:\/\s*10|sao|★)|★\s*(\d+(?:\.\d+)?))/i.exec(str(txt));
+    if (!m)
+        return null;
+    var n = parseFloat(m[1] || m[2]);
+    return isNaN(n) ? null : n;
+}
+function parseYear(txt) {
+    var m = /\b((?:19|20)\d{2})\b/.exec(str(txt));
+    return m ? parseInt(m[1], 10) : null;
+}
+var COUNTRY_RE = {
+    vn: /(?:việt nam|vietnam|truyện việt|phim việt|\bvn\b)/i,
+    cn: /(?:trung quốc|china|manhua|tiên hiệp|huyền huyễn|ngôn tình|đam mỹ|convert|\bcn\b)/i,
+    jp: /(?:nhật bản|japan|manga|anime|light novel|isekai|\bjp\b)/i,
+    kr: /(?:hàn quốc|korea|manhwa|webtoon|\bkr\b)/i,
+    us: /(?:âu mỹ|usa|\bus\b|\buk\b|comic|marvel|hollywood)/i,
+};
+var TRANS_RE = {
+    sub: /(?:vietsub|bản dịch|dịch|\bsub\b|trans)/i,
+    dub: /(?:thuyết minh|lồng tiếng|\bdub\b)/i,
+    convert: /(?:convert|\bcv\b)/i,
+    raw: /(?:raw|gốc|engsub|english)/i,
+};
+function applyClientFilters(items, f, meta) {
+    if (!Array.isArray(items) || !items.length)
+        return items || [];
+    var res = items.slice();
+    var textOf = function (it) { return (str(it.name) + ' ' + str(it.description) + ' ' + str(it.tag)).toLowerCase(); };
+    if (f.content_rating === 'nsfw') {
+        if (!(meta && meta.nsfw)) {
+            var matched = res.filter(function (it) { return /(?:18\+|nsfw|hentai|ecchi|adult|smut|sắc|jav)/i.test(textOf(it)); });
+            res = matched;
+        }
+    }
+    else if (f.content_rating === 'sfw') {
+        if (meta && meta.nsfw)
+            return [];
+        res = res.filter(function (it) { return !/(?:18\+|nsfw|hentai|adult|jav)/i.test(textOf(it)); });
+    }
+    if (f.status === 'ongoing') {
+        res = res.filter(function (it) { return !/(?:hoàn thành|hoàn tất|completed|đã kết thúc|\bfull\b)/i.test(textOf(it)); });
+    }
+    else if (f.status === 'completed') {
+        var hasStatusInfo = res.some(function (it) { return /(?:hoàn thành|hoàn tất|completed|\bfull\b|đang tiến hành|ongoing|tạm ngưng|hiatus)/i.test(textOf(it)); });
+        if (hasStatusInfo)
+            res = res.filter(function (it) { return /(?:hoàn|complete|full|end)/i.test(textOf(it)); });
+    }
+    else if (f.status === 'hiatus') {
+        var hasHiatus = res.some(function (it) { return /(?:tạm ngưng|tạm dừng|hiatus|drop)/i.test(textOf(it)); });
+        if (hasHiatus)
+            res = res.filter(function (it) { return /(?:tạm ngưng|tạm dừng|hiatus|drop)/i.test(textOf(it)); });
+    }
+    if (f.country) {
+        var re_1 = COUNTRY_RE[f.country];
+        if (re_1) {
+            var hasCountry = res.some(function (it) { return COUNTRY_RE.vn.test(textOf(it)) || COUNTRY_RE.cn.test(textOf(it)) || COUNTRY_RE.jp.test(textOf(it)) || COUNTRY_RE.kr.test(textOf(it)) || COUNTRY_RE.us.test(textOf(it)); });
+            if (hasCountry)
+                res = res.filter(function (it) { return re_1.test(textOf(it)); });
+        }
+        else if (f.country === 'other') {
+            var hasKnown = res.some(function (it) { return COUNTRY_RE.vn.test(textOf(it)) || COUNTRY_RE.cn.test(textOf(it)) || COUNTRY_RE.jp.test(textOf(it)) || COUNTRY_RE.kr.test(textOf(it)) || COUNTRY_RE.us.test(textOf(it)); });
+            if (hasKnown)
+                res = res.filter(function (it) { return !COUNTRY_RE.vn.test(textOf(it)) && !COUNTRY_RE.cn.test(textOf(it)) && !COUNTRY_RE.jp.test(textOf(it)) && !COUNTRY_RE.kr.test(textOf(it)) && !COUNTRY_RE.us.test(textOf(it)); });
+        }
+    }
+    if (f.year) {
+        var hasYear = res.some(function (it) { return parseYear(textOf(it)) !== null; });
+        if (hasYear) {
+            res = res.filter(function (it) {
+                var y = parseYear(textOf(it));
+                if (y === null)
+                    return false;
+                return f.year === 'before_2020' ? y < 2020 : String(y) === f.year;
+            });
+        }
+    }
+    if (f.rating) {
+        var minScore_1 = parseFloat(f.rating);
+        if (!isNaN(minScore_1)) {
+            var hasScore = res.some(function (it) { return parseScore(textOf(it)) !== null; });
+            if (hasScore) {
+                res = res.filter(function (it) {
+                    var sc = parseScore(textOf(it));
+                    return sc !== null && sc >= minScore_1;
+                });
+            }
+        }
+    }
+    if (f.translation && TRANS_RE[f.translation]) {
+        var tre_1 = TRANS_RE[f.translation];
+        var hasTrans = res.some(function (it) { return TRANS_RE.sub.test(textOf(it)) || TRANS_RE.dub.test(textOf(it)) || TRANS_RE.convert.test(textOf(it)) || TRANS_RE.raw.test(textOf(it)); });
+        if (hasTrans)
+            res = res.filter(function (it) { return tre_1.test(textOf(it)); });
+    }
+    if (f.genres && f.genres.length) {
+        var wanted_1 = f.genres.map(function (g) { return g.toLowerCase(); }).filter(function (g) { return !/^https?:\/\//.test(g) && g.charAt(0) !== '/'; });
+        if (wanted_1.length) {
+            var hasGenreTag = res.some(function (it) { return wanted_1.some(function (g) { return textOf(it).indexOf(g) >= 0; }); });
+            if (hasGenreTag)
+                res = res.filter(function (it) { return wanted_1.some(function (g) { return textOf(it).indexOf(g) >= 0; }); });
+        }
+    }
+    if (f.sort === 'az') {
+        res.sort(function (a, b) { return str(a.name).localeCompare(str(b.name)); });
+    }
+    else if (f.sort === 'rating') {
+        if (res.some(function (it) { return parseScore(textOf(it)) !== null; })) {
+            res.sort(function (a, b) { return (parseScore(textOf(b)) || 0) - (parseScore(textOf(a)) || 0); });
+        }
+    }
+    return res;
+}
 var VBookEngine = (function () {
     function VBookEngine(opts) {
         var meta = opts.meta, scripts = opts.scripts, host = opts.host;
@@ -274,7 +750,8 @@ var VBookEngine = (function () {
         var exec = factory(this.env, cfg);
         if (typeof exec !== 'function')
             throw new Error(name + ': execute() not defined');
-        var res = exec.apply(void 0, args.map(str));
+        var callArgs = args.map(function (a) { return (a && typeof a === 'object' ? a : str(a)); });
+        var res = exec.apply(void 0, callArgs);
         if (!res)
             throw new Error(name + ': empty result');
         if (res.code !== 0)
@@ -302,14 +779,37 @@ var VBookEngine = (function () {
         this.cache.tabs = tabs.filter(function (t) { return t && t.script; });
         return this.cache.tabs;
     };
-    VBookEngine.prototype.list = function (scriptName, input, page) {
+    VBookEngine.prototype.genres = function () {
+        if (this.cache.genres)
+            return this.cache.genres;
+        var list = [];
+        try {
+            if (this.has('genre'))
+                list = (this.run('genre')).data || [];
+        }
+        catch (e) {
+            this.host.log && this.host.log('genre: ' + e.message);
+        }
+        this.cache.genres = list.filter(Boolean);
+        return this.cache.genres;
+    };
+    VBookEngine.prototype.getFilters = function () {
+        if (this.cache.filters)
+            return this.cache.filters;
+        var tabs = this.tabs();
+        var genres = this.genres();
+        this.cache.filters = buildFilterSchema(this.meta, tabs, genres);
+        return this.cache.filters;
+    };
+    VBookEngine.prototype.list = function (scriptName, input, page, filterArg) {
         var _this = this;
-        var key = scriptName + '|' + input;
+        var sig = filterArg ? '|' + JSON.stringify(filterArg) : '';
+        var key = scriptName + '|' + input + sig;
         page = Math.max(1, page | 0);
         var tok = page === 1 ? '' : this.tokens[key + '|' + page];
         if (page > 1 && tok == null)
             return { items: [], hasNext: false };
-        var r = this.run(scriptName, input, tok);
+        var r = filterArg ? this.run(scriptName, input, tok, filterArg) : this.run(scriptName, input, tok);
         var next = str(r.data2);
         if (next)
             this.tokens[key + '|' + (page + 1)] = next;
@@ -332,10 +832,81 @@ var VBookEngine = (function () {
             return this.list(this.scriptFile(t.script), str(t.input), page);
         return this.search('', page);
     };
-    VBookEngine.prototype.search = function (q, page) {
-        if (!this.has('search'))
-            return { items: [], hasNext: false };
-        return this.list('search', q, page);
+    VBookEngine.prototype.search = function (q, page, rawFilters) {
+        var f = normalizeFilters(rawFilters);
+        if (isDefaultFilters(f)) {
+            if (!this.has('search'))
+                return { items: [], hasNext: false };
+            return this.list('search', q, page);
+        }
+        var query = str(q).trim();
+        var sb = str(f.search_by).trim();
+        var isModeOnly = /^(?:title|author|keyword|tên|tác giả|từ khóa)$/i.test(sb);
+        if (sb && !isModeOnly && !query)
+            query = sb;
+        var res = null;
+        if (f.feed === 'shorts' && !query) {
+            var tabs = this.tabs();
+            var st = tabs.find(function (t) { return /short/i.test(str(t.title || t.name) + ' ' + str(t.input)); });
+            if (st)
+                res = this.list(this.scriptFile(st.script), str(st.input), page);
+        }
+        if (!res && !query && f.genres && f.genres.length) {
+            var g0_1 = f.genres[0];
+            var glist = this.genres();
+            var match = glist.find(function (g) { return str(g.input) === g0_1 || str(g.title || g.name).toLowerCase() === g0_1.toLowerCase(); });
+            if (match && match.input) {
+                var scr = this.scriptFile(match.script || 'search');
+                if (this.has(scr))
+                    res = this.list(scr, str(match.input), page);
+            }
+            else if (/^https?:\/\/|^\//i.test(g0_1) && this.has('search')) {
+                res = this.list('search', g0_1, page);
+            }
+        }
+        if (!res && !query && f.category) {
+            var tabs = this.tabs();
+            var tab = null;
+            if (/^tab:\d+$/.test(f.category))
+                tab = tabs[parseInt(f.category.slice(4), 10)] || null;
+            else
+                tab = tabs.find(function (t) { return str(t.title || t.name).toLowerCase() === f.category.toLowerCase() || str(t.input) === f.category; }) || null;
+            if (tab)
+                res = this.list(this.scriptFile(tab.script), str(tab.input), page);
+            else if (f.category === 'latest')
+                res = this.latest(page);
+            else if (f.category === 'popular')
+                res = this.popular(page);
+            else if (f.category === 'completed') {
+                var ctab = tabs.find(function (t) { return /hoàn|full|complete/i.test(str(t.title || t.name)); });
+                if (ctab)
+                    res = this.list(this.scriptFile(ctab.script), str(ctab.input), page);
+            }
+            else if (/^https?:\/\/|^\//i.test(f.category) && this.has('search')) {
+                res = this.list('search', f.category, page);
+            }
+        }
+        if (!res) {
+            if (query) {
+                if (!this.has('search'))
+                    return { items: [], hasNext: false };
+                res = this.list('search', query, page, f);
+            }
+            else {
+                if (f.sort === 'latest')
+                    res = this.latest(page);
+                else {
+                    var tabs = this.tabs();
+                    if (tabs[0])
+                        res = this.list(this.scriptFile(tabs[0].script), str(tabs[0].input), page);
+                    else if (this.has('search'))
+                        res = this.list('search', '', page, f);
+                    else
+                        res = { items: [], hasNext: false };
+                }
+            }
+        }
+        return { items: applyClientFilters(res.items || [], f, this.meta), hasNext: !!res.hasNext };
     };
     VBookEngine.prototype.detail = function (url) {
         url = this.decanon(url);
@@ -390,6 +961,56 @@ var VBookEngine = (function () {
         var r = this.run('chap', url);
         return { html: str(r.data), title: str(r.data2) };
     };
+    VBookEngine.prototype._resolveEmbedStream = function (rawUrl, referer, depth) {
+        depth = depth || 0;
+        var u = unwrapPlayerUrl(rawUrl);
+        if (!u || isAdIframeUrl(u))
+            return null;
+        var ref = referer || (this.base + '/');
+        var hdrs = { Referer: ref, Origin: originOf(ref, this.base), 'User-Agent': DEFAULT_VIDEO_UA };
+        if (/\.(?:m3u8|mp4)(?:[?#]|$)/i.test(u)) {
+            return { url: u, headers: hdrs, mimeType: /\.m3u8/i.test(u) ? 'application/x-mpegURL' : 'video/mp4' };
+        }
+        if (depth >= 3 || !this.env || typeof this.env.fetch !== 'function')
+            return null;
+        var res;
+        try {
+            res = this.env.fetch(u, { headers: hdrs });
+        }
+        catch (e) {
+            return null;
+        }
+        if (!res || !res.ok)
+            return null;
+        var pageUrl = res.url || u;
+        var body = str(typeof res.text === 'function' ? res.text() : '');
+        if (!body)
+            return null;
+        var pageHdrs = { Referer: pageUrl, Origin: originOf(pageUrl, this.base), 'User-Agent': DEFAULT_VIDEO_UA };
+        var sniffed = sniffDirectStream(body);
+        if (sniffed) {
+            return { url: sniffed, headers: pageHdrs, mimeType: /\.m3u8/i.test(sniffed) ? 'application/x-mpegURL' : 'video/mp4' };
+        }
+        var vidM = /<(?:video|source)\b[^>]*\bsrc=["']([^"']+)["']/i.exec(body);
+        if (vidM && vidM[1]) {
+            var vu = abs(pageUrl, vidM[1]);
+            if (vu && !isAdIframeUrl(vu) && /\.(?:m3u8|mp4)/i.test(vu)) {
+                return { url: vu, headers: pageHdrs, mimeType: /\.m3u8/i.test(vu) ? 'application/x-mpegURL' : 'video/mp4' };
+            }
+        }
+        var ifrRe = /<iframe\b[^>]*(?:data-primary-player-url|data-alternate-player-url|src|data-src|data-lazy-src)=["']([^"']+)["'][^>]*>/gi;
+        var im, tried = 0;
+        while ((im = ifrRe.exec(body)) && tried < 5) {
+            var nextUrl = abs(pageUrl, im[1]);
+            if (!nextUrl || nextUrl === u || nextUrl === pageUrl || isAdIframeUrl(nextUrl))
+                continue;
+            tried++;
+            var found = this._resolveEmbedStream(nextUrl, pageUrl, depth + 1);
+            if (found)
+                return found;
+        }
+        return null;
+    };
     VBookEngine.prototype.videos = function (url) {
         var _this = this;
         url = this.decanon(url);
@@ -409,16 +1030,31 @@ var VBookEngine = (function () {
                     var tr = tracks_1[_a];
                     if (!tr || !tr.data)
                         continue;
-                    if (tr.type === 'webview')
-                        continue;
                     var streamUrl = abs(tr.host || this.base + '/', tr.data);
+                    var hdrs = tr.headers ? Object.assign({}, tr.headers) : { Referer: this.base + '/' };
+                    if (!hdrs.Referer && !hdrs.referer)
+                        hdrs.Referer = this.base + '/';
+                    if (!hdrs.Origin && !hdrs.origin)
+                        hdrs.Origin = originOf(hdrs.Referer || hdrs.referer, this.base);
+                    if (!hdrs['User-Agent'] && !hdrs['user-agent'])
+                        hdrs['User-Agent'] = DEFAULT_VIDEO_UA;
+                    var mimeType = str(tr.mimeType);
+                    if (tr.type === 'webview') {
+                        var resolved = this._resolveEmbedStream(streamUrl, hdrs.Referer, 0);
+                        if (!resolved || !resolved.url)
+                            continue;
+                        streamUrl = resolved.url;
+                        hdrs = Object.assign({}, hdrs, resolved.headers);
+                        if (!mimeType)
+                            mimeType = resolved.mimeType || '';
+                    }
                     out.push({
                         url: streamUrl,
                         quality: s.title + (tr.quality ? ' ' + tr.quality : ''),
-                        headers: tr.headers || { Referer: this.base + '/' },
+                        headers: hdrs,
                         subtitles: (tr.subtitles || (tr.subtitle ? [{ data: tr.subtitle, label: 'Sub' }] : [])).map(function (x) { return ({ file: abs(_this.base + '/', x.data || x.file), label: str(x.label || x.language || 'Sub') }); }),
                         audios: (tr.audios || []).map(function (x) { return ({ file: abs(_this.base + '/', x.data || x.file), label: str(x.label || x.language || 'Audio') }); }),
-                        mimeType: str(tr.mimeType),
+                        mimeType: mimeType,
                         http2: !!tr.http2,
                     });
                 }

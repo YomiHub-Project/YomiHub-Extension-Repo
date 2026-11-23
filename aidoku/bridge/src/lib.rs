@@ -15,7 +15,7 @@
 extern crate alloc;
 
 use aidoku::{
-	AidokuError, Chapter, ContentRating, Listing, ListingKind, Manga, MangaPageResult, MangaStatus,
+	AidokuError, Chapter, ContentRating, FilterValue, Listing, ListingKind, Manga, MangaPageResult, MangaStatus,
 	Page, PageContent, PageContext, Result, UpdateStrategy, Viewer,
 	alloc::{String, Vec, borrow::ToOwned, string::ToString, vec},
 	imports::{
@@ -357,12 +357,13 @@ impl Bridge {
 		}
 	}
 
-	pub fn search(&self, query: Option<String>, page: i32) -> Result<MangaPageResult> {
+	pub fn search(&self, query: Option<String>, page: i32, filters: Vec<FilterValue>) -> Result<MangaPageResult> {
 		let q = query.unwrap_or_default();
-		let r: EntryPage = if q.trim().is_empty() {
+		let r: EntryPage = if q.trim().is_empty() && filters.is_empty() {
 			self.call("list", serde_json::json!({ "id": "tab0", "page": page }))?
 		} else {
-			self.call("list", serde_json::json!({ "q": q, "page": page }))?
+			let fval = serde_json::to_value(&filters).unwrap_or(Value::Array(Vec::new()));
+			self.call("list", serde_json::json!({ "q": q, "page": page, "filters": fval }))?
 		};
 		Ok(self.page(r))
 	}

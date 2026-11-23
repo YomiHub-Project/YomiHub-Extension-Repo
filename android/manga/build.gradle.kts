@@ -14,7 +14,7 @@ if (flavorDefs.isEmpty()) logger.warn(":manga has no flavors.json - run node too
 android {
     namespace = "eu.kanade.tachiyomi.extension.kiritokmn"
     compileSdk = (project.findProperty("compileSdkOverride") as String?)?.toInt() ?: 35
-    (project.findProperty("buildToolsOverride") as String?)?.let { buildToolsVersion = it }
+    buildToolsVersion = (project.findProperty("buildToolsOverride") as String?) ?: "36.0.0"
     defaultConfig {
         applicationId = "eu.kanade.tachiyomi.extension.kiritokmn"
         minSdk = 21

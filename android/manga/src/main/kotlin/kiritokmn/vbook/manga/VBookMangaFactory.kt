@@ -7,6 +7,7 @@ import androidx.preference.PreferenceScreen
 import eu.kanade.tachiyomi.source.ConfigurableSource
 import eu.kanade.tachiyomi.source.Source
 import eu.kanade.tachiyomi.source.SourceFactory
+import eu.kanade.tachiyomi.source.model.Filter
 import eu.kanade.tachiyomi.source.model.FilterList
 import eu.kanade.tachiyomi.source.model.MangasPage
 import eu.kanade.tachiyomi.source.model.Page
@@ -19,6 +20,7 @@ import kiritokmn.vbook.loadSourceDefs
 import okhttp3.Headers
 import okhttp3.Request
 import okhttp3.Response
+import org.json.JSONArray
 import org.json.JSONObject
 import rx.Observable
 
@@ -31,6 +33,14 @@ class VBookMangaFactory : SourceFactory {
     override fun createSources(): List<Source> =
         loadSourceDefs(Assets.read("vb/sources.json")).filter { it.type == "comic" }.map { VBookMangaSource(it) }
 }
+
+open class MangaSortFilter(name: String, values: Array<String>, val rawValues: Array<String>) :
+    Filter.Sort(name, values)
+open class MangaSelectFilter(val id: String, name: String, values: Array<String>, val rawValues: Array<String>, state: Int = 0) :
+    Filter.Select<String>(name, values, state)
+open class MangaTextFilter(val id: String, name: String) : Filter.Text(name)
+open class MangaGenreCheckBox(name: String, val value: String) : Filter.CheckBox(name, false)
+open class MangaGenreGroup(name: String, genres: List<MangaGenreCheckBox>) : Filter.Group<MangaGenreCheckBox>(name, genres)
 
 class VBookMangaSource(private val def: SourceDef) : HttpSource(), ConfigurableSource {
     override val name = def.name
@@ -45,6 +55,7 @@ class VBookMangaSource(private val def: SourceDef) : HttpSource(), ConfigurableS
     override val baseUrl: String get() = listOf("DOMAIN_CUSTOM", "DOMAIN").firstNotNullOfOrNull { k -> preferences.getString(k, null)?.trim()?.takeIf { it.startsWith("http://") || it.startsWith("https://") } }?.trimEnd('/') ?: def.baseUrl
 
     private val rt by lazy { VBookRuntime(Assets::read, def, client, preferences) }
+    private var filterDefs: List<JSONObject>? = null
 
     override fun headersBuilder(): Headers.Builder = super.headersBuilder().add("Referer", "$baseUrl/")
 
@@ -61,7 +72,89 @@ class VBookMangaSource(private val def: SourceDef) : HttpSource(), ConfigurableS
     override fun fetchPopularManga(page: Int): Observable<MangasPage> = Observable.fromCallable { page(rt.callObject("popular", page)) }
     override fun fetchLatestUpdates(page: Int): Observable<MangasPage> = Observable.fromCallable { page(rt.callObject("latest", page)) }
     override fun fetchSearchManga(page: Int, query: String, filters: FilterList): Observable<MangasPage> =
-        Observable.fromCallable { page(rt.callObject("search", query, page)) }
+        Observable.fromCallable { page(rt.callObject("search", query, page, serializeFilters(filters))) }
+
+    private fun loadFilterDefs(): List<JSONObject> {
+        filterDefs?.let { return it }
+        return try {
+            val res = rt.callObject("filters").getJSONArray("result")
+            (0 until res.length()).map { res.getJSONObject(it) }.also { filterDefs = it }
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    override fun getFilterList(): FilterList {
+        val defs = loadFilterDefs()
+        if (defs.isEmpty()) return FilterList(emptyList())
+        val list = mutableListOf<Filter<*>>()
+        for (d in defs) {
+            val id = d.getString("id")
+            val title = d.getString("title")
+            val type = d.getString("type")
+            when {
+                id == "sort" || type == "sort" -> {
+                    val opts = d.getJSONArray("options")
+                    val labels = Array(opts.length()) { opts.getJSONObject(it).getString("label") }
+                    val values = Array(opts.length()) { opts.getJSONObject(it).getString("value") }
+                    list.add(MangaSortFilter(title, labels, values))
+                }
+                type == "select" -> {
+                    val opts = d.getJSONArray("options")
+                    val labels = Array(opts.length()) { opts.getJSONObject(it).getString("label") }
+                    val values = Array(opts.length()) { opts.getJSONObject(it).getString("value") }
+                    list.add(MangaSelectFilter(id, title, labels, values))
+                }
+                type == "text" -> {
+                    list.add(MangaTextFilter(id, title))
+                }
+                type == "multi-select" || id == "genres" -> {
+                    val opts = d.getJSONArray("options")
+                    val cbs = (0 until opts.length()).map {
+                        val o = opts.getJSONObject(it)
+                        MangaGenreCheckBox(o.getString("label"), o.getString("value"))
+                    }
+                    list.add(MangaGenreGroup(title, cbs))
+                }
+            }
+        }
+        return FilterList(list)
+    }
+
+    private fun serializeFilters(filters: FilterList): String {
+        if (filters.isEmpty()) return ""
+        val json = JSONObject()
+        val genresArr = JSONArray()
+        for (f in filters) {
+            when (f) {
+                is MangaSortFilter -> {
+                    f.state?.let { sel ->
+                        json.put("sort", f.rawValues.getOrNull(sel.index) ?: "")
+                        json.put("sortAscending", sel.ascending)
+                    }
+                }
+                is MangaSelectFilter -> {
+                    val v = f.rawValues.getOrNull(f.state) ?: ""
+                    json.put(f.id, v)
+                }
+                is MangaTextFilter -> {
+                    if (f.state.isNotBlank()) {
+                        json.put(f.id, f.state.trim())
+                    }
+                }
+                is MangaGenreGroup -> {
+                    for (cb in f.state) {
+                        if (cb.state) genresArr.put(cb.value)
+                    }
+                }
+                else -> {}
+            }
+        }
+        if (genresArr.length() > 0) {
+            json.put("genres", genresArr)
+        }
+        return json.toString()
+    }
 
     override fun fetchMangaDetails(manga: SManga): Observable<SManga> = Observable.fromCallable {
         val d = rt.callObject("detail", manga.url).getJSONObject("result")

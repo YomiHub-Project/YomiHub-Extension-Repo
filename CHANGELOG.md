@@ -1,3 +1,47 @@
+# Kiritokmn Extension Repo — v0.0.9 (23/11/2026)
+
+## Điểm nổi bật & Tính năng mới
+- **Hệ thống Bộ Lọc thống nhất 10 mục (Filter Extension + Chuẩn Tiyo):**
+  - Tích hợp schema 10 bộ lọc chuẩn: (1) Sắp Xếp (*Mặc định, Mới cập nhật, Phổ biến nhất, Xem nhiều nhất, Đánh giá cao, Tên A-Z*), (2) Tình Trạng (*Tất Cả, Đang Tiến Hành, Tạm Ngưng, Hoàn Thành*), (3) Danh Mục (tự động từ tabs nguồn), (4) Phân Loại Nội Dung (*An toàn SFW, 18+ NSFW*), (5) Quốc Gia Phát Hành (*Việt Nam, Trung Quốc, Nhật Bản, Hàn Quốc, Âu Mỹ, Khác*), (6) Năm Phát Hành (2026 → 2020, Trước 2020), (7) Tìm Theo (Tên, Tác giả, Từ khóa), (8) Đánh Giá (9+, 8+, 7+, 5+ sao), (9) Bản Dịch (*Vietsub/Dịch, Thuyết minh/Lồng tiếng, Convert, Raw/Gốc*), (10) Thể Loại (nhóm CheckBox đa lựa chọn).
+  - Hoạt động đồng bộ 100% trên `runtime/engine.js`, `runtime/rhino-prelude.js`, `hosts/mangayomi.tail.js`, `hosts/lnreader.js`, `hosts/aidoku.tail.js` (Aidoku `BRIDGE_REV = 5`), và các module Android Kotlin (`VBookAnimeFactory`, `VBookMangaFactory`, `VBookNovelFactory`).
+- **Tách riêng 3 kho độc lập Anime / Manga / Novel (44 Anime + 37 Manga + 115 Novel):**
+  - Aniyomi: Kho độc lập `repo/anime/index.min.json` + `repo.json` (44 tiện ích Anime / Phim / Video).
+  - Nekoyomi: Kho độc lập `repo/manga/index.min.json` + `repo.json` (37 tiện ích Manga) và kho `repo/novel/index.min.json` (115 tiện ích Novel).
+  - Bổ sung module Android `novel-core` và `novel` kế thừa chuẩn ABI `NovelSource` của Nekoyomi (`tachiyomi.novelextension` feature, `isNovelSource = true`, `fetchPageText`), xuất xưởng **196 APK riêng biệt** (`APK_REV = 2`).
+  - Mangayomi / YomiHub: Bổ sung 3 chỉ mục tách mục `repo/mangayomi/anime.json`, `repo/mangayomi/manga.json`, `repo/mangayomi/novel.json`.
+- **Bắt buộc phát video trực tiếp trong app (Direct In-App Playback — KHÔNG qua WebView):**
+  - Loại bỏ hoàn toàn `type: 'webview'` cho các luồng phát; `lib/lib_generic.js` (`track()`) và `runtime/engine.js` (`videos()`) tự động bóc iframe đa tầng (tối đa depth 3), trích xuất trực tiếp URL `.m3u8` / `.mp4` kèm đầy đủ headers `Referer`, `Origin`, `User-Agent`.
+  - Khắc phục triệt để các nguồn video: Anime47, Dailymotion, HentaiVietsub, Bilibili TV, VTV Go, WatchHentai, Xôi Lạc TV, FapReel, Hồng Quả, AVSub – AnimeVietsub.
+- **Tích hợp Chặn quảng cáo & Giải mã (Tampermonkey Adblock + DevTools Project + Tiyo):**
+  - `lib/lib_common.js`: Bổ sung `C.cleanAds(docOrHtml)` loại bỏ popup, banner quảng cáo, overlay, iframe rác theo bộ lọc Tampermonkey Adblock không kích hoạt anti-adblock; tích hợp vào `C.cleanContent()`, lọc banner ảnh trong `pages()` và lọc iframe rác trong `track()`.
+  - Tối ưu `C.cleanDevTools` bypass anti-debugging và `C.sniff` bóc luồng Dean Edwards unpack đa khối, base64, giải bọc `?url=`.
+- **Chuyển kho chính thức sang tổ chức YomiHub-Project:**
+  - Chuyển `origin` và tất cả đường dẫn tài nguyên sang `https://github.com/YomiHub-Project/Kiritokmn---Extension-Repo`.
+
+## Sửa chữa & Phục hồi nguồn
+- **Nhóm Phim & Video (20/44 PASS mạng thật, phát trực tiếp không qua web):**
+  - Sửa lỗi stream kiểm thử tự động cho `anime47`, `dailymotion`, `hentaivietsubcom`.
+  - Nâng cấp bóc tách player cho `vtvgo`, `watchhentainet`, `xoilac`, `fapreel`, `hongqua`, `avsubanimevietsub`.
+- **Nhóm Truyện tranh & Tiểu thuyết (80 nguồn PASS):**
+  - Khôi phục và ổn định: `truyencvio`, `truyennet`, `syosetur18`, `sweetastes`, `po18sm`, `webtruyendich`, `deqixs`, `tinhlinh`, `07br`, `hacamchicac`, `abcbiquge`, `stvappvi`, `allin1`.
+  - Rà soát 196/196 logo biểu tượng 256×256 PNG sắc nét, tăng `version` +1 cho 100% 196 nguồn so với bản 0.0.8.
+
+## Kết quả kiểm thử & Thiết bị thật Galaxy Note9
+- **Kiểm thử tự động trên mạng thật:** Đạt **100/196 PASS** (51.0%, tăng +6 nguồn so với 94/196 của 0.0.8) gồm 20 Anime, 21 Manga, 59 Novel.
+- **Mô phỏng Aidoku:** Đạt **81/152 PASS** (tăng +7 nguồn so với 74/152 của 0.0.8).
+- **Unit Tests:** 12/12 domain-switch tests PASS, 9/9 filter-extension test suites PASS (100%).
+- **Kiểm thử thiết bị thật Samsung Galaxy Note9 (SM-N960N, Android 10):**
+  - Cài đặt thành công 196/196 APKs (44 Anime + 37 Manga + 115 Novel) qua ADB.
+  - Thu thập 6 video screenrecord (.mp4) và 50+ ảnh chụp màn hình xác minh trực quan 100% lưu tại `_work/shots/v009/`:
+    - Aniyomi: Tách kho Anime, Filter Extension 10 mục, `DOMAIN_CUSTOM`, phát video trực tiếp trong `PlayerActivity`, Resume A Video.
+    - Nekoyomi: Tách riêng 3 kho (Anime, Manga, Novel sources), đọc Manga TruyenQQ, duyệt Novel.
+    - Mangayomi & YomiHub: Duyệt các kho tổng hợp & tách mục, bộ lọc, Shorts video dọc.
+    - LNReader: Duyệt Bàn Long, đọc tiểu thuyết tiếng Việt chương dài sắc nét.
+    - vBook v1.1.57 & LeechText: Thư viện 25 nguồn vBook.
+  - Hoàn trả nguyên trạng cài đặt máy theo `phone_settings_before.txt`.
+
+---
+
 # Kiritokmn Extension Repo — v0.0.8 (23/11/2026)
 
 ## Điểm nổi bật & Tính năng mới

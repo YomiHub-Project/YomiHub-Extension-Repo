@@ -49,7 +49,8 @@
     "po18": "yêu cầu xác minh 18+/đăng nhập",
     "mintteanovel": "chương mới bị khoá (cần đăng nhập/mở khoá trên trang)",
     "lnkuro": "toàn trang yêu cầu đăng nhập tài khoản (kuro-kmssccttan)",
-    "douban": "read.douban.com là kho sách điện tử trả phí, chương truyện yêu cầu mua/đăng nhập qua tài khoản Douban"
+    "douban": "read.douban.com là kho sách điện tử trả phí, chương truyện yêu cầu mua/đăng nhập qua tài khoản Douban",
+    "anime47": "API website yêu cầu đăng nhập tài khoản"
   },
   "protected": {
     "blvietsub": "trình phát dùng Cloudflare Turnstile token verification (Worker Siteverify), mở trong WebView để xem",
@@ -63,7 +64,6 @@
   },
   "api": {
     "douyin": "danh sách chủ đề nóng chạy không cần máy chủ; xem video cần máy chủ Douyin_TikTok_Download_API tự dựng (đặt trong cài đặt nguồn)",
-    "bilibili": "trang dựng bằng JavaScript (SPA) — cần viết theo API, để bản sau",
     "dailymotion": "SPA — cần API, để bản sau",
     "iqiyi": "SPA — cần API, để bản sau",
     "mgtv": "SPA — cần API, để bản sau",

@@ -17,7 +17,7 @@ function execute(url) {
         list.push({
           name: name || ('Tập ' + (k + 1)),
           url: BASE_URL + '/vi/play/' + sid + '/' + ep.episode_id,
-          pay: ep.limit !== 1
+          pay: ep.limit !== 0
         });
       }
     }

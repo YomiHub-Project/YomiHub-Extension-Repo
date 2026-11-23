@@ -153,9 +153,27 @@ function __call(method) {
     if (!__ENG) {
       __ENG = new VBookEngine({ meta: __SRC.META, scripts: __SRC.SCRIPTS, env: __env, host: { config: function (k) { var v = __host.config(k); return v == null ? null : __s(v); }, log: function (m) { __host.log(String(m)); } } });
     }
+    if (method === 'filters') {
+      return JSON.stringify({ ok: true, result: __ENG.getFilters() });
+    }
     if (method === 'popular' || method === 'latest') args[0] = parseInt(args[0], 10) || 1;
-    if (method === 'search') args[1] = parseInt(args[1], 10) || 1;
-    var r = __ENG[method].apply(__ENG, args.map(function (a) { return typeof a === 'number' ? a : __s(a); }));
+    if (method === 'search') {
+      args[0] = __s(args[0]);
+      args[1] = parseInt(args[1], 10) || 1;
+      if (args.length > 2 && args[2] != null && args[2] !== '') {
+        if (typeof args[2] === 'string') {
+          try { args[2] = JSON.parse(args[2]); } catch (pe) { args[2] = {}; }
+        }
+      } else if (args.length > 2) {
+        args[2] = {};
+      }
+    }
+    var mapped = [];
+    for (var i = 0; i < args.length; i++) {
+      var a = args[i];
+      mapped.push((typeof a === 'number' || (a && typeof a === 'object')) ? a : __s(a));
+    }
+    var r = __ENG[method].apply(__ENG, mapped);
     return JSON.stringify({ ok: true, result: r });
   } catch (e) {
     return JSON.stringify({ error: true, message: __s(e && (e.message || e)) });

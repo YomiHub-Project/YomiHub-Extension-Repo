@@ -1,10 +1,4 @@
-function execute(url) {
-    let response = fetch(url);
-    if (response.ok) {
-        let data = response.json();
-        let content = data.content.replace(/<!-- (.*?) -->/gm, '')
-            .replace(/<p(.*?)>(.*?)<?p>/g, '')
-            .replace(/\n/g, '<br>');
-        return Response.success(content);
-    }
-}
+load('config.js');
+load('lib_common.js');
+load('lib_generic.js');
+function execute(url) { return X.text(url); }
