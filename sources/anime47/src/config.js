@@ -1,21 +1,25 @@
 var BASE_URL = "https://anime47.best";
 try {
-  if (typeof DOMAIN_CUSTOM !== 'undefined' && DOMAIN_CUSTOM && DOMAIN_CUSTOM.trim()) {
+  if (typeof DOMAIN_CUSTOM !== 'undefined' && DOMAIN_CUSTOM && String(DOMAIN_CUSTOM).trim()) {
     BASE_URL = String(DOMAIN_CUSTOM).trim().replace(/\/+$/, "");
-  } else if (typeof DOMAIN !== 'undefined' && DOMAIN) {
-    BASE_URL = String(DOMAIN).replace(/\/+$/, "");
+  } else if (typeof DOMAIN !== 'undefined' && DOMAIN && String(DOMAIN).trim()) {
+    BASE_URL = String(DOMAIN).trim().replace(/\/+$/, "");
   }
 } catch (e) {}
-var API_URL = "https://animevui.com/api";
-
+// Avoid `var API_URL`: vBook runtime (__vbConsts) injects `const API_URL` from plugin.json config,
+// and redeclaring it with `var` throws `SyntaxError: invalid redefinition of lexical identifier`.
+var API_BASE = "https://animevui.com/api";
 try {
-  if (typeof DOMAIN !== 'undefined' && DOMAIN) BASE_URL = String(DOMAIN).replace(/\/+$/, "");
-  if (typeof API_URL_CFG !== 'undefined' && API_URL_CFG) API_URL = String(API_URL_CFG).replace(/\/+$/, "");
+  if (typeof API_URL !== 'undefined' && API_URL && String(API_URL).trim()) {
+    API_BASE = String(API_URL).trim().replace(/\/+$/, "");
+  } else if (typeof API_URL_CFG !== 'undefined' && API_URL_CFG && String(API_URL_CFG).trim()) {
+    API_BASE = String(API_URL_CFG).trim().replace(/\/+$/, "");
+  }
 } catch (e) {}
 
 function requestApiJson(endpoint, opt) {
   opt = opt || {};
-  var url = (/^https?:\/\//i.test(endpoint)) ? endpoint : (API_URL + endpoint);
+  var url = (/^https?:\/\//i.test(endpoint)) ? endpoint : (API_BASE + endpoint);
   var res = fetch(url, {
     method: opt.method || 'GET',
     headers: {
