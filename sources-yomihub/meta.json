@@ -1,5 +1,5 @@
 {
- "version": "0.6.6",
+ "version": "0.6.7",
  "note": "Tiện ích YomiHub (định dạng Mangayomi JS, gồm _common.js). Chuyển từ bản tích hợp sẵn trong YomiHub 0.5.3. Cùng id với bản tích hợp cũ để bản đã cài nhận cập nhật từ repo.",
  "sources": [
   {
@@ -51,8 +51,9 @@
    "nsfw": false,
    "lang": "vi",
    "iconUrl": "https://animevsub.co.uk/favicon.ico",
-   "notes": "Anime Vietsub (máy chủ animevsub.co.uk). Máy chủ DU/HDX phát bằng trình phát web của trang (mã hoá phía trang); tự chuyển máy chủ/tên miền khi lỗi mạng.",
-   "shorts": false
+   "notes": "Anime Vietsub (animevsub.co.uk) – dùng chung mã nguồn AVSub của kho (API mới của trang, phát trực tiếp m3u8).",
+   "shorts": false,
+   "useRepo": "avsubanimevietsub"
   },
   {
    "id": 920260002,

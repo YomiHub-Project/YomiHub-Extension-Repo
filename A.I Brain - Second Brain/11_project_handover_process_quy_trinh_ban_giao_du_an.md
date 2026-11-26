@@ -25,6 +25,12 @@
 3. Kiểm thực tế: `git status -sb`, `git log -5`; `_work/run/heartbeat.txt` (runner còn sống?), job mới nhất trong `_work/run/o/`; `_work/NOTES_*.md` mới nhất; `Output/publish.log` (UTF-16).
 4. Tóm tắt trạng thái cho chủ dự án rồi tiếp tục từ việc dở dang đầu tiên.
 
+## D01. Trạng thái 0.1.0 (26/11/2026) — Claude điều phối + Google Antigravity `/swarm`
+- **Kho đổi tên:** `YomiHub-Project/YomiHub-Extension-Repo` (link cũ `Kiritokmn---Extension-Repo` GitHub tự chuyển hướng). Thư mục máy vẫn là `D:\A.I Project\A.I Project - Extension Repo\Kiritokmn - Extension Repo`. Tệp Output: `YomiHub-Extension-<ver>-*.zip`.
+- **Mới:** tự chuyển tên miền dự phòng trong `runtime/engine.js` (test `test/domain-fallback.test.mjs`); tab "Shorts (Video ngắn)" cho 11 nguồn Short; logo kết hợp (`data/brand/repo-icon*.png`); APK dùng `android/libs/rhino-1.7.15-slim.jar` (−14%), `APK_REV 3`, `BRIDGE_REV 6`.
+- **Kết quả:** mạng thật 94/196 (`--stream --dns 1.1.1.1`); Aidoku mô phỏng 77/152; Note9: Aniyomi/Nekoyomi/AVSub (phát, tua, chuyển tập, Resume) đạt; ảnh/video `_work/shots/v010/`. Tiến độ chi tiết `_work/NOTES_0.1.0_progress.md`; phần Antigravity `_work/agents/NOTES_antigravity_0.1.0.md`.
+- **Việc cần làm ở bản sau:** NguonC embed `streamc.xyz` 403 Cloudflare (tồn đọng #82); `tools/win/build_all.ps1` phải gọi `run-tests --stream --dns 1.1.1.1,8.8.8.8` và `aidoku-sim` với `node --import _work/v010/dnspre.mjs` (hiện không có → số liệu thấp giả); lofter/sudugu/truyencvio/navyteamcomic (trang nguồn đổi); BLVietsub (Turnstile), HHPanda (AEAD streamfree.vip), Kwiky (cần đăng nhập); Pornhub `/shorties` chưa kiểm được vì nhà mạng chặn IP (kiểm bằng Tor trong YomiHub); IReader (Play Protect), LeechText 2.0.0 crash — lỗi phía app.
+
 ## D00. Trạng thái 0.0.9 (23–24/11/2026) — HOÀN THÀNH TOÀN DIỆN, ĐÃ PHÁT HÀNH
 - **Đặc điểm nổi bật bản 0.0.9:**
   - **Filter Extension 10 mục tiêu chuẩn**: Đầy đủ Sort, Status, Genre, Content Rating, Media Type, Language, Release Year, Chapter Count, Update Frequency, Audio/Sub (test suite `test/filter-extension.test.mjs` đạt 9/9 PASS).

@@ -1,4 +1,4 @@
-# One-click build on the owner's Windows machine:
+﻿# One-click build on the owner's Windows machine:
 #   sources -> repo/ (vBook, Mangayomi, LNReader/IReader)  ->  APKs (Aniyomi/Nekoyomi)  ->  live tests  ->  README
 $ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'
 $Root = Resolve-Path (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) '..\..')
@@ -20,11 +20,11 @@ L 'step 2: build APKs'
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'android\build_apks.ps1')
 Get-Content (Join-Path $Root 'android\build_apks.log') -Tail 15 | ForEach-Object { L "  [apk] $_" }
 L 'step 3: live tests'
-& node tools\test\run-tests.mjs --conc 8 *>> $Log
+& node tools\test\run-tests.mjs --conc 8 --stream --dns 1.1.1.1,8.8.8.8 *>> $Log
 Copy-Item (Join-Path $Root 'test-results.json') (Join-Path $Root 'data\test-results.json') -Force
 L 'step 3b: Aidoku packages + live test of the Aidoku adapter (same JS that runs in JavaScriptCore)'
 if (Get-Command cargo -ErrorAction SilentlyContinue) { & node tools\build\aidoku-build.mjs *>> $Log; L "aidoku build exit $LASTEXITCODE" } else { L '  cargo not installed: keeping the committed repo/aidoku packages' }
-& node tools\test\aidoku-sim.mjs --all --conc 6 --json data\aidoku-test-results.json *>> $Log
+& node --import ./tools/test/dnspre.mjs tools\test\aidoku-sim.mjs --all --conc 6 --json data\aidoku-test-results.json *>> $Log
 L 'step 4: output bundle + README'
 & node tools\build\make-output.mjs *>> $Log
 & node tools\docs\gen-readme.mjs *>> $Log

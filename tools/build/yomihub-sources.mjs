@@ -34,13 +34,18 @@ export function buildYomihubSources(root, base) {
     const isShort = !!(s.short || s.shorts || (rid && shortIds.has(rid)));
     if (rid && fs.existsSync(path.join(root, 'sources', rid, 'icon.png'))) s.iconUrl = `${base}/repo/icons/${rid}.png`;
     if (rid && (status.dead || {})[rid] && !/Ngừng hoạt động/.test(s.name)) { s.name += ' (Ngừng hoạt động)'; s.notes = '⛔ Ngừng hoạt động: ' + status.dead[rid]; }
-    const body = fs.readFileSync(path.join(SRC, s.asset), 'utf8');
+    // 0.1.0 (26/11): `useRepo: "<sources id>"` — the hand-written YomiHub copy broke (site redesign) while the
+    // repo source still passes run-tests: ship the vBook-converted Mangayomi code under the OLD id so installed
+    // copies update in place. Header (mangayomiSources) is replaced with this entry.
+    let repoCode = null;
+    if (s.useRepo) { const f = path.join(root, 'repo', 'mangayomi', s.useRepo + '.js'); if (fs.existsSync(f)) repoCode = fs.readFileSync(f, 'utf8').replace(/^const mangayomiSources = .*\n/, ''); else console.warn('yomihub: useRepo not built: ' + s.useRepo); }
+    const body = repoCode ? '' : fs.readFileSync(path.join(SRC, s.asset), 'utf8');
     const m = {
       name: s.name, lang: s.lang, id: s.id, baseUrl: s.baseUrl, apiUrl: '', iconUrl: s.iconUrl || '',
       typeSource: 'single', itemType: s.itemType, isNsfw: !!s.nsfw, version: meta.version,
       dateFormat: '', dateFormatLocale: '', pkgPath: `repo/yomihub/${s.asset}`,
     };
-    const code = `const mangayomiSources = [${JSON.stringify(m)}];\n${common}\n${body}\n`;
+    const code = repoCode ? `const mangayomiSources = [${JSON.stringify(m)}];\n${repoCode}` : `const mangayomiSources = [${JSON.stringify(m)}];\n${common}\n${body}\n`;
     fs.writeFileSync(path.join(OUT, s.asset), code);
     entries.push({ ...m, hasCloudflare: false, sourceCodeUrl: `${base}/repo/yomihub/${s.asset}`, isManga: s.itemType === 0,
       isFullData: false, appMinVerReq: '0.5.0', additionalParams: isShort ? JSON.stringify({ shorts: true, short_video: true }) : '', sourceCodeLanguage: 1,

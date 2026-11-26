@@ -128,3 +128,10 @@ Mỗi phiên thêm một mục ở **cuối tệp**: ngày, người/tác nhân,
     * Cập nhật `CHANGELOG.md` mục v0.0.9.
     * Đúc kết kinh nghiệm và cập nhật toàn bộ Second Brain (01, 03, 04, 05, 06, 09, 10, 11, 12).
     * Chạy `publish.ps1`, đối chiếu 11 assets và kiểm tra HTTP 200/302, bàn giao hoàn tất cho `@coordinator`.
+
+
+## 26/11/2026 — bản 0.1.0 (Claude Opus 5.5 điều phối + Google Antigravity `/swarm`)
+- 14:05 chủ dự án xác nhận: 9 app, đổi tên kho, logo kết hợp, kiểm tự động + video luồng chính. 14:10 đọc Second Brain + NOTES; bật lại runner (`!RUNNER.bat` qua File Explorer).
+- 14:17 giao Antigravity sửa Manga/Novel (đợt 1, xong 15:20: 58 nguồn, 52 PASS); 15:03 chủ dự án đặt quy tắc mọi lệnh gửi Antigravity phải dùng `/swarm`; 15:32 đợt 2 (4 nguồn Phim + nháp tài liệu, LuPhim đạt).
+- Claude: đổi URL/tên kho, engine tự chuyển tên miền, tab Shorts, logo, Anime47 báo lỗi đăng nhập, R8 thử (quá chậm) → Rhino rút gọn, dựng 196 APK + Aidoku (đám mây), kiểm Note9 (Aniyomi, Nekoyomi, AVSub theo yêu cầu 16:03), tài liệu, phát hành v0.1.0.
+- Đo: đầu phiên 96/196 → cuối 94/196 (xem TECHNICAL_UPDATE_NOTES 0.1.0 vì sao).
