@@ -12,11 +12,13 @@
 ## Sửa lỗi
 - **Phim:** LuPhim phát HLS trực tiếp (`/geturl` → `/streaming`); Anime47 không còn quay mãi — báo rõ "trang bắt đăng nhập" (API trả 401 PRIVATE_MODE); AVSub – AnimeVietsub kiểm sâu 11/11 luồng (Vietsub/Thuyết Minh/Lồng Tiếng, phát/tua/chuyển tập/Resume trên Note9).
 - **Truyện tranh/Tiểu thuyết (58 nguồn, Google Antigravity):** khôi phục HentaiVN (`hentaivnreal.com`), MangaDex (API v5), NovelNext, MangaDM, Kakuyomu, NovelPhoenix, NovelpiaGlobal, WebTruyenChu, Wikidich, Syosetu/Syosetu R18, Piaotia, CBunu, WeebCentral, Cosplaytele, FanMTL, AbcBiquge…; DamCoNuong sang tên miền mới (`damconuong.help/.tech`, cần đăng nhập).
+- **YomiHub – AVSub:** bản YomiHub riêng hết đọc được danh sách vì animevsub.co.uk đổi giao diện → nay dùng chung mã AVSub của kho (cùng id, tự cập nhật lên 0.6.7).
 - Trạng thái nguồn rõ ràng hơn trong README: PornHub/Tik.Porn (nhà mạng VN chặn IP → bật Tor/VPN), NextPhim (trang tin, không có phim), BLVietsub (Cloudflare Turnstile), HHPanda (luồng mã hoá), Kwiky (cần đăng nhập), VinaHentai/Phimmoi (chết mọi tên miền).
 
 ## Kiểm thử
 - Mạng thật **94/196** nguồn đạt trọn chuỗi; Aidoku mô phỏng 77/152; unit test 28/28.
-- Galaxy Note9: Aniyomi, Nekoyomi (3 kho tách biệt), Mangayomi, YomiHub, LNReader, vBook — ảnh + video trong `_work/shots/v010/` (máy chủ dự án).
+- Galaxy Note9: Aniyomi, Nekoyomi (3 kho tách biệt), Mangayomi, YomiHub (AVSub), LNReader — ảnh + video trong `_work/shots/v010/` (máy chủ dự án). vBook 1.1.57 bắt cập nhật app trước khi cài tiện ích; LeechText 2.0.0 crash trên Android 10 (lỗi phía app).
+- Mới: kiểm tự động 29 nguồn riêng của YomiHub (15/29, phần lỗi đều do trang nguồn) và bản Mangayomi/YomiHub của 94 nguồn đạt (92/94).
 
 ---
 

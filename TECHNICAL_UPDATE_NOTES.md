@@ -890,7 +890,7 @@ Nhóm nguồn Phim & Video ngắn (Mục I), `lib/lib_common.js`, `lib/lib_gener
   - Mới đạt: `hentaivn`, `luphim`, `mangadex`, `piaotianapp`, `sobqg`.
   - Không còn đạt: `anime47` (chủ đích — API bắt đăng nhập, nay báo lỗi thay vì đưa trang HTML vào trình phát; trước đó `stream✗` dù tính "PASS"), `nguonc` (phim đầu danh sách dùng embed `streamc.xyz` → 403 Cloudflare, tồn đọng #82; phim khác phát tốt trên Note9), `lofter`, `sudugu` (chương >8 s), `truyencvio` (detail rỗng), `navyteamcomic` (một số truyện thiếu ảnh). `lnhakovnhako` chạy lại thì đạt (dao động mạng).
   - Phần lớn 58 nguồn Antigravity sửa vốn đã đạt — việc chính là thêm `genre.js`/bộ lọc 10 ô (52/58 đạt sau sửa).
-- `build_all.ps1` gọi `run-tests` **không** có `--dns` → chỉ 92/196 (DNS nhà mạng) — đã chạy lại đúng cấu hình; bản sau sửa `build_all.ps1`.
+- `build_all.ps1` gọi `run-tests` **không** có `--dns` → chỉ 92/196 (DNS nhà mạng) — đã chạy lại đúng cấu hình; **đã sửa** `build_all.ps1` (commit `504a9cf0`: `--stream --dns 1.1.1.1,8.8.8.8`, `aidoku-sim` với `node --import ./tools/test/dnspre.mjs`).
 - `aidoku-sim --all` (DNS 1.1.1.1 qua `node --import _work/v010/dnspre.mjs`): **77/152** (0.0.9 ghi 81).
 - Unit: `domain-fallback` 7/7, `domain-switch` 12/12, `filter-extension` 9/9.
 - Kiểm sâu trình phát AVSub (chủ dự án yêu cầu 16:03, `_work/v010/avsub_deep.mjs`): **11/11** luồng đạt — Đảo Hải Tặc (2210 mục = 1192 Vietsub + 1018 Lồng Tiếng), Chú Thuật Hồi Chiến 3, Tiên Nghịch, Thanh Gươm Diệt Quỷ: Vô Hạn Thành; tập đầu/giữa/cuối; HLS + segment HTTP 206 kèm Referer.
@@ -900,4 +900,22 @@ Nhóm nguồn Phim & Video ngắn (Mục I), `lib/lib_common.js`, `lib/lib_gener
 - **Aniyomi** (video `01_aniyomi_rec.mp4`): Duyệt → Nguồn Anime (logo riêng từng trang) ✅; NguonC danh sách ✅; Bộ lọc đủ 10 ô ✅; chi tiết "Phi Vụ 12-12-12" ✅; phát trực tiếp trong trình phát app (01:02/59:37) ✅; Resume: mở lại tiếp tục từ 01:02 ✅.
 - **Nekoyomi** (video `02_nekoyomi_rec.mp4`): 3 tab tách biệt Nguồn Anime / Nguồn Manga / Novel sources ✅; XTruyen (APK Novel mới) danh sách + chi tiết + đọc chương tiếng Việt ✅.
 - **AVSub – AnimeVietsub trên Aniyomi** (video `03_avsub_rec.mp4`): [Thuyết Minh] Tập 12 phát ✅; nút tập trước → Tập 11 ✅; kéo thanh tua tới 11:37/24:14 phát tiếp ✅; thoát → "Đã xem 12:00/24:14" → mở lại tiếp tục 12:00 ✅.
+- **Mangayomi** (video `04_mangayomi_rec.mp4`): Manga/Anime/Novel tách riêng; "Update all" 4 tiện ích lên 0.5.x; TruyenQQ duyệt ✅; bấm nút Bộ lọc bị trượt toạ độ (chưa kiểm được ô lọc).
+- **YomiHub** (video `05_yomihub_rec.mp4`, `05_yomihub_avsub_rec.mp4`; 26/11 17:00–17:32, phiên Claude thứ 2):
+  - **Lỗi phát hiện:** AVSub (bản YomiHub riêng `sources-yomihub/avsub.js`, id 920260010) báo `AVSub không trả về danh sách (HTTP 200, 231403 byte)` — animevsub.co.uk đổi giao diện (`/anime-moi/` 404, trang dùng API `/api/v1/home`), trong khi bản vBook/APK vẫn đạt.
+  - **Sửa:** `tools/build/yomihub-sources.mjs` thêm `useRepo` (đóng gói mã `repo/mangayomi/<id>.js` dưới id cũ để bản đã cài tự cập nhật); `sources-yomihub/meta.json`: AVSub `useRepo: avsubanimevietsub`, `version` 0.6.6 → 0.6.7. Commit `504a9cf0`.
+  - Sau khi cập nhật AVSub 0.6.7 trong app: danh sách (Đảo Hải Tặc, Conan, Dragon Ball Super, Chú Thuật Hồi Chiến 3) ✅; chi tiết Conan 1232 tập ✅; bấm phát tập 1221 → mediacodec giải mã liên tục, trình phát chuyển PiP khi thoát ✅ (khung hình chụp/quay ra **màu đen** — trình phát YomiHub chặn chụp màn hình, không phải lỗi phát).
+  - **Kiểm tự động mới cho YomiHub** (chưa từng có): `_work/v011/yhtest.mjs` (29 nguồn `repo/yomihub/*.js`, mô phỏng `MProvider`/`Client`/`Document`) **15/29** — mọi nguồn lỗi còn lại đều lỗi cả ở app khác (Cloudflare/đăng nhập/chặn IP/chết miền); 5 nguồn bản YomiHub riêng chạy tốt dù bản chung lỗi (Hako, RoPhim, NextPhim, Vfilm, HihiSex). `_work/v011/mgtest.mjs` (bản Mangayomi/YomiHub của 94 nguồn đạt run-tests): **92/94** (truyenqqc 0 trang — chạy lại đạt; hihiphim 404 — không có trong index YomiHub).
+  - Báo lỗi gửi chủ dự án: `D:\A.I Project\Claude outputs\YomiHub_bao_loi_tien_ich_2026-11-26.md`; issue https://github.com/YomiHub-Project/YomiHub-Project/issues/2.
+  - Log YomiHub của chủ dự án (Xiaomi, YomiHub 0.6.4–0.6.6, 22–26/11, 1105 dòng): **không có lỗi nào từ kho này**; 0.6.5 tự chuyển 56 tiện ích sang địa chỉ kho mới.
+- **LNReader** (video `06_lnreader_rec.mp4`): Bàn Long — danh sách, chi tiết (236 chương), đọc Chương 1 ✅. Boylove Bất Tử — danh sách + chi tiết (28 chương) ✅ nhưng **nội dung chương chỉ có phần bình luận** (chương dạng ảnh) → việc 0.1.1.
+- **vBook 1.1.57** (video `07_vbook_rec.mp4`): mở được kho tiện ích; bấm cài thì app luôn hiện hộp "Cập nhật" phiên bản mới (bấm "Để sau" vẫn hiện lại) → chưa cài thử được, lỗi phía app (không tự cập nhật app trên máy chủ dự án).
+- **LeechText 2.0.0**: crash trên Android 10 (ghi nhận từ 0.0.8, lỗi phía app); IReader: Play Protect chặn (phía app).
+
+**Việc cần làm ở bản sau (0.1.1)**
+- Đưa `_work/v011/yhtest.mjs` + `mgtest.mjs` vào `tools/test/` và gọi trong `build_all.ps1` (29 nguồn YomiHub riêng chưa từng nằm trong `run-tests`).
+- Boylove Bất Tử (và các nguồn BL dạng ảnh trong nhóm Tiểu thuyết): nội dung chương chỉ lấy được phần bình luận.
+- NguonC `streamc.xyz` 403 (#82); BLVietsub (Turnstile), HHPanda (AEAD), Kwiky (đăng nhập); Pornhub `/shorties` (nhà mạng chặn).
+- Mangayomi: kiểm lại nút Bộ lọc trên máy thật; vBook: cập nhật app 1.1.x rồi kiểm cài tiện ích (cần chủ dự án đồng ý cập nhật app).
+- Đang làm (Google Antigravity `/swarm`, brief `_work/agents/brief_antigravity_0.1.1.md`): @phim (nguonc, xoilac, xfree, hhtqhayvip, vfilm, dò tên miền nguồn dead) + @truyen (lofter, sudugu, truyencvio, navyteamcomic, lnhako, nhóm 0 mục / 403, nettruyenz, ungtycomics, moetruyen).
 

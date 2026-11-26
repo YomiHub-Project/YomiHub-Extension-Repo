@@ -1,4 +1,4 @@
-# Publish: commit + push source and outputs to GitHub, create Release v<version> with every file in Output/,
+﻿# Publish: commit + push source and outputs to GitHub, create Release v<version> with every file in Output/,
 # then verify that all assets were uploaded (names + sizes). Uses the owner's Git credentials (GitHub Desktop / GCM).
 $ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'
 $Root = Resolve-Path (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) '..\..')
@@ -12,11 +12,13 @@ $git = (Get-Command git -ErrorAction SilentlyContinue).Source
 if (-not $git) { $git = Get-ChildItem "$env:LOCALAPPDATA\GitHubDesktop" -Recurse -Filter git.exe -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName }
 L "git=$git version=$Ver"
 & $git config core.autocrlf false
+if ($env:PUB_NO_COMMIT) { L 'PUB_NO_COMMIT: skip git add/commit/push (commit done separately)' } else {
 & $git add -A *>> $Log
 $msg = if ($env:PUB_MSG) { $env:PUB_MSG } else { "Extension Repo ${Tag}" }
 & $git -c user.name="kiritokmn1403" -c user.email="kietnguyenworking1403@gmail.com" commit -m "Extension Repo ${Tag} - $msg" -m "Co-Authored-By: Google Antigravity <noreply@google.com>`nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" *>> $Log
 L 'pushing (this can take a while: repo/ contains every built plugin)'
 & $git push origin HEAD:main *>> $Log
+}
 L "push exit $LASTEXITCODE"
 # token from the Git credential manager (same login GitHub Desktop uses)
 $tok = $null
