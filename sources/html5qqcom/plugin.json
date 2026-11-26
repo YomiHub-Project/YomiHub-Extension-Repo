@@ -2,7 +2,7 @@
   "metadata": {
     "name": "html5.qq.com",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://bookshelf.html5.qq.com",
     "description": "html5.qq.com (QQ 浏览器小说) — gốc: Moleys (Moleys/vbook-ext)",
     "locale": "zh-CN",
@@ -12,6 +12,7 @@
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",

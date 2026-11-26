@@ -5,9 +5,9 @@ var G = {
   "Mới cập nhật": "/[?page={p}]"
  },
  "search": "/search?keyword={q}",
- "item": "ul.home-release-list.fwn-latest-list > li > div.home-release-title-cell",
- "title": "[class*=title] a",
- "link": "[class*=title] a@href",
+ "item": "ul.home-release-list.fwn-latest-list > li > div.home-release-title-cell, div.li-row, div.li",
+ "title": "[class*=title] a || h3 a",
+ "link": "[class*=title] a@href || h3 a@href",
  "ch_list": "#idData a",
  "d_title": "h1 || meta[property=og:title]@content",
  "d_cover": "meta[property=og:image]@content || img@img",
@@ -17,5 +17,6 @@ var G = {
  "s_item": "div.ul-list1.ul-list1-2 > div.li-row",
  "s_title": "h3 a",
  "s_link": "h3 a@href",
- "s_cover": "img@img"
+ "s_cover": "img@img",
+ "genre": "a[href*='/genre/']"
 };

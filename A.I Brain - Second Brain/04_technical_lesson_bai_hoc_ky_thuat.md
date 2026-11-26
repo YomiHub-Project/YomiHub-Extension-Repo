@@ -71,3 +71,12 @@
 - **Đóng gói Output 7 zip:** Với sự ra mắt của 115 APK Novel, thư mục `Output/` có thêm `Kiritokmn-Extension-0.0.9-nekoyomi-novel-apks.zip` (73.5 MB). Cần kiểm tra kỹ `make-output.mjs` để đảm bảo đóng gói đủ 7 file zip phát hành.
 
 
+
+## Bài học bản 0.1.0 (26/11/2026)
+- **Tự chuyển tên miền dự phòng nằm trong `runtime/engine.js`** (bọc `env.fetch`): chỉ coi là lỗi khi response có `status` số (0, 502–504, 520–530). Fetch giả trong test không có `status` → nếu coi là lỗi sẽ phá `domain-switch`. Mirror phải thử bằng fetch gốc (`w.__raw`), vì lớp `live()` sẽ ghi đè host mirror quay về tên miền đang chọn.
+- **Đừng tin tên miền "còn sống":** `messiahelartista.com` (Phimmoi) trả 200, tiêu đề đúng "Phimmoichill" nhưng là bản sao Wayback tĩnh (link tương đối `info/<slug>`, trang chi tiết 700 byte quảng cáo waybackmachinedownloader). Luôn mở thử 1 trang chi tiết + 1 trang tập trước khi đổi tên miền mặc định.
+- **Không bao giờ trả trang HTML làm luồng `native`**: trình phát (mpv/ExoPlayer/media_kit) quay mãi. Hết cách thì `Response.error('…lý do tiếng Việt…')`. Ví dụ Anime47: API trả 401 `PRIVATE_MODE` từ 11/2026.
+- **NextPhim là trang tin/lịch chiếu phim rạp**, không có luồng phát — đừng mất thời gian tìm player.
+- **Nhà mạng VN chặn IP** pornhub.com, tik.porn (kết nối hết giờ cả khi dùng DNS 1.1.1.1) → `status.blocked`, kiểm bằng Tor/VPN trong app; không phải lỗi mã.
+- **Short YomiHub (0.6.6 `shorts_detect.dart`)**: nguồn cần một tab có chữ "Shorts" để engine định tuyến `feed=shorts` và để đường "filter" của ShortsDetect bật; `additionalParams {"shorts":true}` chỉ làm hiện nút Short.
+- **R8 cho APK tiện ích**: Rhino chạy thông dịch nên bỏ được `org.mozilla.javascript.optimizer.**` + `tools.**` (−19…21% dung lượng). Cần `-dontwarn org.jetbrains.annotations.**`. Nhược điểm: R8 chạy lại cho TỪNG flavor → 196 APK mất ~60 phút (trước ~10 phút). Bản sau: thu gọn Rhino 1 lần ở module `*-core` (jar đã shrink) rồi tắt minify ở flavor.

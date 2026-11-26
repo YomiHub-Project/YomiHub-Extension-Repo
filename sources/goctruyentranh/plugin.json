@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Góc Truyện Tranh",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://goctruyentranhvui41.com",
-    "description": "Góc Truyện Tranh — Kiritokmn Extension Repo",
+    "description": "Góc Truyện Tranh — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "goctruyentranhvui41\\.com",
     "type": "comic",

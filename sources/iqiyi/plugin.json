@@ -2,9 +2,9 @@
   "metadata": {
     "name": "iQIYI",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.iq.com",
-    "description": "iQIYI — Kiritokmn Extension Repo",
+    "description": "iQIYI — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "iq\\.com",
     "type": "video",

@@ -10,8 +10,8 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const fingerprint = process.argv[2];
-const BASE = 'https://raw.githubusercontent.com/YomiHub-Project/Kiritokmn---Extension-Repo/main';
-const GH_REPO = 'https://github.com/YomiHub-Project/Kiritokmn---Extension-Repo';
+const BASE = 'https://raw.githubusercontent.com/YomiHub-Project/YomiHub-Extension-Repo/main';
+const GH_REPO = 'https://github.com/YomiHub-Project/YomiHub-Extension-Repo';
 const OUT = path.join(ROOT, 'repo');
 const AND = path.join(ROOT, 'android');
 
@@ -128,8 +128,8 @@ stale += cleanStale(path.join(OUT, 'apk'), keepRootApk);
 stale += cleanStale(path.join(OUT, 'icon'), keepRootIcon);
 
 const baseMeta = {
-  name: 'Kiritokmn Extension Repo',
-  shortName: 'Kiritokmn',
+  name: 'YomiHub Extension Repo',
+  shortName: 'YomiHubExt',
   website: GH_REPO,
   signingKeyFingerprint: String(fingerprint || '').toLowerCase().replace(/[^0-9a-f]/g, ''),
 };
@@ -142,7 +142,7 @@ for (const mod of MODS) {
   fs.writeFileSync(path.join(OUT, mod, 'index.min.json'), JSON.stringify(byMod[mod]));
   fs.writeFileSync(
     path.join(OUT, mod, 'repo.json'),
-    JSON.stringify({ meta: { ...baseMeta, name: `Kiritokmn Extension Repo (${labels[mod]})`, shortName: `Kiritokmn ${labels[mod]}` } }, null, 1),
+    JSON.stringify({ meta: { ...baseMeta, name: `YomiHub Extension Repo (${labels[mod]})`, shortName: `YomiHubExt ${labels[mod]}` } }, null, 1),
   );
   if (mod === 'manga' || mod === 'novel') {
     fs.writeFileSync(

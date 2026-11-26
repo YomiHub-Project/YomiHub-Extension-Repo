@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Kakuyomu",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://kakuyomu.jp",
     "description": "Kakuyomu — Kiritokmn Extension Repo",
     "locale": "ja",
@@ -15,7 +15,8 @@
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",
-    "chap": "chap.js"
+    "chap": "chap.js",
+    "genre": "genre.js"
   },
   "config": {
     "DOMAIN": {

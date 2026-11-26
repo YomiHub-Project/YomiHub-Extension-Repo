@@ -2,9 +2,9 @@
   "metadata": {
     "name": "WebtoonScan",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://webtoonscan.com",
-    "description": "WebtoonScan — Kiritokmn Extension Repo",
+    "description": "WebtoonScan — YomiHub Extension Repo",
     "locale": "en",
     "regexp": "webtoonscan\\.com",
     "type": "comic",

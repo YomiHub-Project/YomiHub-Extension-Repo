@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Truyện Zhihu Tổng Hợp",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://truyendexuat.com",
-    "description": "Truyện Zhihu Tổng Hợp — Kiritokmn Extension Repo",
+    "description": "Truyện Zhihu Tổng Hợp — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "truyendexuat\\.com",
     "type": "novel",

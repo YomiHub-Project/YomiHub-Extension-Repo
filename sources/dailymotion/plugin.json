@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Dailymotion",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.dailymotion.com",
     "description": "Dailymotion — video qua API công khai (api.dailymotion.com + player metadata), không cần tài khoản.",
     "locale": "vi",

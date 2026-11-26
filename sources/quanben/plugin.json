@@ -2,9 +2,9 @@
   "metadata": {
     "name": "quanben",
     "author": "Kiritokmn",
-    "version": 8,
+    "version": 9,
     "source": "https://quanben.io",
-    "description": "quanben — Kiritokmn Extension Repo",
+    "description": "quanben — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "quanben\\.io",
     "type": "novel",

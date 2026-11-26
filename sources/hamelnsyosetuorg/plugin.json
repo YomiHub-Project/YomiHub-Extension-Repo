@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Hameln (Syosetu.org)",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://syosetu.org",
-    "description": "Hameln (Syosetu.org) — Kiritokmn Extension Repo",
+    "description": "Hameln (Syosetu.org) — YomiHub Extension Repo",
     "locale": "ja",
     "regexp": "syosetu\\.org",
     "type": "novel",

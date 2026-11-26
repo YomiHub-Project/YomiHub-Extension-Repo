@@ -2,9 +2,9 @@
   "metadata": {
     "name": "搜笔趣阁",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://www.sobqg.com",
-    "description": "搜笔趣阁 — Kiritokmn Extension Repo",
+    "description": "搜笔趣阁 — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "sobqg\\.com",
     "type": "novel",

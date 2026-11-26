@@ -13,5 +13,6 @@ var G = {
  "d_cover": ".cover-wrapper img@img",
  "d_desc": ".book-desc-detail",
  "content": "#bookContentBody",
- "d_author": ".cover-info a[href*='/tac-gia/']"
+ "d_author": ".cover-info a[href*='/tac-gia/']",
+ "genre": "a[href*='tag=']"
 };

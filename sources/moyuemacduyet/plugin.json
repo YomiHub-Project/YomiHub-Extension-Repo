@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Moyue · Mặc Duyệt",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://moyue.app",
-    "description": "Moyue · Mặc Duyệt — Kiritokmn Extension Repo",
+    "description": "Moyue · Mặc Duyệt — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "moyue\\.app",
     "type": "novel",

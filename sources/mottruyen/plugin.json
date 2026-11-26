@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Mọt Truyện",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://mottruyen.app",
     "description": "Mọt Truyện — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -15,7 +15,8 @@
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",
-    "chap": "chap.js"
+    "chap": "chap.js",
+    "genre": "genre.js"
   },
   "config": {
     "DOMAIN": {

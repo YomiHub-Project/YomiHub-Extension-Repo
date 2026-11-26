@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Sói Xám (Fanqie)",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://api.langge.cf",
-    "description": "Sói Xám (Fanqie) — Kiritokmn Extension Repo",
+    "description": "Sói Xám (Fanqie) — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "api\\.langge\\.cf",
     "type": "novel",

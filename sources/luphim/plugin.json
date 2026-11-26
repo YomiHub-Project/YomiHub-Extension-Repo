@@ -2,9 +2,9 @@
   "metadata": {
     "name": "LuPhim",
     "author": "Kiritokmn",
-    "version": 8,
+    "version": 10,
     "source": "https://luphim.com",
-    "description": "LuPhim — Kiritokmn Extension Repo",
+    "description": "LuPhim — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "luphim\\.com",
     "type": "video",

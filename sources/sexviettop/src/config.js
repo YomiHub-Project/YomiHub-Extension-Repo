@@ -24,6 +24,7 @@ var G = {
     }
   },
   "tabs": {
+    "Shorts (Video ngắn)": "/phim-sex-nhat-ban/[trang/{p}/]",
     "Phim sex Nhật Bản": "/phim-sex-nhat-ban/[trang/{p}/]",
     "Phim sex Vietsub": "/phim-sex-vietsub/[trang/{p}/]",
     "Phim sex Trung Quốc": "/phim-sex-trung-quoc/[trang/{p}/]",

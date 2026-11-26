@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
-const GH = 'YomiHub-Project/Kiritokmn---Extension-Repo';
+const GH = 'YomiHub-Project/YomiHub-Extension-Repo';
 const RAW = `https://raw.githubusercontent.com/${GH}/main/repo`;
 const REL = `https://github.com/${GH}/releases/download/v${VERSION}`;
 
@@ -152,7 +152,7 @@ const passPct = src.length ? ((passCount * 100) / src.length).toFixed(1) : '0.0'
 const md = `# Kiritokmn - Extension Repo
 
 <p align="center">
-  <img src="sources/hotphim/icon.png" alt="Kiritokmn Extension Repo Logo" width="128" height="128">
+  <img src="data/brand/repo-icon.png" alt="YomiHub Extension Repo Logo" width="128" height="128">
 </p>
 
 <p align="center">
@@ -322,7 +322,7 @@ ${catalogRows}${yh.md}
 ### Cấu trúc thư mục / Directory Layout
 
 \`\`\`
-Kiritokmn---Extension-Repo/
+YomiHub-Extension-Repo/
 ├── sources/<id>/             # 196 nguồn chuẩn vBook (plugin.json + src/*.js) [NƠI DUY NHẤT SỬA NGUỒN]
 ├── sources-yomihub/          # Tiện ích website chuyển từ YomiHub 0.5.3
 ├── lib/                      # Thư viện dùng chung (lib_common.js, lib_generic.js, lib_madara.js, ...)

@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Mino Truyện",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://minotruyenv6.xyz",
-    "description": "Mino Truyện — Kiritokmn Extension Repo",
+    "description": "Mino Truyện — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "minotruyenv6\\.xyz",
     "type": "novel",

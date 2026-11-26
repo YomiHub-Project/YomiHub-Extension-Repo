@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Dưa Hấu",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://xgmf.zuanqianyi.com",
-    "description": "Dưa Hấu — Kiritokmn Extension Repo",
+    "description": "Dưa Hấu — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "xgmf\\.zuanqianyi\\.com",
     "type": "novel",

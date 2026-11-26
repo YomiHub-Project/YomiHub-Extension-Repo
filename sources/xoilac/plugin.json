@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Xôi Lạc",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://xoilacvbf.tv",
-    "description": "Xôi Lạc — Kiritokmn Extension Repo",
+    "description": "Xôi Lạc — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "xoilac.*",
     "type": "video",

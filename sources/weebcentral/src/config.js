@@ -5,8 +5,8 @@ var G = {
   "Mới cập nhật": "/"
  },
  "search": "/search/data?text={q}&sort=Best+Match&order=Descending&official=Any&anime=Any&adult=Any&display_mode=Full+Display",
- "item": "article[data-tip]",
- "title": ":self@data-tip",
+ "item": "article[data-tip], article.bg-base-300.flex",
+ "title": ":self@data-tip || div.truncate.text-white",
  "link": "a[href*='/series/']@href",
  "d_title": "h1",
  "d_cover": "meta[property=og:image]@content",

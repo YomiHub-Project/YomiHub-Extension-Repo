@@ -2,9 +2,9 @@
   "metadata": {
     "name": "HotPhim",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://hotphim.org",
-    "description": "HotPhim — Kiritokmn Extension Repo",
+    "description": "HotPhim — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "hotphim\\.org",
     "type": "video",

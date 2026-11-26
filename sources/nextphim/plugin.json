@@ -2,9 +2,9 @@
   "metadata": {
     "name": "NextPhim",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://nextphim.net",
-    "description": "NextPhim — Kiritokmn Extension Repo",
+    "description": "NextPhim — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "nextphim\\.net",
     "type": "video",

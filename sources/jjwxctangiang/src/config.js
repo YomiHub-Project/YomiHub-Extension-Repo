@@ -19,5 +19,7 @@ var G = {
  "d_author": "span[itemprop=author] || h2 a",
  "d_desc": "div#novelintro || meta[name=Description]@content",
  "ch_list": "a[itemprop=url][href*=\"chapterid=\"]",
- "content": "div.noveltext"
+ "content": "div.noveltext",
+ "genrePage": "/bookbase_slave.php",
+ "genre": "a[href*='bookbase_slave.php?booktype='], a[href*='bookbase_slave.php?endstr=']"
 };

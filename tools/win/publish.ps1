@@ -6,7 +6,7 @@ $Log = Join-Path $Root 'Output\publish.log'
 function L($m) { $t = (Get-Date).ToString('HH:mm:ss'); Add-Content -Path $Log -Value "$t $m" -Encoding UTF8; Write-Host "$t $m" }
 Set-Content -Path $Log -Value "=== publish $(Get-Date)" -Encoding UTF8
 Set-Location $Root
-$Owner = 'YomiHub-Project'; $Repo = 'Kiritokmn---Extension-Repo'
+$Owner = 'YomiHub-Project'; $Repo = 'YomiHub-Extension-Repo'
 $Ver = (Get-Content package.json -Raw | ConvertFrom-Json).version; $Tag = "v$Ver"
 $git = (Get-Command git -ErrorAction SilentlyContinue).Source
 if (-not $git) { $git = Get-ChildItem "$env:LOCALAPPDATA\GitHubDesktop" -Recurse -Filter git.exe -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName }
@@ -36,7 +36,7 @@ $rel = $null
 try { $rel = Invoke-RestMethod -Headers $H -Uri "$api/releases/tags/$Tag" } catch { }
 $notes = if (Test-Path CHANGELOG.md) { [string]([IO.File]::ReadAllText("$Root\CHANGELOG.md")) } else { "Extension Repo $Tag" }
 if (-not $rel) {
-  $body = @{ tag_name = $Tag; target_commitish = 'main'; name = "Kiritokmn Extension Repo $Tag"; body = $notes; draft = $false; prerelease = $false } | ConvertTo-Json
+  $body = @{ tag_name = $Tag; target_commitish = 'main'; name = "YomiHub Extension Repo $Tag"; body = $notes; draft = $false; prerelease = $false } | ConvertTo-Json
   $rel = Invoke-RestMethod -Headers $H -Method Post -Uri "$api/releases" -Body ([Text.Encoding]::UTF8.GetBytes($body)) -ContentType 'application/json; charset=utf-8'
   L "created release $($rel.html_url)"
 } else { L "release exists $($rel.html_url)" }

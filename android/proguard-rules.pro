@@ -1,7 +1,15 @@
 # Keep the factories/sources the host app instantiates by reflection
 -keep class kiritokmn.vbook.** { *; }
 # Rhino uses reflection for the Java bridge (__host methods)
--keep class org.mozilla.javascript.** { *; }
+# 0.1.0 size: Rhino runs interpreted (optimizationLevel = -1) -> the bytecode compiler (optimizer.**) and the
+# shell/debugger (tools.**) are never used; Rhino looks Codegen up with Kit.classOrNull and falls back to the interpreter.
+-keep class !org.mozilla.javascript.optimizer.**,!org.mozilla.javascript.tools.**,org.mozilla.javascript.** { *; }
+-dontobfuscate
+-dontoptimize
+-dontwarn kotlin.**
+-dontwarn kotlinx.**
+-dontwarn org.jetbrains.annotations.**
+-dontwarn javax.annotation.**
 -dontwarn org.mozilla.javascript.**
 -dontwarn javax.lang.model.**
 -dontwarn java.beans.**

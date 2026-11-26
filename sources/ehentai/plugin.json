@@ -2,7 +2,7 @@
   "metadata": {
     "name": "E Hentai",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://e-hentai.org",
     "description": "E Hentai — Kiritokmn Extension Repo",
     "locale": "global",
@@ -12,6 +12,7 @@
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",

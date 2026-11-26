@@ -668,7 +668,46 @@ var VBookEngine = (function () {
             if (typeof f_1 === 'function' && !f_1.__kiriLive) {
                 var w = function (u, o) { return f_1.call(env_1, self_1.live(u), o); };
                 w.__kiriLive = true;
+                w.__raw = f_1;
                 env_1.fetch = w;
+            }
+        }
+        {
+            var env_2 = this.env, f_2 = env_2.fetch, self_2 = this;
+            if (typeof f_2 === 'function' && !f_2.__kiriAuto) {
+                var bad_1 = function (r) { if (!r || r.status == null)
+                    return false; var c = +r.status; return c === 0 || (c >= 520 && c <= 530) || c === 502 || c === 503 || c === 504; };
+                var w = function (u, o) {
+                    var first = f_2.call(env_2, u, o);
+                    var retry = function (r) {
+                        if (!bad_1(r))
+                            return r;
+                        var alts = self_2.mirrorAlternatives(str(u));
+                        var i = 0;
+                        var next = function (last) {
+                            if (i >= alts.length)
+                                return last;
+                            var a = alts[i++];
+                            var rr;
+                            try {
+                                rr = (f_2.__raw || f_2).call(env_2, a.url, o);
+                            }
+                            catch (e) {
+                                return next(last);
+                            }
+                            var fin = function (x) { if (!bad_1(x)) {
+                                self_2.setAutoBase(a.origin);
+                                return x;
+                            } return next(x); };
+                            return rr && typeof rr.then === 'function' ? rr.then(fin, function () { return next(last); }) : fin(rr);
+                        };
+                        return next(r);
+                    };
+                    return first && typeof first.then === 'function' ? first.then(retry) : retry(first);
+                };
+                w.__kiriAuto = true;
+                w.__kiriLive = true;
+                env_2.fetch = w;
             }
         }
         this.scripts = scripts;
@@ -678,11 +717,70 @@ var VBookEngine = (function () {
     Object.defineProperty(VBookEngine.prototype, "base", {
         get: function () {
             var ok = function (v) { v = str(v).trim(); return /^https?:\/\/[^/?#\s]+/i.test(v) ? v : ''; };
-            return (ok(this.host.config('DOMAIN_CUSTOM')) || ok(this.host.config('DOMAIN')) || ok((this.meta.configDefaults || {}).DOMAIN) || str(this.meta.source)).replace(/\/+$/, '');
+            var custom = ok(this.host.config('DOMAIN_CUSTOM'));
+            if (custom)
+                return custom.replace(/\/+$/, '');
+            var picked = (ok(this.host.config('DOMAIN')) || ok((this.meta.configDefaults || {}).DOMAIN) || str(this.meta.source)).replace(/\/+$/, '');
+            var auto = this.autoBase();
+            return auto && auto.from === picked ? auto.to : picked;
         },
         enumerable: false,
         configurable: true
     });
+    VBookEngine.prototype.autoBase = function () {
+        if (this._auto !== undefined)
+            return this._auto;
+        var a = null;
+        try {
+            var v = this.host.storageGet && this.host.storageGet('__autoBase__');
+            if (v)
+                a = JSON.parse(v);
+        }
+        catch (e) {
+            a = null;
+        }
+        this._auto = a && a.from && a.to ? a : null;
+        return this._auto;
+    };
+    VBookEngine.prototype.setAutoBase = function (origin) {
+        var ok = function (v) { v = str(v).trim(); return /^https?:\/\/[^/?#\s]+/i.test(v) ? v : ''; };
+        if (ok(this.host.config('DOMAIN_CUSTOM')))
+            return;
+        var picked = (ok(this.host.config('DOMAIN')) || ok((this.meta.configDefaults || {}).DOMAIN) || str(this.meta.source)).replace(/\/+$/, '');
+        this._auto = { from: picked, to: str(origin).replace(/\/+$/, '') };
+        try {
+            this.host.storageSet && this.host.storageSet('__autoBase__', JSON.stringify(this._auto));
+        }
+        catch (e) { }
+        try {
+            this.host.log && this.host.log('[YomiHub Ext] ' + picked + ' lỗi mạng → tự chuyển sang ' + this._auto.to);
+        }
+        catch (e) { }
+    };
+    VBookEngine.prototype.mirrorAlternatives = function (u) {
+        var o = this.origins;
+        var m = /^https?:\/\/[^/?#]+/i.exec(u);
+        if (!m)
+            return [];
+        var h = o.key(m[0]);
+        if (o.hosts[h] !== 1)
+            return [];
+        var rest = u.slice(m[0].length);
+        var seen = {};
+        seen[h] = 1;
+        var out = [];
+        for (var _i = 0, _a = o.list; _i < _a.length; _i++) {
+            var org = _a[_i];
+            var k = o.key(org);
+            if (seen[k])
+                continue;
+            seen[k] = 1;
+            out.push({ origin: org, url: org + rest });
+            if (out.length >= 4)
+                break;
+        }
+        return out;
+    };
     VBookEngine.prototype.live = function (u) {
         u = str(u);
         var o = this.origins;
@@ -707,8 +805,11 @@ var VBookEngine = (function () {
             var key = function (u) { var m = /^https?:\/\/(?:www\.|m\.)?([^/?#:]+)/i.exec(str(u).trim()); return m ? m[1].toLowerCase() : ''; };
             var set = {};
             [this.meta.source, d.default].concat(d.values || []).map(key).filter(Boolean).forEach(function (h) { set[h] = 1; });
+            var list = [];
+            [d.default].concat(d.values || [], [this.meta.source]).forEach(function (u) { var mm = /^https?:\/\/[^/?#]+/i.exec(str(u).trim()); if (mm && list.indexOf(mm[0]) < 0)
+                list.push(mm[0]); });
             var m0 = /^https?:\/\/[^/?#]+/i.exec(str(this.meta.source));
-            this._orig = { key: key, hosts: set, def: m0 ? m0[0] : '' };
+            this._orig = { key: key, hosts: set, list: list, def: m0 ? m0[0] : '' };
             return this._orig;
         },
         enumerable: false,

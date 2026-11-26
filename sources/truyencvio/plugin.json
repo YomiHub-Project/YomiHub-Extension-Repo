@@ -2,9 +2,9 @@
   "metadata": {
     "name": "TruyenCV.io",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://truyencv.io",
-    "description": "TruyenCV.io — Kiritokmn Extension Repo",
+    "description": "TruyenCV.io — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "truyencv\\.io",
     "type": "novel",

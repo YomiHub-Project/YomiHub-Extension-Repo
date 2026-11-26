@@ -2,9 +2,9 @@
   "metadata": {
     "name": "quanwenyuedu",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.quanwenyuedu.io",
-    "description": "quanwenyuedu — Kiritokmn Extension Repo",
+    "description": "quanwenyuedu — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "quanwenyuedu\\.io",
     "type": "novel",

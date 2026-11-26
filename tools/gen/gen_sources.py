@@ -141,7 +141,7 @@ def gen(sid, spec):
     pj = {
         'metadata': {
             'name': spec.get('name') or reg['name'], 'author': 'Kiritokmn', 'version': spec.get('version', 1), 'source': base,
-            'description': spec.get('description') or f"{reg['name']} — Kiritokmn Extension Repo",
+            'description': spec.get('description') or f"{reg['name']} — YomiHub Extension Repo",
             'locale': LOCALE[reg['lang_code']], 'regexp': re.escape(host.split('/')[0]).replace('\\-', '-'), 'type': typ, 'nsfw': bool(reg['nsfw']),
         },
         'script': scripts,

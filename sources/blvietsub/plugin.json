@@ -2,9 +2,9 @@
   "metadata": {
     "name": "BLVietsub",
     "author": "Kiritokmn",
-    "version": 8,
+    "version": 9,
     "source": "https://www.blvietsub.vip",
-    "description": "BLVietsub — Kiritokmn Extension Repo",
+    "description": "BLVietsub — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "blvietsub\\.vip",
     "type": "video",

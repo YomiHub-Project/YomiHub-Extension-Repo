@@ -16,5 +16,6 @@ var G = {
  "s_item": "div.container > div.item",
  "s_title": "img@alt",
  "s_link": "a@href",
- "s_cover": "img@img"
+ "s_cover": "img@img",
+ "genre": "a[href*='/sort/']"
 };

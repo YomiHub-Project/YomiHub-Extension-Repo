@@ -13,5 +13,6 @@ var G = {
  "d_cover": "meta[property=og:image]@content || .thumb img@img || .poster img@img || img@img",
  "d_desc": "meta[name=description]@content",
  "cover": "img@img",
- "content": "div.chapter-content"
+ "content": "div.chapter-content",
+ "genre": "a[href*='/danh-sach?cat=']"
 };

@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Sonako",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://sonako.fandom.com",
-    "description": "Sonako — Kiritokmn Extension Repo",
+    "description": "Sonako — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "sonako\\.fandom\\.com",
     "type": "novel",

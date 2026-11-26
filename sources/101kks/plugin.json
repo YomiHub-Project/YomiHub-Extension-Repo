@@ -2,9 +2,9 @@
   "metadata": {
     "name": "101kks",
     "author": "Kiritokmn",
-    "version": 8,
+    "version": 9,
     "source": "https://101kks.com",
-    "description": "101kks — Kiritokmn Extension Repo",
+    "description": "101kks — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "101kks\\.com",
     "type": "novel",

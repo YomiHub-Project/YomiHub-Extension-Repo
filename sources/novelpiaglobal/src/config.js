@@ -12,5 +12,6 @@ var G = {
  "cover": "img@src",
  "d_title": "h1 || meta[property=og:title]@content",
  "d_cover": "meta[property=og:image]@content || img@src",
- "d_desc": "meta[property=og:description]@content"
+ "d_desc": "meta[property=og:description]@content",
+ "genre": "a[href*='type=']"
 };

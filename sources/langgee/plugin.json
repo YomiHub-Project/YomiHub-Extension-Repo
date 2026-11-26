@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Langgee",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://v5.langge.uk",
-    "description": "Langgee — Kiritokmn Extension Repo",
+    "description": "Langgee — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "v5\\.langge\\.uk",
     "type": "novel",

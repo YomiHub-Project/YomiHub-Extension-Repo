@@ -2,9 +2,9 @@
   "metadata": {
     "name": "HentaiVN",
     "author": "vBook (Kiritokmn repack)",
-    "version": 33,
-    "source": "https://hentaihvn.tv",
-    "regexp": "(www.)?hen(tai)?(vn|ayame|hvn).[a-z]+/\\d+-[^/]+.html$",
+    "version": 34,
+    "source": "https://hentaivnreal.com",
+    "regexp": "(www\\.)?hen(tai)?(vn|ayame|hvn|vnreal)\\.[a-z]+/\\d*[^/]+",
     "description": "Đọc truyện trên trang HentaiVN — gốc: vBook (vbook-extensions)",
     "locale": "vi_VN",
     "language": "javascript",
@@ -19,5 +19,18 @@
     "search": "search.js",
     "toc": "toc.js",
     "chap": "chap.js"
+  },
+  "config": {
+    "DOMAIN": {
+      "title": "Tên miền",
+      "subtitle": "Đổi khi trang đổi tên miền",
+      "default": "https://hentaivnreal.com",
+      "values": [
+        "https://hentaivnreal.com",
+        "https://hentaihvn.tv"
+      ],
+      "mode": "input",
+      "format": "text"
+    }
   }
 }

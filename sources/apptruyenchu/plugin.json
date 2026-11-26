@@ -2,9 +2,9 @@
   "metadata": {
     "name": "App Truyện Chữ",
     "author": "Kiritokmn",
-    "version": 8,
+    "version": 9,
     "source": "https://apptruyenchu.pro",
-    "description": "App Truyện Chữ — Kiritokmn Extension Repo",
+    "description": "App Truyện Chữ — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "apptruyenchu\\.pro",
     "type": "novel",

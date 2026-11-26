@@ -2,9 +2,9 @@
   "metadata": {
     "name": "PhimTV",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://phimtv2.com",
-    "description": "PhimTV — Kiritokmn Extension Repo",
+    "description": "PhimTV — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "phimtv2\\.com|phimtv\\.my",
     "type": "video",

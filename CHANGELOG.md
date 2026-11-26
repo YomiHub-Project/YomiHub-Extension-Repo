@@ -1,3 +1,25 @@
+# YomiHub Extension Repo — v0.1.0 (26/11/2026)
+
+> Kho đã đổi tên: **`YomiHub-Project/Kiritokmn---Extension-Repo` → `YomiHub-Project/YomiHub-Extension-Repo`** (GitHub tự chuyển hướng link cũ; nên thêm lại kho bằng link mới trong README). Tên gói APK, khoá ký và ID nguồn **không đổi** — chỉ cần "Cập nhật", không phải gỡ cài lại.
+
+## Tính năng mới
+- **Tự chuyển tên miền dự phòng (9 app):** khi tên miền đang dùng chết (DNS, hết giờ, bị chặn) hoặc Cloudflare 52x/502–504, tiện ích tự thử các tên miền khác của trang (danh sách Excel + `DOMAIN.values`), nhớ tên miền dùng được; Tên miền tuỳ chỉnh luôn được ưu tiên; vị trí xem/đọc (Resume) không bị mất.
+- **Tab "Shorts (Video ngắn)"** cho 11 nguồn Short (PornHub `/shorties`, Tik.Porn, Kwiky, xFree, FreeReels, SexVietTop, FikFap, TikTok, Douyin, FapReel, YouTube) → nút/feed Short của YomiHub mở đúng video dọc.
+- **Logo kết hợp:** mỗi tiện ích giữ logo riêng của trang web; logo **YomiHub Extensions** làm icon kho, icon README và icon dự phòng (bỏ favicon Google).
+- **APK nhẹ hơn ~14%** (196 APK: 125,95 MB → 108,5 MB): Rhino rút gọn (`android/libs/rhino-1.7.15-slim.jar`, bỏ trình biên dịch bytecode/shell không dùng).
+- Bộ lọc 10 ô (Filter Extension) đầy đủ cho thêm ~50 nguồn Truyện tranh/Tiểu thuyết (`genre.js` thật từ trang nguồn, `search.js` nhận `filters`).
+
+## Sửa lỗi
+- **Phim:** LuPhim phát HLS trực tiếp (`/geturl` → `/streaming`); Anime47 không còn quay mãi — báo rõ "trang bắt đăng nhập" (API trả 401 PRIVATE_MODE); AVSub – AnimeVietsub kiểm sâu 11/11 luồng (Vietsub/Thuyết Minh/Lồng Tiếng, phát/tua/chuyển tập/Resume trên Note9).
+- **Truyện tranh/Tiểu thuyết (58 nguồn, Google Antigravity):** khôi phục HentaiVN (`hentaivnreal.com`), MangaDex (API v5), NovelNext, MangaDM, Kakuyomu, NovelPhoenix, NovelpiaGlobal, WebTruyenChu, Wikidich, Syosetu/Syosetu R18, Piaotia, CBunu, WeebCentral, Cosplaytele, FanMTL, AbcBiquge…; DamCoNuong sang tên miền mới (`damconuong.help/.tech`, cần đăng nhập).
+- Trạng thái nguồn rõ ràng hơn trong README: PornHub/Tik.Porn (nhà mạng VN chặn IP → bật Tor/VPN), NextPhim (trang tin, không có phim), BLVietsub (Cloudflare Turnstile), HHPanda (luồng mã hoá), Kwiky (cần đăng nhập), VinaHentai/Phimmoi (chết mọi tên miền).
+
+## Kiểm thử
+- Mạng thật **94/196** nguồn đạt trọn chuỗi; Aidoku mô phỏng 77/152; unit test 28/28.
+- Galaxy Note9: Aniyomi, Nekoyomi (3 kho tách biệt), Mangayomi, YomiHub, LNReader, vBook — ảnh + video trong `_work/shots/v010/` (máy chủ dự án).
+
+---
+
 # Kiritokmn Extension Repo — v0.0.9 (23/11/2026)
 
 ## Điểm nổi bật & Tính năng mới

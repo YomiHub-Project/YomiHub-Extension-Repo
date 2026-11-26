@@ -2,9 +2,9 @@
   "metadata": {
     "name": "HiHiPhim",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://hihiphim.com",
-    "description": "HiHiPhim — Kiritokmn Extension Repo",
+    "description": "HiHiPhim — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "hihiphim\\.com",
     "type": "video",

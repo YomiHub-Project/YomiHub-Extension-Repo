@@ -2,9 +2,9 @@
   "metadata": {
     "name": "WatchHentai.net",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://watchhentai.net",
-    "description": "WatchHentai.net — Kiritokmn Extension Repo",
+    "description": "WatchHentai.net — YomiHub Extension Repo",
     "locale": "en",
     "regexp": "watchhentai\\.net",
     "type": "video",

@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Syosetu",
     "author": "Kiritokmn",
-    "version": 8,
+    "version": 9,
     "source": "https://ncode.syosetu.com",
     "description": "Syosetu — Kiritokmn Extension Repo",
     "locale": "ja",
@@ -12,6 +12,7 @@
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",

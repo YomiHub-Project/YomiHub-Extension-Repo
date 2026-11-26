@@ -17,7 +17,7 @@ androidComponents { beforeVariants(selector().withBuildType("debug")) { it.enabl
 
 dependencies {
     compileOnly(project(":stub-manga"))
-    implementation("org.mozilla:rhino:1.7.15")
+    implementation(files("../libs/rhino-1.7.15-slim.jar")) // 0.1.0: Rhino without optimizer/tools (interpreted mode only) - shrunk once instead of R8 per flavor
     compileOnly("com.squareup.okhttp3:okhttp:4.12.0")
     compileOnly("org.jsoup:jsoup:1.21.2")
     compileOnly("io.reactivex:rxjava:1.3.8")

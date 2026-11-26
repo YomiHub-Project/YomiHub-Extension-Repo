@@ -2,9 +2,9 @@
   "metadata": {
     "name": "TaoNovel",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://tybook.taoyuewenhua.net",
-    "description": "TaoNovel — Kiritokmn Extension Repo",
+    "description": "TaoNovel — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "tybook\\.taoyuewenhua\\.net",
     "type": "novel",

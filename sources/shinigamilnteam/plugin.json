@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Shinigami LN Team",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://shinigamilnteam.com",
-    "description": "Shinigami LN Team — Kiritokmn Extension Repo",
+    "description": "Shinigami LN Team — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "shinigamilnteam\\.com",
     "type": "novel",

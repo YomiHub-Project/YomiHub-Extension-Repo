@@ -27,10 +27,7 @@ function execute(url) {
     } catch (e) {}
   }
 
-  // Return native playback target with headers
-  return Response.success({
-    type: 'native',
-    data: url,
-    headers: { Referer: BASE_URL + '/' }
-  });
+  // 0.1.0: never hand an HTML page to the player as a "native" stream (the player spins forever).
+  // Since 11/2026 the API answers 401 PRIVATE_MODE for every episode: the site requires an account.
+  return Response.error('Anime47 đang bật chế độ riêng tư: cần đăng nhập tài khoản Anime47 (mở nguồn bằng WebView, đăng nhập rồi tải lại) mới xem được tập này.');
 }

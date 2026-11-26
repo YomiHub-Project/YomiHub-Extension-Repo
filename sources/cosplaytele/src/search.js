@@ -27,7 +27,8 @@ function execute(key, page) {
     });
 
     var next = '';
-    var nextHref = doc.select("a.next.page-numbers").first().attr("href");
+    var nextEl = doc.select("a.next.page-numbers").first();
+    var nextHref = nextEl ? nextEl.attr("href") : "";
     if (nextHref) {
       var m = nextHref.match(/page\/(\d+)/);
       if (m) next = m[1];

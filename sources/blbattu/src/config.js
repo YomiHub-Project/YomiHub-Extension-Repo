@@ -21,5 +21,6 @@ var G = {
  "ch_next": "#chapter-list ul.uk-pagination a[aria-label='Trang sau']",
  "ch_reverse": true,
  "initmanga": true,
- "pages": "#chapter-content img"
+ "pages": "#chapter-content img",
+ "genre": "a[href*='/the-loai/']"
 };

@@ -14,5 +14,6 @@ var G = {
  "d_desc": "meta[name=description]@content",
  "single": true,
  "pages": ".entry img",
- "pages_next": ".page-link a.post-page-numbers:last-child, a.post-page-numbers.next"
+ "pages_next": ".page-link a.post-page-numbers:last-child, a.post-page-numbers.next",
+ "genre": "a[href*='/tag/']"
 };

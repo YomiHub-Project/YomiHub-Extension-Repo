@@ -13,5 +13,6 @@ var G = {
  "d_cover": "meta[property=og:image]@content || img@img",
  "d_desc": "meta[property=og:description]@content || meta[name=description]@content",
  "cover": "img@img",
- "content": "article"
+ "content": "article",
+ "genre": "a[href*='/tim-kiem?tags=']"
 };

@@ -2,9 +2,9 @@
   "metadata": {
     "name": "xsw",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://m.xsw.tw",
-    "description": "xsw — Kiritokmn Extension Repo",
+    "description": "xsw — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "m\\.xsw\\.tw",
     "type": "novel",

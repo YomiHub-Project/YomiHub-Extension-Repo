@@ -2,7 +2,7 @@
   "metadata": {
     "name": "MangaDM",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://mangadm.me",
     "description": "MangaDM — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -15,7 +15,8 @@
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",
-    "chap": "chap.js"
+    "chap": "chap.js",
+    "genre": "genre.js"
   },
   "config": {
     "DOMAIN": {

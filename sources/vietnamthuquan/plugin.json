@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Việt Nam Thư Quán",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://vnthuquan.org",
-    "description": "Việt Nam Thư Quán — Kiritokmn Extension Repo",
+    "description": "Việt Nam Thư Quán — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "vnthuquan\\.org",
     "type": "novel",

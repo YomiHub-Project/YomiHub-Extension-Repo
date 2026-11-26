@@ -2,9 +2,9 @@
   "metadata": {
     "name": "TruyenC",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://truyenc.com",
-    "description": "TruyenC — Kiritokmn Extension Repo",
+    "description": "TruyenC — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "truyenc\\.(com|net)",
     "type": "novel",

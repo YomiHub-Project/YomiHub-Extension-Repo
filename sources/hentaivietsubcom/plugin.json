@@ -2,9 +2,9 @@
   "metadata": {
     "name": "HentaiVietsub.com",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://hentaivietsub.com",
-    "description": "HentaiVietsub.com — Kiritokmn Extension Repo",
+    "description": "HentaiVietsub.com — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "hentaivietsub\\.com",
     "type": "video",

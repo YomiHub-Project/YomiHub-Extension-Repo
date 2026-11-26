@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Truyen H",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://truyenh.top",
-    "description": "Truyen H — Kiritokmn Extension Repo",
+    "description": "Truyen H — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "truyenh\\.top",
     "type": "novel",

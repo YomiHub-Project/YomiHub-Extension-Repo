@@ -2,9 +2,9 @@
   "metadata": {
     "name": "HHPanda",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://hhpanda.st",
-    "description": "HHPanda — Kiritokmn Extension Repo",
+    "description": "HHPanda — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "hhpanda\\.st",
     "type": "video",

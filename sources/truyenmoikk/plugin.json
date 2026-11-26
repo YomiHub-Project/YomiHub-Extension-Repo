@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Truyện Mới KK",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://truyenmoikk.com",
-    "description": "Truyện Mới KK — Kiritokmn Extension Repo",
+    "description": "Truyện Mới KK — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "truyenmoikk\\.com",
     "type": "novel",

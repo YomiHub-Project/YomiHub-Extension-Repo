@@ -2,9 +2,9 @@
   "metadata": {
     "name": "czbooks - repo Đường đen",
     "author": "Kiritokmn",
-    "version": 11,
+    "version": 12,
     "source": "https://czbooks.net",
-    "description": "czbooks - repo Đường đen — Kiritokmn Extension Repo",
+    "description": "czbooks - repo Đường đen — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "czbooks\\.net",
     "type": "novel",

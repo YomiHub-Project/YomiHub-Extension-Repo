@@ -1,4 +1,4 @@
-const mangayomiSources = [{"name":"Hako (Light Novel)","lang":"vi","id":920260001,"baseUrl":"https://ln.hako.vn","apiUrl":"","iconUrl":"https://raw.githubusercontent.com/YomiHub-Project/Kiritokmn---Extension-Repo/main/repo/icons/lnhakovnhako.png","typeSource":"single","itemType":2,"isNsfw":false,"version":"0.6.6","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/hako.js"}];
+const mangayomiSources = [{"name":"Hako (Light Novel)","lang":"vi","id":920260001,"baseUrl":"https://ln.hako.vn","apiUrl":"","iconUrl":"https://raw.githubusercontent.com/YomiHub-Project/YomiHub-Extension-Repo/main/repo/icons/lnhakovnhako.png","typeSource":"single","itemType":2,"isNsfw":false,"version":"0.6.6","dateFormat":"","dateFormatLocale":"","pkgPath":"repo/yomihub/hako.js"}];
 // ---- YomiHub shared helpers (prepended to every bundled extension) ----
 const YH_UA = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36";
 function yhPref(key, def) {

@@ -2,9 +2,9 @@
   "metadata": {
     "name": "GuPhim",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://guphimz.com",
-    "description": "GuPhim — Kiritokmn Extension Repo",
+    "description": "GuPhim — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "guphimz\\.com",
     "type": "video",

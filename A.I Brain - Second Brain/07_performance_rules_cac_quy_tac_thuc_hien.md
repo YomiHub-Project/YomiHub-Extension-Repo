@@ -37,3 +37,6 @@ Bổ sung cho `AGENTS.md`; khi hai nơi khác nhau thì làm theo quy tắc ch�
 22. Sau mỗi đợt cập nhật ghi `TECHNICAL_UPDATE_NOTES.md` (hạng mục, lỗi, tệp/dòng sửa, công cụ, kết quả kiểm thử, ngày) — không xoá lịch sử thất bại.
 23. Báo cáo chủ dự án bằng tiếng Việt, ngắn; nói rõ việc chủ dự án phải tự làm (bấm runner, cắm điện thoại, xác nhận phát hành…).
 24. Cuối mỗi phiên: thêm mục vào nhật ký (12), cập nhật mục D của 11, tắt tác vụ nền (runner, điều khiển điện thoại `quit`, lịch hẹn, Antigravity).
+
+## Điều phối Google Antigravity (chủ dự án đặt 26/11/2026)
+25. **Mọi lệnh gửi tới Google Antigravity đều phải bắt đầu bằng `/swarm`** (kể cả lời giao việc, trả lời câu hỏi, nhắc hạn chót, yêu cầu báo cáo). Không gửi tin nhắn thường không có `/swarm`.

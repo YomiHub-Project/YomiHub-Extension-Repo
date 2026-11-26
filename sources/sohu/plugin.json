@@ -2,9 +2,9 @@
   "metadata": {
     "name": "sohu",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://m.sohu.com",
-    "description": "sohu — Kiritokmn Extension Repo",
+    "description": "sohu — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "m\\.sohu\\.com",
     "type": "novel",

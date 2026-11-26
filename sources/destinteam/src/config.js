@@ -21,5 +21,6 @@ var G = {
  "pages": "#chapter-content img",
  "d_title": "h1 || meta[property=og:title]@content",
  "d_cover": "meta[property=og:image]@content",
- "d_desc": "meta[property=og:description]@content || meta[name=description]@content"
+ "d_desc": "meta[property=og:description]@content || meta[name=description]@content",
+ "genre": "a[href*='/the-loai/']"
 };

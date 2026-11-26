@@ -1,4 +1,5 @@
 var BASE_URL = "https://sayhentai.cx";
+try { if (DOMAIN) BASE_URL = String(DOMAIN).replace(/\/+$/, ""); } catch (e) {}
 var HOST = BASE_URL;
 
 var FETCH_HEADERS = {
@@ -138,7 +139,13 @@ function listPageResponse(url, page) {
     if (!(currentPage > 0)) currentPage = 1;
 
     var res = fetchRetry(buildPagedUrl(url, currentPage));
-    if (!res || !res.ok) return Response.error("Khong tai duoc danh sach");
+    if (!res || !res.ok) {
+        var body = res && res.text ? (res.text() || "") : "";
+        if (res && (res.status === 403 || res.status === 503) && /cf_chl|challenge-platform|Just a moment|cf-turnstile/i.test(body.slice(0, 20000))) {
+            throw new Error("CLOUDFLARE: trang " + BASE_URL + " yêu cầu xác minh. Mở nguồn bằng WebView trong ứng dụng, đợi qua bước kiểm tra rồi tải lại.");
+        }
+        return Response.error("Khong tai duoc danh sach (HTTP " + (res ? res.status : 0) + ")");
+    }
 
     var doc = res.html();
     if (!doc) return Response.error("Khong doc duoc danh sach");

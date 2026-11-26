@@ -2,7 +2,7 @@
   "metadata": {
     "name": "飘天文学",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://www.piaotia.com",
     "description": "飘天文学 — Kiritokmn Extension Repo",
     "locale": "zh-CN",
@@ -12,6 +12,7 @@
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",

@@ -2,9 +2,9 @@
   "metadata": {
     "name": "MGTV",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://glb.m.mgtv.com",
-    "description": "MGTV — Kiritokmn Extension Repo",
+    "description": "MGTV — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "glb\\.m\\.mgtv\\.com",
     "type": "video",

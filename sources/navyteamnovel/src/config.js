@@ -18,5 +18,6 @@ var G = {
   "title": "title",
   "link": "/truyen/{slug}",
   "cover": "cover"
- }
+ },
+ "genre": "a[href*='/the-loai/']"
 };

@@ -30,5 +30,6 @@ var G = {
  "d_author": "meta[property=og:novel:author]@content",
  "d_desc": "meta[property=og:description]@content || meta[name=description]@content",
  "ch_list": "ul.list-charts li a",
- "content": ".content-body.content-ext, .content-body"
+ "content": ".content-body.content-ext, .content-body",
+ "genre": "a[href*='/list/']"
 };

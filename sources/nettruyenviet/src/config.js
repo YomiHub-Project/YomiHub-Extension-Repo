@@ -23,9 +23,10 @@ var G = {
  "ch_list": "#chapter_list a",
  "ch_reverse": true,
  "pages": "div.page-chapter img",
- "genre": ".dropdown-menu .megamenu a, ul.nav li.dropdown .megamenu a",
+ "genre": "a[href*='/tim-truyen/']",
  "s_item": "div.item > figure > div.image",
  "s_title": "a@title",
  "s_link": "a@href",
- "s_cover": "img@img"
+ "s_cover": "img@img",
+ "genrePage": "/tim-truyen"
 };

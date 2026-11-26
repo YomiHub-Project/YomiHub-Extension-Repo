@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Hồng Quả",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://hongguoduanju.com",
-    "description": "Hồng Quả — Kiritokmn Extension Repo",
+    "description": "Hồng Quả — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "hongguoduanju\\.com",
     "type": "video",

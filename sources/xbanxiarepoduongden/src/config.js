@@ -5,7 +5,7 @@ var G = {
   "Mới cập nhật": "/[?page={p}]"
  },
  "search": "/modules/article/search_t.php?searchkey={q}[&page={p}]",
- "item": ".pop-book",
+ "item": ".pop-book, li.pop-book2",
  "title": "h2 || a@title || img@alt",
  "link": "a@href",
  "ch_list": "div.book-list li a",
@@ -16,5 +16,6 @@ var G = {
  "s_title": "h2 || a@title",
  "s_link": "a@href",
  "s_cover": "img@data-original || img@img",
- "content": "#nr1"
+ "content": "#nr1",
+ "genre": "a[href*='/list/']"
 };

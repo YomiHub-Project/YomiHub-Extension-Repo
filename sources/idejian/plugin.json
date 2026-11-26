@@ -2,9 +2,9 @@
   "metadata": {
     "name": "idejian",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.idejian.com",
-    "description": "idejian — Kiritokmn Extension Repo",
+    "description": "idejian — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "idejian\\.com",
     "type": "novel",

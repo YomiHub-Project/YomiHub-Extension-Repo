@@ -2,9 +2,9 @@
   "metadata": {
     "name": "8book",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://www.8book.com",
-    "description": "8book — Kiritokmn Extension Repo",
+    "description": "8book — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "8book\\.com",
     "type": "novel",

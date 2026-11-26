@@ -1,78 +1,38 @@
 load("config.js");
 
-function buildApiUrl(inputUrl, page) {
-    if (!inputUrl) return BASE_URL + "/api/search-novels?page=" + (page || 1);
-
-    var strUrl = inputUrl + "";
-    if (strUrl.indexOf("http") < 0 && strUrl.indexOf("/") < 0 && strUrl.indexOf("webtruyendich.com") < 0) {
-        return BASE_URL + "/api/search-novels?keyword=" + encodeURIComponent(strUrl) + "&page=" + (page || 1);
+function parseHtmlList(html, page) {
+    var doc = Html.parse(html, BASE_ORIGIN + "/");
+    var cards = doc.select("article.card, article.flex, div.grid > div.flex.items-start");
+    var books = [], seen = {};
+    for (var i = 0; i < cards.size(); i++) {
+        var el = cards.get(i);
+        var a = el.select("h2 a[href*='/truyen/'], a[href*='/truyen/']").first();
+        if (!a) continue;
+        var href = String(a.attr("href") || "").trim();
+        if (!href || href.indexOf("/chuong") >= 0) continue;
+        var link = toAbs(href);
+        if (seen[link]) continue;
+        var h2 = el.select("h2, h3").first();
+        var title = cleanText(h2 ? h2.text() : a.text());
+        if (!title) continue;
+        seen[link] = 1;
+        var img = el.select("img").first();
+        var cover = img ? toAbs(img.attr("data-src") || img.attr("src") || "") : "";
+        books.push({ name: title, link: link, cover: cover, description: "", host: BASE_ORIGIN });
     }
-
-    var path = strUrl.split("?")[0];
-    var queryStr = strUrl.split("?")[1] || "";
-
-    var params = {};
-    if (queryStr) {
-        var pairs = queryStr.split("&");
-        for (var i = 0; i < pairs.length; i++) {
-            var parts = pairs[i].split("=");
-            if (parts[0]) params[parts[0]] = decodeURIComponent(parts[1] || "");
-        }
-    }
-
-    if (path.indexOf("/the-loai/") >= 0) {
-        var genreSlug = path.split("/the-loai/")[1];
-        if (genreSlug) params.genre = genreSlug;
-    }
-
-    if (path.indexOf("/xep-hang/") >= 0) {
-        var rankSlug = path.split("/xep-hang/")[1];
-        if (rankSlug) params.sort = rankSlug;
-    }
-
-    params.page = String(page || 1);
-
-    var queryArr = [];
-    for (var k in params) {
-        if (params[k] !== undefined && params[k] !== null && params[k] !== "") {
-            queryArr.push(encodeURIComponent(k) + "=" + encodeURIComponent(params[k]));
-        }
-    }
-
-    return BASE_URL + "/api/search-novels?" + queryArr.join("&");
+    var cur = parseInt(page || "1", 10);
+    var nextEl = doc.select("a[href*='page=" + (cur + 1) + "']").first();
+    return Response.success(books, nextEl ? String(cur + 1) : "");
 }
 
 function execute(url, page) {
     var curPage = parseInt(page || "1", 10);
-    var apiUrl = buildApiUrl(url, curPage);
-    var res = fetch(apiUrl, {
-        headers: {
-            "User-Agent": typeof BASE_UA !== "undefined" ? BASE_UA : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            "X-Requested-With": "XMLHttpRequest",
-            "Accept": "application/json, text/plain, */*"
-        }
+    var target = String(url || "/tim-truyen").trim();
+    if (target.indexOf("http") !== 0) target = BASE_ORIGIN + (target.charAt(0) === "/" ? "" : "/") + target;
+    target += (target.indexOf("?") >= 0 ? "&" : "?") + "page=" + curPage;
+    var res = fetch(target, {
+        headers: { "User-Agent": typeof BASE_UA !== "undefined" ? BASE_UA : "Mozilla/5.0", "Referer": BASE_ORIGIN + "/" }
     });
-
-    if (!res || !res.ok) return Response.success([]);
-    var json = res.json();
-    if (!json) return Response.success([]);
-
-    var dataArr = json.novels || json.data || json.items || (Array.isArray(json) ? json : []);
-    var books = [];
-    for (var b = 0; b < dataArr.length; b++) {
-        var bk = toBook(dataArr[b]);
-        if (bk && bk.name && bk.link) books.push(bk);
-    }
-
-    var nextPage = "";
-    var current = json.page || json.current_page || curPage;
-    var last = json.total_pages || json.last_page;
-
-    if (last && current < last) {
-        nextPage = String(current + 1);
-    } else if (books.length >= 10) {
-        nextPage = String(curPage + 1);
-    }
-
-    return Response.success(books, nextPage);
+    if (!res || !res.ok) return Response.success([], "");
+    return parseHtmlList(res.text(), curPage);
 }

@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Weeb Central",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://weebcentral.com",
     "description": "Weeb Central — Kiritokmn Extension Repo",
     "locale": "en",
@@ -12,6 +12,7 @@
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",

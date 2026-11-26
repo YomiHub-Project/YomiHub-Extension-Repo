@@ -397,7 +397,33 @@ export class VBookEngine {
     // 0.0.6 — flexible domain switching for EVERY source: a request sent to the default domain or to any known
     // mirror (plugin.json DOMAIN.values + the domains of the owner's Excel sheet) is redirected to the domain the
     // user picked / typed in the settings, so sources with hard-coded URLs follow the switch too.
-    { const env = this.env, f = env.fetch, self = this; if (typeof f === 'function' && !f.__kiriLive) { const w = function (u, o) { return f.call(env, self.live(u), o); }; w.__kiriLive = true; env.fetch = w; } }
+    { const env = this.env, f = env.fetch, self = this; if (typeof f === 'function' && !f.__kiriLive) { const w = function (u, o) { return f.call(env, self.live(u), o); }; w.__kiriLive = true; w.__raw = f; env.fetch = w; } }
+    // 0.1.0 — automatic mirror fallback (all 9 apps): when a request to the selected domain fails at the network level
+    // (DNS, connect timeout, blocked = HTTP 0) or with a Cloudflare 52x / 502-504, the same path is tried on the other
+    // known mirrors (plugin.json DOMAIN.values + Excel domains). The first mirror that answers becomes the session's
+    // domain (remembered per source until the user picks another domain), so dead domains no longer break a source.
+    { const env = this.env, f = env.fetch, self = this;
+      if (typeof f === 'function' && !f.__kiriAuto) {
+        const bad = r => { if (!r || r.status == null) return false; const c = +r.status; return c === 0 || (c >= 520 && c <= 530) || c === 502 || c === 503 || c === 504; };
+        const w = function (u, o) {
+          const first = f.call(env, u, o);
+          const retry = r => {
+            if (!bad(r)) return r;
+            const alts = self.mirrorAlternatives(str(u)); let i = 0;
+            const next = last => {
+              if (i >= alts.length) return last;
+              const a = alts[i++]; let rr;
+              try { rr = (f.__raw || f).call(env, a.url, o); } catch (e) { return next(last); }
+              const fin = x => { if (!bad(x)) { self.setAutoBase(a.origin); return x; } return next(x); };
+              return rr && typeof rr.then === 'function' ? rr.then(fin, () => next(last)) : fin(rr);
+            };
+            return next(r);
+          };
+          return first && typeof first.then === 'function' ? first.then(retry) : retry(first);
+        };
+        w.__kiriAuto = true; w.__kiriLive = true; env.fetch = w;
+      }
+    }
     this.scripts = scripts; // name -> async factory(env, cfg) returning execute
     this.cache = {};
     this.tokens = {};
@@ -405,7 +431,32 @@ export class VBookEngine {
   // 0.0.6: DOMAIN_CUSTOM (free text, any new domain) > DOMAIN (picked from the list) > default domain
   get base() {
     const ok = v => { v = str(v).trim(); return /^https?:\/\/[^/?#\s]+/i.test(v) ? v : ''; };
-    return (ok(this.host.config('DOMAIN_CUSTOM')) || ok(this.host.config('DOMAIN')) || ok((this.meta.configDefaults || {}).DOMAIN) || str(this.meta.source)).replace(/\/+$/, '');
+    const custom = ok(this.host.config('DOMAIN_CUSTOM'));
+    if (custom) return custom.replace(/\/+$/, '');
+    const picked = (ok(this.host.config('DOMAIN')) || ok((this.meta.configDefaults || {}).DOMAIN) || str(this.meta.source)).replace(/\/+$/, '');
+    const auto = this.autoBase();
+    return auto && auto.from === picked ? auto.to : picked;
+  }
+  // 0.1.0: the mirror found by the automatic fallback, valid while the user keeps the same domain selection
+  autoBase() {
+    if (this._auto !== undefined) return this._auto;
+    let a = null; try { const v = this.host.storageGet && this.host.storageGet('__autoBase__'); if (v) a = JSON.parse(v); } catch (e) { a = null; }
+    this._auto = a && a.from && a.to ? a : null; return this._auto;
+  }
+  setAutoBase(origin) {
+    const ok = v => { v = str(v).trim(); return /^https?:\/\/[^/?#\s]+/i.test(v) ? v : ''; };
+    if (ok(this.host.config('DOMAIN_CUSTOM'))) return;
+    const picked = (ok(this.host.config('DOMAIN')) || ok((this.meta.configDefaults || {}).DOMAIN) || str(this.meta.source)).replace(/\/+$/, '');
+    this._auto = { from: picked, to: str(origin).replace(/\/+$/, '') };
+    try { this.host.storageSet && this.host.storageSet('__autoBase__', JSON.stringify(this._auto)); } catch (e) { }
+    try { this.host.log && this.host.log('[YomiHub Ext] ' + picked + ' lỗi mạng → tự chuyển sang ' + this._auto.to); } catch (e) { }
+  }
+  mirrorAlternatives(u) {
+    const o = this.origins; const m = /^https?:\/\/[^/?#]+/i.exec(u); if (!m) return [];
+    const h = o.key(m[0]); if (o.hosts[h] !== 1) return [];
+    const rest = u.slice(m[0].length); const seen = {}; seen[h] = 1; const out = [];
+    for (const org of o.list) { const k = o.key(org); if (seen[k]) continue; seen[k] = 1; out.push({ origin: org, url: org + rest }); if (out.length >= 4) break; }
+    return out;
   }
   live(u) {
     u = str(u); const o = this.origins; if (!o.def) return u;
@@ -426,7 +477,8 @@ export class VBookEngine {
     const d = (this.meta.config || {}).DOMAIN || {};
     const key = u => { const m = /^https?:\/\/(?:www\.|m\.)?([^/?#:]+)/i.exec(str(u).trim()); return m ? m[1].toLowerCase() : ''; };
     const set = {}; [this.meta.source, d.default].concat(d.values || []).map(key).filter(Boolean).forEach(h => { set[h] = 1; });
-    const m0 = /^https?:\/\/[^/?#]+/i.exec(str(this.meta.source)); this._orig = { key, hosts: set, def: m0 ? m0[0] : '' };
+    const list = []; [d.default].concat(d.values || [], [this.meta.source]).forEach(u => { const mm = /^https?:\/\/[^/?#]+/i.exec(str(u).trim()); if (mm && list.indexOf(mm[0]) < 0) list.push(mm[0]); });
+    const m0 = /^https?:\/\/[^/?#]+/i.exec(str(this.meta.source)); this._orig = { key, hosts: set, list, def: m0 ? m0[0] : '' };
     return this._orig;
   }
   canon(u) {

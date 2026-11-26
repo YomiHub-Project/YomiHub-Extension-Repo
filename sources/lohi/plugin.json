@@ -2,9 +2,9 @@
   "metadata": {
     "name": "LoHi",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://lohi2.com",
-    "description": "LoHi — Kiritokmn Extension Repo",
+    "description": "LoHi — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "lohi2\\.com",
     "type": "novel",

@@ -22,7 +22,7 @@ const WS = path.join(ROOT, '.build/aidoku-ws');
 const OUT = path.join(ROOT, 'repo/aidoku');
 const VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
 // Bump when the bridge or the Aidoku adapter changes: package version = BRIDGE_REV * 100 + source version.
-const BRIDGE_REV = 5; // 0.0.9: 10-filter system (filters.json + FilterValue bridge); 0.0.6: DOMAIN_CUSTOM + engine domain redirect (live())
+const BRIDGE_REV = 6; // 0.1.0: engine automatic mirror fallback; // 0.0.9: 10-filter system (filters.json + FilterValue bridge); 0.0.6: DOMAIN_CUSTOM + engine domain redirect (live())
 const LANG = { vi: 'vi', 'zh-CN': 'zh', zh: 'zh', en: 'en', ja: 'ja', global: 'multi', all: 'multi' };
 const crate = id => 'kiri-' + id.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 export const aidokuId = s => `${LANG[s.lang] || 'multi'}.kiritokmn.${s.id.toLowerCase().replace(/[^a-z0-9]+/g, '')}`;
@@ -47,7 +47,7 @@ function settingsJson(s) {
     : { type: 'text', key: 'DOMAIN', title: 'Tên miền / Domain', placeholder: s.source, default: s.source, keyboardType: 3, autocorrectionDisabled: true, autocapitalizationType: 0, refreshes: ['content', 'listings'] };
   // 0.0.6: free-text domain that wins over the list (any new address, no extension update needed)
   const custom = { type: 'text', key: 'DOMAIN_CUSTOM', title: 'Tên miền tuỳ chỉnh', placeholder: 'https://…', default: '', keyboardType: 3, autocorrectionDisabled: true, autocapitalizationType: 0, refreshes: ['content', 'listings'] };
-  return [{ type: 'group', title: 'Kiritokmn Extension Repo ' + VERSION, footer: 'Chọn tên miền, hoặc nhập tên miền mới vào ô tuỳ chỉnh khi trang chuyển địa chỉ (VD: https://example.com). Để trống ô tuỳ chỉnh để dùng danh sách.', items: [item, custom] }];
+  return [{ type: 'group', title: 'YomiHub Extension Repo ' + VERSION, footer: 'Chọn tên miền, hoặc nhập tên miền mới vào ô tuỳ chỉnh khi trang chuyển địa chỉ (VD: https://example.com). Để trống ô tuỳ chỉnh để dùng danh sách.', items: [item, custom] }];
 }
 export function filtersJson(s) {
   const sel = (id, title, pairs, extra = {}) => ({
@@ -237,7 +237,7 @@ for (const s of list) {
   report.push({ id: s.id, ok: true, aid, wasmKB: Math.round(fs.statSync(wasm).size / 1024), aixKB: Math.round(aix.length / 1024) });
 }
 items.sort((a, b) => a.id.localeCompare(b.id));
-const index = { name: 'Kiritokmn Extension Repo', sources: items };
+const index = { name: 'YomiHub Extension Repo', sources: items };
 fs.writeFileSync(indexFile, JSON.stringify(index));
 fs.writeFileSync(path.join(OUT, 'index.json'), JSON.stringify(index, null, 1));
 fs.writeFileSync(path.join(ROOT, '.build/aidoku-report.json'), JSON.stringify(report, null, 1));

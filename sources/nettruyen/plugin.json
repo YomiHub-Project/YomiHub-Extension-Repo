@@ -2,9 +2,9 @@
   "metadata": {
     "name": "NetTruyen",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://nettruyen.com.vn",
-    "description": "NetTruyen — Kiritokmn Extension Repo",
+    "description": "NetTruyen — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "nettruyen\\.com\\.vn",
     "type": "novel",

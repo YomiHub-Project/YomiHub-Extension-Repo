@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Matt Reading Translations",
     "author": "Kiritokmn",
-    "version": 8,
+    "version": 9,
     "source": "https://mattreadingtranslations.com",
-    "description": "Matt Reading Translations — Kiritokmn Extension Repo",
+    "description": "Matt Reading Translations — YomiHub Extension Repo",
     "locale": "en",
     "regexp": "mattreadingtranslations\\.com",
     "type": "novel",

@@ -2,9 +2,9 @@
   "metadata": {
     "name": "douban",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://read.douban.com",
-    "description": "douban — Kiritokmn Extension Repo",
+    "description": "douban — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "read\\.douban\\.com",
     "type": "novel",

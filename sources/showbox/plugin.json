@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Showbox",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://pixnet.cc",
-    "description": "Showbox — Kiritokmn Extension Repo",
+    "description": "Showbox — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "pixnet\\.cc",
     "type": "video",

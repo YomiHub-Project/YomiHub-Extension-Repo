@@ -2,9 +2,9 @@
   "metadata": {
     "name": "NetTruyen18",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://nettruyen18.com",
-    "description": "NetTruyen18 — Kiritokmn Extension Repo",
+    "description": "NetTruyen18 — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "nettruyen18\\.com",
     "type": "comic",

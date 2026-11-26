@@ -8,5 +8,6 @@ var G = {
  "item": "div.inner > div.item, .item:has(div.info h3.name)",
  "title": "h3.name a || .caption h3 || h3 || img@alt",
  "link": "h3.name a@href || a@href",
- "ch_list": "a[href*=chuong], a[href*=chap], a[href*=tap-], a[href*=episode]"
+ "ch_list": "a[href*=chuong], a[href*=chap], a[href*=tap-], a[href*=episode]",
+ "genre": "a[href*='/the-loai/']"
 };

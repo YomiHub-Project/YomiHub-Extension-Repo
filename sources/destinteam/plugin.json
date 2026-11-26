@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Destin Team",
     "author": "Kiritokmn",
-    "version": 8,
+    "version": 9,
     "source": "https://destinteam.xyz",
     "description": "Destin Team — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -15,7 +15,8 @@
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",
-    "chap": "chap.js"
+    "chap": "chap.js",
+    "genre": "genre.js"
   },
   "config": {
     "DOMAIN": {

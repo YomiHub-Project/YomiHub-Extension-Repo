@@ -2,9 +2,9 @@
   "metadata": {
     "name": "LoppyToon",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://loppytoon.com",
-    "description": "LoppyToon — Kiritokmn Extension Repo",
+    "description": "LoppyToon — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "loppytoon\\.com",
     "type": "novel",

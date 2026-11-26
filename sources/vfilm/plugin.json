@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Vfilm",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "http://vfilm.vn",
-    "description": "Vfilm — Kiritokmn Extension Repo",
+    "description": "Vfilm — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "vfilm\\.vn",
     "type": "video",

@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Si Truyện CV",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://sitruyencv.com",
-    "description": "Si Truyện CV — Kiritokmn Extension Repo",
+    "description": "Si Truyện CV — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "sitruyencv\\.com",
     "type": "novel",

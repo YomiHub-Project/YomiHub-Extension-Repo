@@ -2,9 +2,9 @@
   "metadata": {
     "name": "NovelFull.Net",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://novelfull.net",
-    "description": "NovelFull.Net — Kiritokmn Extension Repo",
+    "description": "NovelFull.Net — YomiHub Extension Repo",
     "locale": "en",
     "regexp": "novelfull\\.net",
     "type": "novel",

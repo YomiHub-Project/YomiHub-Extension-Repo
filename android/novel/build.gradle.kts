@@ -55,7 +55,7 @@ android {
     }
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = false // 0.1.0: R8 per flavor took ~60 min for 196 APKs; Rhino is pre-shrunk in libs/rhino-1.7.15-slim.jar
             isShrinkResources = false
             proguardFiles("../proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
@@ -65,7 +65,7 @@ android {
     lint { checkReleaseBuilds = false; abortOnError = false }
 
     dependenciesInfo { includeInApk = false; includeInBundle = false }
-    packaging { resources.excludes += setOf("META-INF/**", "kotlin/**") }
+    packaging { resources.excludes += setOf("META-INF/**", "kotlin/**", "org/mozilla/javascript/tools/**", "org/mozilla/javascript/resources/Messages_*.properties") } // 0.1.0: base Messages.properties kept
 }
 
 // only release APKs are shipped: skipping the debug variants halves configuration and build time

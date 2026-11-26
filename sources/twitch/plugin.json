@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Twitch",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.twitch.tv",
     "description": "Twitch — kênh trực tiếp và video phát lại (VOD) qua API GQL công khai, không cần tài khoản.",
     "locale": "global",

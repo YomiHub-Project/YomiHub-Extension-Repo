@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Rổ Phim",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.rophim.soy",
-    "description": "Rổ Phim — Kiritokmn Extension Repo",
+    "description": "Rổ Phim — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "rophim\\.soy",
     "type": "video",

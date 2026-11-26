@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Novelpia Global",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://global.novelpia.com",
     "description": "Novelpia Global — Kiritokmn Extension Repo",
     "locale": "en",
@@ -15,7 +15,8 @@
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",
-    "chap": "chap.js"
+    "chap": "chap.js",
+    "genre": "genre.js"
   },
   "config": {
     "DOMAIN": {

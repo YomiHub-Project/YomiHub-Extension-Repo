@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Phimmoi",
     "author": "Kiritokmn",
-    "version": 9,
+    "version": 10,
     "source": "https://phimmoii.run",
-    "description": "Phimmoi — Kiritokmn Extension Repo (Nguồn hay đổi tên miền/bị chặn mạng, hãy bật VPN/Tor khi cần)",
+    "description": "Phimmoi — YomiHub Extension Repo (Nguồn hay đổi tên miền/bị chặn mạng, hãy bật VPN/Tor khi cần)",
     "locale": "vi",
     "regexp": "(phimmoii|phimmoi|messiahelartista)",
     "type": "video",

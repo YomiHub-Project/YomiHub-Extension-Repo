@@ -32,3 +32,10 @@
 ## Script viết trong phiên (nằm ở `_work/x/` hoặc thư mục tạm của máy đám mây)
 - `cards.py` (đoán thẻ truyện lặp lại), `an.py` (tiêu đề, khối chữ lớn nhất, nhóm liên kết), `getrec.py` (lấy trang đã ghi theo URL), `peek.py`, `patch.py` (sửa khối `var G` của config.js), `domprobe.mjs` (thử tên miền), `logofetch.mjs` (gom logo).
 - Thiết bị: `_work/phone4.ps1`, `_work/phone5.ps1`, `_work/emu_start.ps1`; phía Linux `~/pc.sh`, `~/pc5.sh` (phải viết lại ở phiên mới nếu máy ảo Linux đã bị xoá).
+
+## Bổ sung 0.1.0 (26/11/2026)
+- `_work/v010/ph.ps1 "cmd; cmd"` — điều khiển Note9 qua adb: `shot NAME`, `tap X Y`, `swipe …`, `text`, `key`, `launch PKG`, `recstart/recstop NAME` (screenrecord ≤170 s), `install APK`, `sh "…"`. Ảnh/video vào `_work/shots/v010/`.
+- `_work/v010/domprobe.mjs` (dò mọi tên miền Excel của nguồn, DNS 1.1.1.1), `_work/v010/bump.mjs` (tăng version mọi nguồn chưa tăng so với `git show HEAD:`).
+- Aidoku dựng trên máy đám mây: `git clone --depth 1 --filter=blob:none --sparse -b 1.97.0 rust-lang/rust` + `sparse-checkout set library`, symlink vào `rustlib/src/rust/library`; đưa mã từ Windows lên bằng `tar -czf _work/v010/src.tgz sources lib runtime hosts data tools aidoku package.json` → `device_stage_files`; trả `repo/aidoku` về bằng tgz + `tar -xzf` trên Windows. Cargo 217–244 s.
+- Lệnh `git status`/`grep -r` trên ổ gắn của máy ảo Linux rất chậm (hết giờ 60 s) → chạy git qua runner Windows.
+- Đồng hồ: lấy giờ thật bằng `TZ=Asia/Ho_Chi_Minh date +%H:%M` khi ghi tiến độ (đừng ước lượng).

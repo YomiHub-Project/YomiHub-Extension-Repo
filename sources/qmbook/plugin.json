@@ -2,7 +2,7 @@
   "metadata": {
     "name": "qmbook",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://m.bqg349.xyz",
     "description": "qmbook — Kiritokmn Extension Repo",
     "locale": "zh-CN",
@@ -12,6 +12,7 @@
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "browse": "browse.js",
     "search": "search.js",
     "detail": "detail.js",

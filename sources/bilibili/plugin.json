@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Bilibili",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://www.bilibili.tv",
-    "description": "Bilibili — Kiritokmn Extension Repo",
+    "description": "Bilibili — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "bilibili\\.tv",
     "type": "video",

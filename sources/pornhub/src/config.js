@@ -18,6 +18,7 @@ var G = {
     }
   },
   "tabs": {
+    "Shorts (Video ngắn)": "/shorties[?page={p}]",
     "Thịnh hành": "/video?o=tr[&page={p}]",
     "Mới nhất": "/video?o=mr[&page={p}]",
     "Xem nhiều": "/video?o=mv[&page={p}]",

@@ -2,9 +2,9 @@
   "metadata": {
     "name": "MotPhim",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://motphimc.my",
-    "description": "MotPhim — Kiritokmn Extension Repo",
+    "description": "MotPhim — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "motphimc\\.my",
     "type": "video",

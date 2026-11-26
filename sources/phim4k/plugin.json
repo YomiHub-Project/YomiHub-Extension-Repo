@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Phim4K",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://phim4k.xyz",
-    "description": "Phim4K — Kiritokmn Extension Repo",
+    "description": "Phim4K — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "phim4k\\.xyz",
     "type": "video",

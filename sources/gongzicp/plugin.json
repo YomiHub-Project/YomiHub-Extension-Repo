@@ -2,9 +2,9 @@
   "metadata": {
     "name": "gongzicp",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.gongzicp.com",
-    "description": "gongzicp — Kiritokmn Extension Repo",
+    "description": "gongzicp — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "gongzicp\\.com",
     "type": "novel",

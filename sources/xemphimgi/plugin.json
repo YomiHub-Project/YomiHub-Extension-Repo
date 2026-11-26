@@ -2,9 +2,9 @@
   "metadata": {
     "name": "XemPhimGi",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://xemphimgi.com",
-    "description": "XemPhimGi — Kiritokmn Extension Repo",
+    "description": "XemPhimGi — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "xemphimgi\\.com",
     "type": "video",

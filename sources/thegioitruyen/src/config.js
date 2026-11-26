@@ -17,5 +17,6 @@ var G = {
  "s_item": "div.wp-block-group.alignfull > h2.wp-block-post-title.has-x-large-font-size",
  "s_title": "a",
  "s_link": "a@href",
- "s_cover": ""
+ "s_cover": "",
+ "genre": "a[href*='/the-loai/']"
 };

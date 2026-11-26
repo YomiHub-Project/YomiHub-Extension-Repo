@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Weibo",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://m.weibo.cn",
-    "description": "Weibo — Kiritokmn Extension Repo",
+    "description": "Weibo — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "m\\.weibo\\.cn",
     "type": "novel",

@@ -2,7 +2,7 @@
   "metadata": {
     "name": "JJWXC · Tấn Giang",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://www.jjwxc.net",
     "description": "JJWXC · Tấn Giang — Kiritokmn Extension Repo",
     "locale": "zh-CN",
@@ -12,6 +12,7 @@
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",

@@ -2,11 +2,11 @@
   "metadata": {
     "name": "Dâm Cô Nương",
     "author": "Kiritokmn",
-    "version": 6,
-    "source": "https://damconuong.name",
+    "version": 7,
+    "source": "https://damconuong.help",
     "description": "Dâm Cô Nương — Kiritokmn Extension Repo",
     "locale": "vi",
-    "regexp": "damconuong\\.name",
+    "regexp": "damconuong\\.(?:help|tech|name|pet)",
     "type": "comic",
     "nsfw": true
   },
@@ -21,8 +21,10 @@
     "DOMAIN": {
       "title": "Tên miền",
       "subtitle": "Đổi khi trang đổi tên miền",
-      "default": "https://damconuong.name",
+      "default": "https://damconuong.help",
       "values": [
+        "https://damconuong.help",
+        "https://damconuong.tech",
         "https://damconuong.name",
         "https://damconuong.pet"
       ],

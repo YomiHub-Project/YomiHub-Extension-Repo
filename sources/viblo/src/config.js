@@ -13,5 +13,6 @@ var G = {
  "d_cover": "meta[property=og:image]@content || img@img",
  "d_desc": "meta[property=og:description]@content || meta[name=description]@content",
  "content": ".md-contents, article .md-contents, .post-body",
- "single": "Đọc bài viết"
+ "single": "Đọc bài viết",
+ "genre": "a[href*='/tags/']"
 };

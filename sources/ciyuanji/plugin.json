@@ -2,9 +2,9 @@
   "metadata": {
     "name": "ciyuanji",
     "author": "Kiritokmn",
-    "version": 9,
+    "version": 10,
     "source": "https://m.ciyuanji.com",
-    "description": "ciyuanji — Kiritokmn Extension Repo",
+    "description": "ciyuanji — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "m\\.ciyuanji\\.com",
     "type": "novel",

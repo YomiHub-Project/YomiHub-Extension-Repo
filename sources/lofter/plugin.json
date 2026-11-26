@@ -2,9 +2,9 @@
   "metadata": {
     "name": "LOFTER",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://www.suduguu.com",
-    "description": "LOFTER — Kiritokmn Extension Repo",
+    "description": "LOFTER — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "suduguu\\.com",
     "type": "novel",

@@ -1,11 +1,10 @@
 {
   "_note": "0.0.4 (13/11/2026): trạng thái nguồn do kiểm tra thủ công + domprobe/run-tests trên mạng VN. dead = giữ trong kho nhưng đánh dấu (Ngừng hoạt động) theo yêu cầu chủ dự án; các nhóm khác chỉ ghi chú trong README.",
   "dead": {
-    "damconuong": "tên miền chết (ENOTFOUND / 525)",
     "dualeotruyen": "tên miền chết",
     "guphim": "tên miền chết (guphimz.com, guphim.com/.net)",
     "haychill": "tên miền chết; phimhaychill.net là trang cờ bạc",
-    "hentaivn": "tên miền chết",
+    "vinahentai": "tên miền chết (vinahentai.bio/.bond không phản hồi)",
     "khotruyenchu": "tên miền chết / không phản hồi",
     "lacatruyen": "tên miền chết",
     "loppytoon": "tên miền chết",
@@ -39,9 +38,12 @@
     "mangadex": "mangadex.org và api.mangadex.org bị chặn ở Việt Nam — bật VPN (ví dụ VPN của YomiHub)",
     "wattpad": "wattpad.com bị chặn ở Việt Nam — cần VPN",
     "fikfap": "không kết nối được từ mạng Việt Nam — cần VPN",
-    "nettruyen": "máy chủ dùng khoá TLS cũ (DH key too small), ứng dụng Android từ chối kết nối"
+    "nettruyen": "máy chủ dùng khoá TLS cũ (DH key too small), ứng dụng Android từ chối kết nối",
+    "pornhub": "nhà mạng Việt Nam chặn IP (kết nối hết giờ cả khi dùng DNS 1.1.1.1) – bật Tor/VPN trong app; mã nguồn không lỗi",
+    "tikporn": "nhà mạng Việt Nam chặn IP (kết nối hết giờ cả khi dùng DNS 1.1.1.1) – bật Tor/VPN trong app; mã nguồn không lỗi"
   },
   "login": {
+    "damconuong": "yêu cầu đăng nhập trên damconuong.help để xem chi tiết/chương truyện",
     "vfilm": "yêu cầu đăng nhập hoặc sử dụng 3G/GPRS Vinaphone để xem phim",
     "doctruyentranhbl": "chương truyện chỉ mở khi đăng nhập Google (WP Manga Images Protection) — đăng nhập trong WebView",
     "luottruyen": "chương truyện yêu cầu đăng nhập trong WebView",
@@ -50,19 +52,22 @@
     "mintteanovel": "chương mới bị khoá (cần đăng nhập/mở khoá trên trang)",
     "lnkuro": "toàn trang yêu cầu đăng nhập tài khoản (kuro-kmssccttan)",
     "douban": "read.douban.com là kho sách điện tử trả phí, chương truyện yêu cầu mua/đăng nhập qua tài khoản Douban",
-    "anime47": "API website yêu cầu đăng nhập tài khoản"
+    "anime47": "từ 11/2026 API animevui.com trả 401 PRIVATE_MODE: phải đăng nhập tài khoản Anime47 mới xem được tập (danh sách/tìm kiếm/chi tiết vẫn chạy)"
   },
   "protected": {
     "blvietsub": "trình phát dùng Cloudflare Turnstile token verification (Worker Siteverify), mở trong WebView để xem",
-    "luphim": "trình phát dùng dấu vân tay WebGL + chống DevTools, không lấy được luồng phát",
     "moetruyen": "ảnh chương cấp qua token \"page-access\" (bảo vệ ảnh)",
     "8book": "nội dung chương tải bằng JavaScript (read.js)",
     "shubenshu": "trang chương chuyển về trang chủ khi không có cookie/Referer hợp lệ",
     "hhpanda": "trình phát (streamfree.vip) mã hoá luồng phát bằng bytecode + nonce, không lấy được link phát",
-    "nextphim": "nextphim.net hiện là trang tin tức/review phim, không có phim để xem",
-    "snapd": "nội dung chương chuyển hướng xác minh chống bot (/userverify)"
+    "snapd": "nội dung chương chuyển hướng xác minh chống bot (/userverify)",
+    "webtruyendich": "trang chương bị bảo vệ bởi Cloudflare Turnstile (403) — mở chương bằng WebView",
+    "ypshuobinhluansach": "ypshuo.com là trang đánh giá/review sách (liên kết sang qidian.com), không lưu nội dung chương",
+    "nextphim": "trang tin/lịch chiếu/đánh giá phim rạp (nextphim.net), không có luồng phát – chỉ xem danh sách & thông tin phim"
   },
   "api": {
+    "kwiky": "trang SPA (kwiky.com) không có endpoint danh sách video công khai; các /api/* trả 401 Unauthorized khi chưa đăng nhập",
+    "gongzicp": "truyencp/gongzicp trả lỗi API \"访问异常\" trên chapterList/search và HTML /novel-*.html là Vue SPA",
     "douyin": "danh sách chủ đề nóng chạy không cần máy chủ; xem video cần máy chủ Douyin_TikTok_Download_API tự dựng (đặt trong cài đặt nguồn)",
     "dailymotion": "SPA — cần API, để bản sau",
     "iqiyi": "SPA — cần API, để bản sau",

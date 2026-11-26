@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Novel Next",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://novelnext.me",
     "description": "Novel Next — Kiritokmn Extension Repo",
     "locale": "en",
@@ -15,7 +15,8 @@
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",
-    "chap": "chap.js"
+    "chap": "chap.js",
+    "genre": "genre.js"
   },
   "config": {
     "DOMAIN": {

@@ -2,9 +2,9 @@
   "metadata": {
     "name": "YPShuo - Bình luận sách",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.ypshuo.com",
-    "description": "YPShuo - Bình luận sách — Kiritokmn Extension Repo",
+    "description": "YPShuo - Bình luận sách — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "ypshuo\\.com",
     "type": "novel",

@@ -19,7 +19,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const args = process.argv.slice(2);
 const opt = k => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
 const ONLY = opt('--only') ? new Set(opt('--only').split(',')) : null;
-const BASE = (opt('--base') || 'https://raw.githubusercontent.com/YomiHub-Project/Kiritokmn---Extension-Repo/main').replace(/\/+$/, '');
+const BASE = (opt('--base') || 'https://raw.githubusercontent.com/YomiHub-Project/YomiHub-Extension-Repo/main').replace(/\/+$/, '');
 const VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
 
 function loadEsbuild() {
@@ -248,7 +248,7 @@ const ANDROID = path.join(ROOT, 'android');
 // 0.0.5: one extension APK per source (own package / label / icon) so Aniyomi / Nekoyomi / Mihon can tell them apart.
 // versionCode = 1000 * APK_REV + plugin version. Bump APK_REV whenever the shared Android runtime changes
 // (android/shared, android/*/src/main/kotlin, runtime/engine.js, runtime/rhino-prelude.js, lib/*) so every APK gets an update.
-const APK_REV = 2;
+const APK_REV = 3; // 0.1.0: engine mirror fallback + R8-shrunk Rhino (was 2 in 0.0.9)
 const APK_LANG = { vi: 'vi', 'zh-CN': 'zh', zh: 'zh', en: 'en', ja: 'ja', all: 'all', global: 'all' };
 const APK_MODS = {
   anime: { pkg: 'eu.kanade.tachiyomi.animeextension', label: 'Aniyomi: ', ver: c => '14.' + c },
@@ -291,7 +291,8 @@ for (const id of ids) {
     // 0.0.4: every source ships its own logo (tools/gen/make_icons.py) -> repo/icons/<id>.png; Google favicon only as fallback
     const hasIcon = fs.existsSync(path.join(dir, 'icon.png'));
     if (hasIcon) { fs.mkdirSync(path.join(OUT, 'icons'), { recursive: true }); fs.copyFileSync(path.join(dir, 'icon.png'), path.join(OUT, 'icons', id + '.png')); }
-    const icon = hasIcon ? `${BASE}/repo/icons/${id}.png` : `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(md.source)}`;
+    // 0.1.0 (logo plan A): own website logo per source; the YomiHub Extensions logo (data/brand) is the repo icon and the fallback
+    const icon = hasIcon ? `${BASE}/repo/icons/${id}.png` : `${BASE}/repo/icon.png`;
     // ---- vBook package (+ libraries it loads)
     const files = [{ name: 'plugin.json', data: JSON.stringify(pj, null, 2) }];
     // Other hosts group sources by language code: repacked vBook sources use vi_VN / zh_CN / en_US, ours use vi / zh-CN / en.
@@ -300,7 +301,7 @@ for (const id of ids) {
     let allCode = '';
     for (const f of srcFiles) { const c = fs.readFileSync(path.join(dir, 'src', f), 'utf8'); allCode += c; files.push({ name: 'src/' + f, data: c }); }
     for (const lib of usedLibs(allCode, path.join(dir, 'src'))) files.push({ name: 'src/' + lib, data: fs.readFileSync(path.join(LIB_DIR, lib), 'utf8') });
-    if (fs.existsSync(path.join(dir, 'icon.png'))) files.push({ name: 'icon.png', data: fs.readFileSync(path.join(dir, 'icon.png')) });
+    files.push({ name: 'icon.png', data: fs.readFileSync(fs.existsSync(path.join(dir, 'icon.png')) ? path.join(dir, 'icon.png') : path.join(ROOT, 'data/brand/repo-icon.png')) });
     fs.writeFileSync(path.join(OUT, 'vbook', id + '.zip'), makeZip(files));
     vbookIndex.push({ name: md.name, author: md.author, path: `${BASE}/repo/vbook/${id}.zip`, version: md.version, source: md.source, icon, description: md.description, type: md.type, locale: VB_LOCALE[md.locale] || md.locale, nsfw: !!md.nsfw });
     // ---- shared async scripts module
@@ -324,7 +325,7 @@ for (const id of ids) {
     }
     mg = `const mangayomiSources = [${JSON.stringify(mgMeta)}];\n` + (needGbk ? `var __GBK_TABLE = ${JSON.stringify(GBK_TABLE)};\n` : '') + mg + '\n' + fs.readFileSync(path.join(ROOT, 'hosts/mangayomi.tail.js'), 'utf8');
     fs.writeFileSync(path.join(OUT, 'mangayomi', id + '.js'), mg);
-    mgIndex.push({ ...mgMeta, hasCloudflare: CF_IDS.has(id), sourceCodeUrl: `${BASE}/repo/mangayomi/${id}.js`, isManga: md.type === 'comic', isFullData: false, appMinVerReq: '0.5.0', sourceCodeLanguage: 1, additionalParams: reg.short ? JSON.stringify({ shorts: true, short_video: true }) : '', notes: 'Kiritokmn Extension Repo ' + VERSION });  // 0.0.6: YomiHub 0.5.7 ShortsDetect reads {"shorts": true} / #shorts
+    mgIndex.push({ ...mgMeta, hasCloudflare: CF_IDS.has(id), sourceCodeUrl: `${BASE}/repo/mangayomi/${id}.js`, isManga: md.type === 'comic', isFullData: false, appMinVerReq: '0.5.0', sourceCodeLanguage: 1, additionalParams: reg.short ? JSON.stringify({ shorts: true, short_video: true }) : '', notes: 'YomiHub Extension Repo ' + VERSION });  // 0.0.6: YomiHub 0.5.7 ShortsDetect reads {"shorts": true} / #shorts
     // ---- LNReader / IReader (novels only)
     let lnSize = 0;
     if (md.type === 'novel') {
@@ -387,7 +388,8 @@ for (const [mod, list] of Object.entries(androidFlavors)) {
   fs.writeFileSync(f, JSON.stringify(all, null, 1));
 }
 if (!ONLY) {
-  fs.writeFileSync(path.join(OUT, 'plugin.json'), JSON.stringify({ metadata: { author: 'Kiritokmn', description: `Kiritokmn Extension Repo v${VERSION}` }, data: vbookIndex }, null, 1));
+  fs.copyFileSync(path.join(ROOT, 'data/brand/repo-icon.png'), path.join(OUT, 'icon.png')); // 0.1.0: repo icon (YomiHub Extensions)
+  fs.writeFileSync(path.join(OUT, 'plugin.json'), JSON.stringify({ metadata: { author: 'Kiritokmn', description: `YomiHub Extension Repo v${VERSION}` }, data: vbookIndex }, null, 1));
   fs.writeFileSync(path.join(OUT, 'index.json'), JSON.stringify(mgIndex));
   // YomiHub 0.5.3: website extensions moved out of the YomiHub app
   { const { buildYomihubSources } = await import('./yomihub-sources.mjs'); const r = buildYomihubSources(ROOT, BASE); console.log(`yomihub: ${r.added} sources, replaced ${r.dropped.length} vBook-converted entries`); }

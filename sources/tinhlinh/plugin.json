@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Tinh Linh",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://tinhlinh.com",
     "description": "Tinh Linh — Kiritokmn Extension Repo",
     "locale": "vi",
@@ -12,6 +12,7 @@
   },
   "script": {
     "home": "home.js",
+    "genre": "genre.js",
     "search": "search.js",
     "detail": "detail.js",
     "toc": "toc.js",

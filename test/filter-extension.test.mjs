@@ -268,7 +268,7 @@ await test('LNReader plugin assigns 10 filters (Picker/Text/Checkbox) & filters 
 });
 
 // 6. Aidoku tail & Rust/build artifacts
-await test('Aidoku tail handles filters op & FilterValue list search; BRIDGE_REV = 5', async () => {
+await test('Aidoku tail handles filters op & FilterValue list search; BRIDGE_REV = 6', async () => {
   const { eng, meta } = makeTestEngine({ meta: { type: 'comic' } });
   const tail = fs.readFileSync(path.join(ROOT, 'hosts/aidoku.tail.js'), 'utf8');
   const ctx = vm.createContext({
@@ -300,7 +300,7 @@ await test('Aidoku tail handles filters op & FilterValue list search; BRIDGE_REV
   assert.deepEqual(Array.from(listRes.e, x => x.t), ['Zeta Novel']);
 
   const buildSrc = fs.readFileSync(path.join(ROOT, 'tools/build/aidoku-build.mjs'), 'utf8');
-  assert.match(buildSrc, /const BRIDGE_REV = 5;/);
+  assert.match(buildSrc, /const BRIDGE_REV = 6;/);
   assert.match(buildSrc, /Payload\/filters\.json/);
   const rustSrc = fs.readFileSync(path.join(ROOT, 'aidoku/bridge/src/lib.rs'), 'utf8');
   assert.match(rustSrc, /filters: Vec<FilterValue>/);

@@ -1,36 +1,48 @@
 load("config.js");
 
-function execute(input, page) {
-    var keyword = "";
-    if (Array.isArray(input)) {
-        keyword = input[0] || "";
-        if (!page) page = input[1] || 1;
+function parseHtmlSearch(html, page) {
+    var doc = Html.parse(html, BASE_ORIGIN + "/");
+    var cards = doc.select("article.card, article.flex, div.grid > div.flex.items-start");
+    var books = [], seen = {};
+    for (var i = 0; i < cards.size(); i++) {
+        var el = cards.get(i);
+        var a = el.select("h2 a[href*='/truyen/'], a[href*='/truyen/']").first();
+        if (!a) continue;
+        var href = String(a.attr("href") || "").trim();
+        if (!href || href.indexOf("/chuong") >= 0) continue;
+        var link = toAbs(href);
+        if (seen[link]) continue;
+        var h2 = el.select("h2, h3").first();
+        var title = cleanText(h2 ? h2.text() : a.text());
+        if (!title) continue;
+        seen[link] = 1;
+        var img = el.select("img").first();
+        var cover = img ? toAbs(img.attr("data-src") || img.attr("src") || "") : "";
+        books.push({ name: title, link: link, cover: cover, description: "", host: BASE_ORIGIN });
+    }
+    var cur = parseInt(page || "1", 10);
+    var nextEl = doc.select("a[href*='page=" + (cur + 1) + "']").first();
+    return Response.success(books, nextEl ? String(cur + 1) : "");
+}
+
+function execute(input, page, filters) {
+    var keyword = Array.isArray(input) ? (input[0] || "") : (input || "");
+    var curPage = parseInt((Array.isArray(input) && !page ? input[1] : page) || "1", 10);
+    var target = "";
+    if (/^https?:\/\//i.test(String(keyword))) {
+        target = String(keyword);
+    } else if (!String(keyword).trim() && filters && filters.genres && filters.genres.length) {
+        var g = String(filters.genres[0]);
+        target = g.indexOf("http") === 0 ? g : (BASE_ORIGIN + (g.charAt(0) === "/" ? "" : "/") + g);
     } else {
-        keyword = input || "";
-        if (!page) page = 1;
+        target = BASE_ORIGIN + "/tim-truyen?q=" + encodeURIComponent(String(keyword).trim());
+        if (filters && filters.status) target += "&status=" + encodeURIComponent(filters.status);
+        if (filters && filters.sort) target += "&sort=" + encodeURIComponent(filters.sort);
     }
-
-    var searchUrl = BASE_URL + "/api/search-novels?keyword=" + encodeURIComponent(keyword) + "&page=" + (page || 1);
-    var res = fetch(searchUrl, { headers: { "X-Requested-With": "XMLHttpRequest", "Accept": "application/json" } });
-
-    if (!res || !res.ok) return Response.success([]);
-    var json = res.json();
-    if (!json) return Response.success([]);
-
-    var dataArr = json.data || json.novels || json.items || (Array.isArray(json) ? json : []);
-    var books = [];
-    for (var i = 0; i < dataArr.length; i++) {
-        var bk = toBook(dataArr[i]);
-        if (bk && bk.name && bk.link) books.push(bk);
-    }
-
-    var nextPage = "";
-    var curPage = parseInt(page || "1", 10);
-    var current = json.current_page || json.page || curPage;
-    var last = json.last_page || json.total_pages;
-
-    if (last && current < last) nextPage = String(current + 1);
-    else if (books.length >= 10) nextPage = String(curPage + 1);
-
-    return Response.success(books, nextPage);
+    target += (target.indexOf("?") >= 0 ? "&" : "?") + "page=" + curPage;
+    var res = fetch(target, {
+        headers: { "User-Agent": typeof BASE_UA !== "undefined" ? BASE_UA : "Mozilla/5.0", "Referer": BASE_ORIGIN + "/" }
+    });
+    if (!res || !res.ok) return Response.success([], "");
+    return parseHtmlSearch(res.text(), curPage);
 }

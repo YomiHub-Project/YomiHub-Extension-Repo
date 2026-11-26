@@ -8,7 +8,8 @@ try {
 } catch (e) {}
 var G = {
  "tabs": {
-  "Trang chủ": "/[?page={p}]",
+  "Shorts (Video ngắn)": "/[?page={p}]",
+    "Trang chủ": "/[?page={p}]",
   "MILF": "/tag/milf[?page={p}]",
   "Amateur": "/tag/amateurs[?page={p}]",
   "Gay": "/gay[?page={p}]"

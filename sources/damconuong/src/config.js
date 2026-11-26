@@ -1,4 +1,4 @@
-var BASE_URL = "https://damconuong.name";
+var BASE_URL = "https://damconuong.help";
 try { if (DOMAIN) BASE_URL = String(DOMAIN).replace(/\/+$/, ""); } catch (e) {}
 var G = {
  "tabs": {

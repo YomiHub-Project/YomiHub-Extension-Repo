@@ -1,4 +1,4 @@
-# Kiritokmn - Extension Repo Project — Ghi chú kỹ thuật cập nhật
+# YomiHub Extension Repo (trước đây Kiritokmn - Extension Repo) — Ghi chú kỹ thuật cập nhật
 
 **BẮT BUỘC ĐỌC TRƯỚC MỖI LẦN CẬP NHẬT.** Từ 0.0.4: đọc thư mục `A.I Brain - Second Brain/` trước tài liệu này.
 
@@ -10,10 +10,10 @@ Chủ dự án yêu cầu tạo và duy trì tài liệu này ngày 25/10/2026. 
 
 | Hạng mục | Trạng thái |
 |---|---|
-| Phiên bản | **0.0.9** (23/11/2026) — trước đó 0.0.8 (23/11/2026), 0.0.7 (18/11/2026), 0.0.6 (16/11/2026), 0.0.5 (13/11/2026), 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
+| Phiên bản | **0.1.0** (26/11/2026, kho đổi tên `YomiHub-Project/YomiHub-Extension-Repo`) — trước đó 0.0.9 (23/11/2026), 0.0.8 (23/11/2026), 0.0.7 (18/11/2026), 0.0.6 (16/11/2026), 0.0.5 (13/11/2026), 0.0.4 (13/11/2026), 0.0.3 (08/11/2026), 0.0.2 (08/11/2026), 0.0.1 (04/11/2026) |
 | Số nguồn | 196 (Phim 44 · Truyện tranh 37 · Tiểu thuyết 115) lấy từ `Project Extension Repo.xlsx` → sheet *Extension Repo Main* |
 | Ứng dụng hỗ trợ | Aniyomi (44 APK Anime), Nekoyomi (37 APK Manga + 115 APK Novel kế thừa ABI `NovelSource`, tổng 196 APK; tách riêng 3 kho độc lập `anime/`, `manga/`, `novel/`), Mangayomi, YomiHub (chỉ mục tổng hợp & tách mục `anime.json`, `manga.json`, `novel.json`), LNReader, IReader (115 plugin JS ES5), vBook, LeechText, YomiHub-vBook (196 zip vBook), **Aidoku** (152 gói `.aix` WASM, `BRIDGE_REV = 5`, hỗ trợ bộ lọc và xem truyện/tiểu thuyết). Đồng bộ bộ lọc **Filter Extension 10 mục** chuẩn trên tất cả ứng dụng. |
-| Kết quả kiểm thử | **100/196 PASS** (51.0%) mạng thật toàn bộ nguồn (+6 PASS so với 0.0.8: 94/196); Phim 20/44 PASS; Manga 21/37 PASS; Tiểu thuyết 59/115 PASS; Aidoku 81/152 PASS (+7); Note9 thực tế 196/196 APK cài đặt thành công 100% (xem bảng trong `README.md` tự sinh từ `data/test-results.json`) |
+| Kết quả kiểm thử | **94/196 PASS** mạng thật (`--stream --dns 1.1.1.1`, 26/11/2026; Phim 19/44, Truyện tranh 22/37, Tiểu thuyết 53/115); Aidoku mô phỏng 77/152; unit domain-fallback 7/7, domain-switch 12/12, filter-extension 9/9; Note9: Aniyomi, Nekoyomi, AVSub (phát/tua/chuyển tập/Resume) + các app khác — xem mục 0.1.0 |
 
 ## Kiến trúc (0.0.1)
 
@@ -839,4 +839,65 @@ Nhóm nguồn Phim & Video ngắn (Mục I), `lib/lib_common.js`, `lib/lib_gener
 | **Số nguồn Aidoku PASS** | 74/152 PASS | **81/152 PASS** | **Tăng +7 nguồn PASS** qua mô phỏng đầy đủ chuỗi |
 | **Tổ chức GitHub quản lý** | `kiritokmn1403` | **`YomiHub-Project`** | Đồng bộ toàn bộ URL raw, API và releases |
 | **Gói phát hành Output/** | 6 zip + 4 json (10 files) | **7 zip + 4 json (11 files)** | Bổ sung `Kiritokmn-Extension-0.0.9-nekoyomi-novel-apks.zip` (73.5 MB) |
+
+---
+
+### 26/11/2026 — Bản 0.1.0 (Đổi tên kho thành YomiHub Extension Repo, tự chuyển tên miền dự phòng, tab Shorts, logo kết hợp, APK nhỏ hơn ~20% nhờ R8, sửa 62 nguồn — Claude điều phối + Google Antigravity `/swarm`)
+
+**Yêu cầu** (Excel `Project Extension Repo` → sheet *Feature Check* → *Update*, 15 mục) — chủ dự án xác nhận 26/11 lúc 14:05:
+- Làm cho cả 9 app (Aniyomi, Nekoyomi, Mangayomi, YomiHub, LNReader, IReader, vBook, LeechText, Aidoku).
+- Kho GitHub `Kiritokmn---Extension-Repo` đã đổi tên thành **`YomiHub-Project/YomiHub-Extension-Repo`** (GitHub tự chuyển hướng link cũ).
+- Logo phương án A (kết hợp): logo website riêng cho từng tiện ích + `YomiHub Extensions.png` làm icon kho và icon dự phòng.
+- Kiểm thử: tự động toàn bộ + ảnh/video các luồng chính trên từng app (Note9 cắm sẵn).
+- Phân công: Claude (hạ tầng, nhóm Phim, logo, build, kiểm thử, tài liệu, phát hành); Google Antigravity (sửa nguồn Truyện tranh/Tiểu thuyết + bộ lọc 10 ô; đợt 2: 4 nguồn Phim + nháp tài liệu). Quy tắc mới (15:03): mọi lệnh gửi Antigravity phải dùng `/swarm`.
+
+**Đo hiện trạng** (14:20, Windows, `run-tests --conc 8 --stream --dns 1.1.1.1,8.8.8.8`): **96/196** (Phim 20/44, Truyện tranh 21/37, Tiểu thuyết 55/115) — thấp hơn con số 100/196 ghi ở 0.0.9 (trang nguồn đổi liên tục).
+
+| # | Hạng mục | Lỗi phát hiện | Tệp / dòng lệnh đã sửa | Công cụ | Kết quả kiểm thử sau sửa | Ngày |
+|---|---|---|---|---|---|---|
+| C1 | **Đổi tên kho → YomiHub Extension Repo** (Update mục 4 "đẩy cài đặt mới lên GitHub") | Kho đổi tên trên GitHub nhưng mọi URL raw/Release, tên tệp Output, tên kho hiển thị trong app vẫn là `Kiritokmn---Extension-Repo` / `Kiritokmn-Extension-*`. | `git remote set-url origin …/YomiHub-Extension-Repo.git`; `sed` trên `tools/build/{aniyomi-index,build-all,yomihub-sources,make-output,aidoku-build}.mjs`, `tools/docs/gen-readme.mjs`, `tools/win/publish.ps1`, `tools/gen/gen_sources.py`: `Kiritokmn---Extension-Repo→YomiHub-Extension-Repo`, `Kiritokmn-Extension-→YomiHub-Extension-`, `Kiritokmn Extension Repo→YomiHub Extension Repo`; `aniyomi-index.mjs` `shortName: 'YomiHubExt'`; `make-output.mjs` xoá cả tệp cũ `Kiritokmn-Extension-*`; mô tả `plugin.json` của 128 nguồn. **Giữ nguyên** khoá ký APK, tên gói APK, ID nguồn (đổi là người dùng phải cài lại). | git (runner), sed, Python | `git ls-remote` link mới = link cũ = `8cfe2be`; build-all 196/196; index Aidoku `name = "YomiHub Extension Repo"`. | 26/11 |
+| C2 | **Tự chuyển tên miền dự phòng** (Update mục 5 + 7: nhiều tên miền, chuyển linh hoạt) | 0.0.6 chỉ đổi tên miền khi người dùng tự chọn. Đo 21 nguồn Phim: nhiều tên miền mặc định đã chết (DNS/timeout/Cloudflare 52x) trong khi tên miền khác trong Excel vẫn sống → nguồn hỏng dù có mirror. | `runtime/engine.js` (VBookEngine): bọc `env.fetch` — khi yêu cầu tới một mirror đã biết lỗi mạng (`status 0`), Cloudflare 520–530 hay 502/503/504 thì thử cùng đường dẫn trên tối đa 4 mirror khác (`plugin.json DOMAIN.values` + tên miền Excel, danh sách `origins.list`), mirror đầu tiên trả lời được dùng tiếp cho cả phiên và lưu `storageGet/Set('__autoBase__')` (chỉ áp dụng khi người dùng giữ nguyên lựa chọn; `DOMAIN_CUSTOM` luôn thắng); hàm mới `autoBase()`, `setAutoBase()`, `mirrorAlternatives()`; mirror thử bằng fetch gốc (`w.__raw`) để `live()` không ghi đè ngược. URL chuẩn (`canon`) vẫn theo tên miền mặc định → **giữ vị trí xem/Resume**. Chạy ở Mangayomi, YomiHub, LNReader/IReader, Aidoku và APK Aniyomi/Nekoyomi (engine dùng chung, hạ ES5 cho Rhino). vBook/LeechText chạy script gốc nên dùng `BACKUP_DOMAINS` của từng nguồn. | Node 24, unit test mới `test/domain-fallback.test.mjs` | `domain-fallback` **7/7 PASS**; `domain-switch` 12/12 (lần đầu FAIL 1 mục do fetch giả không có `status` → sửa `bad()` chỉ chuyển khi có `status` số). | 26/11 |
+| C3 | **Short Video YomiHub** (Update mục 5) | Đọc `shorts_detect.dart` của YomiHub 0.6.6: nhận Short qua `additionalParams {"shorts":true}` (đã có từ 0.0.6), bộ lọc có lựa chọn "Shorts/Video ngắn", tên site. Engine có `feed=shorts` nhưng chỉ chạy khi nguồn có tab chứa chữ "short" — 9/11 nguồn Short không có tab này (Pornhub có URL `/shorties` trong Excel nhưng mã nguồn không dùng). | Thêm tab đầu **"Shorts (Video ngắn)"**: `sources/{pornhub(/shorties),tikporn,kwiky,xfree,freereels,sexviettop}/src/config.js` (`G.tabs`), `sources/fikfap/src/home.js`; đổi tên tab đầu `sources/tiktok/src/home.js` → `Shorts · Đề xuất`, `sources/douyin/src/home.js` → `Shorts · 热榜`. +1 version mỗi nguồn. | Python, đọc mã YomiHub (git clone `kiritokmn1403/YomiHub-Project` @065d314) | 11/11 nguồn Short có tab Shorts (fapreel, youtube có sẵn). pornhub/tik.porn: không kiểm được trên mạng VN (IP bị chặn). | 26/11 |
+| C4 | **Logo kết hợp** (Update mục 10 + 13) | Hai mục mâu thuẫn (logo từng site ↔ logo chung) → chủ dự án chọn phương án A. Nguồn thiếu `icon.png` dùng favicon Google (trái quy tắc 6 của 07). | `data/brand/repo-icon{,-128,-512}.png` (từ `YomiHub-Project/Yomi-Logo/YomiHub Extensions.png` 2048², PIL LANCZOS); `build-all.mjs`: icon dự phòng = `repo/icon.png` thay cho Google favicon, gói vBook luôn có `icon.png`, chép `repo/icon.png`; `gen-readme.mjs`: logo README = `data/brand/repo-icon.png`. | git, Python PIL | 196/196 nguồn giữ logo riêng; README + icon kho dùng logo YomiHub Extensions. | 26/11 |
+| C5 | **Giảm dung lượng APK** (yêu cầu tối ưu dung lượng/tốc độ) | Mỗi APK ~650–700 KB, trong đó `classes.dex` 1,2 MB (Rhino nhúng đủ trình biên dịch bytecode `optimizer.**`, shell/debugger `tools.**`) dù Rhino chạy thông dịch (`optimizationLevel = -1`); mã nguồn chỉ ~60 KB. | `android/{anime,manga,novel}/build.gradle.kts`: `isMinifyEnabled = true`, `packaging.excludes += org/mozilla/javascript/tools/**, Messages_*.properties`; `android/proguard-rules.pro`: `-keep class !org.mozilla.javascript.optimizer.**,!org.mozilla.javascript.tools.**,org.mozilla.javascript.** {*;}`, `-dontobfuscate`, `-dontoptimize`, `-dontwarn kotlin.**, kotlinx.**, org.jetbrains.annotations.**, javax.annotation.**`. `APK_REV 2→3`. | Gradle 9.3.1 + R8 (AGP), Python zipfile | Lần 1: R8 FAIL "Missing class org.jetbrains.annotations.NotNull" → thêm `-dontwarn`. Thử 2 flavor: novel xtruyen 645 405 → **509 099 B (−21%)**, anime xfree 703 173 → **566 651 B (−19%)**. Tổng 196 APK: xem mục Phiên bản. | 26/11 |
+| C6 | **Phát trực tiếp — không đưa trang HTML vào trình phát** (Update mục 12) | Anime47: API `animevui.com/api/anime/watch/episode/<id>` trả **401 `PRIVATE_MODE`** (trang bắt đăng nhập từ 11/2026); `track.js` khi đó trả chính URL trang HTML với `type:'native'` → trình phát quay mãi (giống log YomiHub "Lỗi video không tải được"). | `sources/anime47/src/track.js`: bỏ nhánh trả trang HTML, trả `Response.error('Anime47 đang bật chế độ riêng tư: cần đăng nhập…')`; `data/status.json → login.anime47`. | Node probe (`_work/v010/a47.mjs`) | Lỗi hiển thị rõ bằng tiếng Việt thay cho vòng quay vô hạn. | 26/11 |
+| C7 | **Phân loại trạng thái nguồn Phim** | Dò 21 nguồn Phim lỗi trên mọi tên miền Excel (`_work/v010/domprobe.mjs`, DNS 1.1.1.1). | `data/status.json`: `blocked.pornhub`, `blocked.tikporn` (nhà mạng VN chặn IP — kết nối hết giờ cả với DNS 1.1.1.1; mã nguồn không lỗi, dùng Tor/VPN của app); `protected.nextphim` (trang tin/lịch chiếu, không có luồng phát). **Phimmoi:** tên miền còn sống duy nhất `messiahelartista.com` hoá ra là bản sao Wayback tĩnh (trang demo "waybackmachinedownloader", không có tập/tìm kiếm) → hoàn tác, giữ `dead`. AnimeVietsub còn `animevsub.co.uk`. | Node fetch, PowerShell | Ghi nhận đúng nguyên nhân; README tự sinh từ status. | 26/11 |
+| C8 | **Kiểm thử & công cụ** | — | `test/domain-fallback.test.mjs` (mới); `test/filter-extension.test.mjs` cập nhật `BRIDGE_REV = 6`; `_work/v010/ph.ps1` (điều khiển Note9: shot/tap/swipe/recstart/recstop/install); `_work/v010/bump.mjs` (tăng version mọi nguồn chưa tăng so với HEAD 0.0.9: 128 nguồn). | Node, PowerShell, adb | — | 26/11 |
+
+**Google Antigravity (`/swarm`) — đợt 1 (14:15–15:20) sửa nguồn Truyện tranh/Tiểu thuyết + bộ lọc 10 ô; đợt 2 (15:32–15:52) 4 nguồn Phim** (bảng do Antigravity viết, Claude rà và gộp; chi tiết `_work/agents/NOTES_antigravity_0.1.0.md`):
+
+| # | Nguồn | Lỗi phát hiện | Tệp / dòng lệnh đã sửa | Công cụ | Kết quả kiểm thử | Ngày |
+|
+
+**Phiên bản**
+- `package.json` 0.1.0 (tên gói `yomihub-extension-repo`).
+- 196/196 nguồn tăng `version` so với 0.0.9 (68 nguồn đã tăng khi sửa + 128 nguồn tăng bằng `_work/v010/bump.mjs` vì engine đổi).
+- APK `APK_REV 3` (ví dụ AVSub `v14.3010`); Aidoku `BRIDGE_REV 6` (gói `6xx`), 152/152 gói dựng trên máy đám mây (cargo 217 s).
+
+**Dựng & dung lượng** (`tools/win/build_all.ps1`, 26/11 15:53–16:11; Gradle 494 s)
+| Hạng mục | 0.0.9 | 0.1.0 | Thay đổi |
+|---|---|---|---|
+| 44 APK Anime | 30,1 MB (zip) | 24,8 MB (25,6 MB zip) | −15% |
+| 37 APK Manga | 24,9 MB (zip) | 20,5 MB (21,2 MB zip) | −15% |
+| 115 APK Novel | 77,0 MB (zip) | 63,2 MB (65,4 MB zip) | −15% |
+| Tổng 196 APK | 125,95 MB | 108,5 MB | **−13,9%** |
+| Một APK Novel (xtruyen) | 645 405 B | 542 355 B | −16% |
+- Lần thử R8 từng flavor (giảm −21%) bị bỏ: 196 flavor × R8 mất ~60 phút (67/196 sau 25 phút) → thay bằng `android/libs/rhino-1.7.15-slim.jar` (bỏ `org/mozilla/javascript/optimizer/**`, `tools/**`, `Messages_*.properties`, `META-INF/versions/**`; 1 407 735 → 1 148 350 B), `isMinifyEnabled = false`. Dựng thử 3 flavor + cài Note9: Aniyomi/Nekoyomi chạy bình thường (Rhino thông dịch không cần Codegen).
+- `Output/`: 7 zip `YomiHub-Extension-0.1.0-{vbook-leechtext, mangayomi-yomihub, lnreader-ireader, aniyomi-apks, tachiyomi-apks, nekoyomi-novel-apks, aidoku}.zip` + 4 chỉ mục (`index.json`, `index.min.json`, `plugin.json`, `plugins.min.json`).
+
+**Kiểm thử tự động** (Windows, 26/11 16:12, `run-tests --conc 8 --stream --dns 1.1.1.1,8.8.8.8`)
+- **94/196** (Phim 19/44, Truyện tranh 22/37, Tiểu thuyết 53/115). Đầu phiên 96/196 (cùng cấu hình).
+  - Mới đạt: `hentaivn`, `luphim`, `mangadex`, `piaotianapp`, `sobqg`.
+  - Không còn đạt: `anime47` (chủ đích — API bắt đăng nhập, nay báo lỗi thay vì đưa trang HTML vào trình phát; trước đó `stream✗` dù tính "PASS"), `nguonc` (phim đầu danh sách dùng embed `streamc.xyz` → 403 Cloudflare, tồn đọng #82; phim khác phát tốt trên Note9), `lofter`, `sudugu` (chương >8 s), `truyencvio` (detail rỗng), `navyteamcomic` (một số truyện thiếu ảnh). `lnhakovnhako` chạy lại thì đạt (dao động mạng).
+  - Phần lớn 58 nguồn Antigravity sửa vốn đã đạt — việc chính là thêm `genre.js`/bộ lọc 10 ô (52/58 đạt sau sửa).
+- `build_all.ps1` gọi `run-tests` **không** có `--dns` → chỉ 92/196 (DNS nhà mạng) — đã chạy lại đúng cấu hình; bản sau sửa `build_all.ps1`.
+- `aidoku-sim --all` (DNS 1.1.1.1 qua `node --import _work/v010/dnspre.mjs`): **77/152** (0.0.9 ghi 81).
+- Unit: `domain-fallback` 7/7, `domain-switch` 12/12, `filter-extension` 9/9.
+- Kiểm sâu trình phát AVSub (chủ dự án yêu cầu 16:03, `_work/v010/avsub_deep.mjs`): **11/11** luồng đạt — Đảo Hải Tặc (2210 mục = 1192 Vietsub + 1018 Lồng Tiếng), Chú Thuật Hồi Chiến 3, Tiên Nghịch, Thanh Gươm Diệt Quỷ: Vô Hạn Thành; tập đầu/giữa/cuối; HLS + segment HTTP 206 kèm Referer.
+
+**Kiểm thử trên Galaxy Note9** (adb `281038ac31217ece`, Android 10, 26/11; ảnh/video `_work/shots/v010/`)
+- Cài APK mới bằng `adb install -r -d`: Success.
+- **Aniyomi** (video `01_aniyomi_rec.mp4`): Duyệt → Nguồn Anime (logo riêng từng trang) ✅; NguonC danh sách ✅; Bộ lọc đủ 10 ô ✅; chi tiết "Phi Vụ 12-12-12" ✅; phát trực tiếp trong trình phát app (01:02/59:37) ✅; Resume: mở lại tiếp tục từ 01:02 ✅.
+- **Nekoyomi** (video `02_nekoyomi_rec.mp4`): 3 tab tách biệt Nguồn Anime / Nguồn Manga / Novel sources ✅; XTruyen (APK Novel mới) danh sách + chi tiết + đọc chương tiếng Việt ✅.
+- **AVSub – AnimeVietsub trên Aniyomi** (video `03_avsub_rec.mp4`): [Thuyết Minh] Tập 12 phát ✅; nút tập trước → Tập 11 ✅; kéo thanh tua tới 11:37/24:14 phát tiếp ✅; thoát → "Đã xem 12:00/24:14" → mở lại tiếp tục 12:00 ✅.
 

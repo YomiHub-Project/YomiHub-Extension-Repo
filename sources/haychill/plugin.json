@@ -2,9 +2,9 @@
   "metadata": {
     "name": "HayChill",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://phimhaychill.org",
-    "description": "HayChill — Kiritokmn Extension Repo",
+    "description": "HayChill — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "phimhaychill\\.org",
     "type": "video",

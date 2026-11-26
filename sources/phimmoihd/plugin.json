@@ -2,9 +2,9 @@
   "metadata": {
     "name": "PhimMoiHD",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://phimmoihd.online",
-    "description": "PhimMoiHD — Kiritokmn Extension Repo",
+    "description": "PhimMoiHD — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "phimmoihd\\.online",
     "type": "video",

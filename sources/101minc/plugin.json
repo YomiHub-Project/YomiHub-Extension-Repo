@@ -2,9 +2,9 @@
   "metadata": {
     "name": "101Minc",
     "author": "Kiritokmn",
-    "version": 6,
+    "version": 7,
     "source": "https://www.101minc.com",
-    "description": "101Minc — Kiritokmn Extension Repo",
+    "description": "101Minc — YomiHub Extension Repo",
     "locale": "zh-CN",
     "regexp": "101minc\\.com",
     "type": "novel",

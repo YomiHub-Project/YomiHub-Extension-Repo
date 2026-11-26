@@ -2,9 +2,9 @@
   "metadata": {
     "name": "Minttea Novel",
     "author": "Kiritokmn",
-    "version": 7,
+    "version": 8,
     "source": "https://mintteanovel.com",
-    "description": "Minttea Novel — Kiritokmn Extension Repo",
+    "description": "Minttea Novel — YomiHub Extension Repo",
     "locale": "vi",
     "regexp": "mintteanovel\\.com",
     "type": "novel",

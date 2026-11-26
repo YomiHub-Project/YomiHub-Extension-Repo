@@ -21,5 +21,6 @@ var G = {
  "s_item": "div.manga-item-ranking, div.manga-item-grid, article.uk-grid-small",
  "s_title": "a.uk-link-heading || h3 || img@alt",
  "s_link": "a.uk-link-heading@href || a@href",
- "s_cover": "img@img"
+ "s_cover": "img@img",
+ "genre": "a[href*='/genre/']"
 };
